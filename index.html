@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%2225%22 y=%2275%22 fill=%22%23FCA5A5%22/><path d=%22M10 75 Q 30 40 100 75 L 100 50 Q 30 15 10 50 Z%22 fill=%22%23FDBA74%22/><path d=%22M30 50 Q 50 15 100 50 L 100 25 Q 50 -10 30 25 Z%22 fill=%22%2392400E%22/><path d=%22M55 25 Q 75 -10 100 25 L 100 0 Q 75 -35 55 0 Z%22 fill=%22%23451A03%22/></svg>">
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -18,15 +19,27 @@
             font-family: 'Playfair Display', serif;
         }
         .glass {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.3);
         }
-        .linear-gradient-text {
-            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        @keyframes slide-up {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slide-up {
+            animation: slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .animate-fade-in {
+            animation: opacity 1s ease-out forwards;
+        }
+        @keyframes bounce-slow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-bounce-slow {
+            animation: bounce-slow 4s ease-in-out infinite;
         }
     </style>
 <script type="importmap">

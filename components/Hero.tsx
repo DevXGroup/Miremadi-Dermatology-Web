@@ -3,61 +3,94 @@ import React from 'react';
 
 const Hero: React.FC = () => {
   return (
-    <div className="relative min-h-[90vh] flex items-center justify-center pt-20 overflow-hidden bg-[#fafafa]">
-      {/* Abstract Background Element */}
-      <div className="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] bg-indigo-50 rounded-full blur-3xl opacity-50 -z-10"></div>
-      <div className="absolute bottom-[-10%] left-[-10%] w-[400px] h-[400px] bg-blue-50 rounded-full blur-3xl opacity-40 -z-10"></div>
+    <div className="relative min-h-screen flex items-center justify-center pt-24 overflow-hidden bg-white">
+      {/* Background patterns inspired by skin layers */}
+      <div className="absolute inset-0 pointer-events-none opacity-[0.03]">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="0.5"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#grid)" />
+        </svg>
+      </div>
 
-      <div className="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
-        <div className="space-y-8 animate-slide-up">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 text-xs font-semibold uppercase tracking-wider">
-            Established 1984 • La Jolla, CA
+      <div className="container mx-auto px-6 grid lg:grid-cols-12 gap-12 items-center relative z-10">
+        <div className="lg:col-span-7 space-y-8 animate-slide-up">
+          <div className="inline-flex items-center gap-4">
+            <div className="h-px w-12 bg-indigo-600"></div>
+            <span className="text-xs font-bold text-indigo-600 uppercase tracking-[0.3em]">55+ Years of Medical Leadership • La Jolla</span>
           </div>
           
-          <h1 className="text-5xl lg:text-7xl font-serif text-slate-900 leading-[1.1]">
-            Experience the <span className="italic">Science</span> of Beautiful Skin.
+          <h1 className="text-5xl lg:text-8xl font-serif text-slate-900 leading-[1] tracking-tight">
+            Meticulous <span className="italic font-light text-indigo-900/40">Care</span> <br/> 
+            for Your Skin.
           </h1>
           
-          <p className="text-lg text-slate-600 leading-relaxed max-w-lg">
-            With over 40 years of expertise in dermatology and pathology, Dr. Miremadi provides world-class skin care using state-of-the-art technology.
-          </p>
-
-          <div className="flex flex-wrap gap-4">
-            <button className="bg-slate-900 text-white px-8 py-4 rounded-full text-lg font-medium hover:bg-indigo-700 transition-all shadow-lg hover:shadow-indigo-200">
-              Schedule Consultation
-            </button>
-            <button className="bg-white border border-slate-200 text-slate-700 px-8 py-4 rounded-full text-lg font-medium hover:bg-slate-50 transition-all">
-              Our Services
-            </button>
+          <div className="max-w-xl">
+             <blockquote className="text-2xl lg:text-3xl font-serif italic text-slate-600 leading-snug border-l-4 border-indigo-100 pl-6 mb-8">
+              "Skin is the largest organ of the body which needs a meticulous care"
+              <footer className="text-sm font-bold uppercase tracking-widest text-slate-400 mt-4">— Arjang K. Miremadi, M.D.</footer>
+            </blockquote>
           </div>
 
-          <div className="flex items-center gap-8 pt-4 border-t border-slate-100">
-            <div>
-              <p className="text-2xl font-bold text-slate-900">40+</p>
-              <p className="text-sm text-slate-500 uppercase tracking-widest">Years Practice</p>
-            </div>
-            <div>
-              <p className="text-2xl font-bold text-slate-900">10k+</p>
-              <p className="text-sm text-slate-500 uppercase tracking-widest">Happy Patients</p>
-            </div>
-            <div>
-              <p className="text-2xl font-bold text-slate-900">4.9/5</p>
-              <p className="text-sm text-slate-500 uppercase tracking-widest">Client Rating</p>
-            </div>
+          <div className="flex flex-wrap gap-4 pt-4">
+            <button className="bg-slate-900 text-white px-10 py-5 rounded-full text-xs font-bold uppercase tracking-[0.2em] hover:bg-indigo-700 transition-all shadow-2xl hover:shadow-indigo-200 transform hover:-translate-y-1">
+              Start Your Beauty Journey
+            </button>
+            <a href="#services" className="inline-flex items-center gap-3 px-8 py-5 rounded-full text-xs font-bold uppercase tracking-[0.2em] text-slate-600 border border-slate-200 hover:bg-slate-50 transition-all">
+              Explore Services
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </a>
+          </div>
+
+          <div className="flex items-center gap-10 pt-8">
+             <div className="bg-slate-50 px-4 py-2 rounded-2xl border border-slate-100 flex items-center gap-3">
+                <div className="flex gap-1">
+                   {[1,2,3,4,5].map(i => (
+                     <svg key={i} className="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
+                       <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                     </svg>
+                   ))}
+                </div>
+                <p className="text-[10px] font-bold text-slate-600 uppercase tracking-widest">5 Star Patient Rating</p>
+             </div>
+             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Trusted globally for over 55 years</p>
           </div>
         </div>
 
-        <div className="relative animate-fade-in delay-200">
-          <div className="relative rounded-2xl overflow-hidden shadow-2xl border-[12px] border-white">
+        <div className="lg:col-span-5 relative">
+          <div className="relative z-10 rounded-[2.5rem] overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.15)] border-[16px] border-white group">
+            {/* Provided Portrait Image */}
             <img 
-              src="https://picsum.photos/id/445/800/1000" 
-              alt="Medical Clinic Interior" 
-              className="w-full h-auto object-cover transform transition-transform hover:scale-105 duration-700"
+              src="https://drmiremadi.com/wp-content/uploads/2015/06/Dr-Arjang-Miremadi-Dermatopathologist.jpg" 
+              alt="Dr. Arjang K. Miremadi" 
+              className="w-full h-auto object-cover transform transition-transform duration-1000 group-hover:scale-105"
             />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-8">
+               <p className="text-white font-medium text-sm">Triple-certified specialist in Dermatology & Pathology.</p>
+            </div>
           </div>
-          <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-2xl shadow-xl max-w-[240px] hidden lg:block border border-slate-50">
-            <p className="text-indigo-600 font-bold mb-1 italic">"Precision in every diagnosis."</p>
-            <p className="text-slate-500 text-xs">Dr. Miremadi is one of few specialists triple-certified in Dermatology & Pathology.</p>
+          
+          {/* Accent decoration */}
+          <div className="absolute -top-12 -right-12 w-48 h-48 bg-indigo-50 rounded-full -z-10 blur-2xl"></div>
+          <div className="absolute -bottom-12 -left-12 w-64 h-64 bg-slate-100 rounded-full -z-10 blur-3xl"></div>
+          
+          {/* Floating badge */}
+          <div className="absolute bottom-10 -right-8 bg-white p-6 rounded-3xl shadow-2xl z-20 border border-slate-50 max-w-[180px] animate-bounce-slow">
+             <div className="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center mb-3">
+               <svg viewBox="0 0 100 100" className="w-6 h-6">
+                 <rect width="100" height="25" y="75" fill="#FCA5A5" />
+                 <path d="M10 75 Q 30 40 100 75 L 100 50 Q 30 15 10 50 Z" fill="#FDBA74" />
+                 <path d="M30 50 Q 50 15 100 50 L 100 25 Q 50 -10 30 25 Z" fill="#92400E" />
+                 <path d="M55 25 Q 75 -10 100 25 L 100 0 Q 75 -35 55 0 Z" fill="#451A03" />
+               </svg>
+             </div>
+             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Dermatopathology</p>
+             <p className="text-sm font-bold text-slate-900 leading-tight">55+ Years of Mastery</p>
           </div>
         </div>
       </div>

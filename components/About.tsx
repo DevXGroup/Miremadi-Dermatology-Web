@@ -3,59 +3,71 @@ import React from 'react';
 
 const About: React.FC = () => {
   return (
-    <div className="container mx-auto px-6 flex flex-col lg:flex-row items-center gap-16">
+    <div className="container mx-auto px-6 flex flex-col lg:flex-row items-center gap-20">
       <div className="lg:w-1/2 relative">
-        <div className="absolute -inset-4 bg-indigo-600 rounded-2xl transform rotate-3 -z-10 opacity-10"></div>
-        <img 
-          src="https://picsum.photos/id/64/800/1000" 
-          alt="Dr. Miremadi Portrait" 
-          className="rounded-2xl shadow-2xl w-full"
-        />
-        <div className="absolute top-4 right-4 bg-white/90 backdrop-blur p-4 rounded-xl shadow-lg">
-          <p className="text-slate-900 font-bold text-sm">Board Certified</p>
-          <p className="text-slate-500 text-xs">American Board of Dermatology</p>
+        <div className="relative z-10 rounded-[3rem] overflow-hidden shadow-2xl group border-8 border-white">
+          <img 
+            src="https://drmiremadi.com/wp-content/uploads/2015/06/Dr-Arjang-Miremadi-Dermatopathologist.jpg" 
+            alt="Dr. Miremadi Portrait" 
+            className="w-full h-auto object-cover transform transition-transform duration-1000 group-hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-indigo-600/10 group-hover:bg-transparent transition-colors"></div>
         </div>
+        {/* Floating badge */}
+        <div className="absolute -bottom-10 -right-10 bg-white p-8 rounded-[2rem] shadow-2xl z-20 border border-slate-50 max-w-[240px]">
+           <div className="flex items-center gap-2 mb-4">
+              <div className="w-2 h-2 rounded-full bg-indigo-600 animate-pulse"></div>
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">5-Star Rated Specialist</span>
+           </div>
+           <p className="text-lg font-serif text-slate-900 leading-tight">American Board of Dermatopathology</p>
+        </div>
+        {/* Abstract shapes */}
+        <div className="absolute -top-20 -left-20 w-64 h-64 bg-indigo-100 rounded-full blur-3xl opacity-30 -z-10"></div>
       </div>
 
-      <div className="lg:w-1/2 space-y-8">
-        <div className="space-y-4">
-          <h2 className="text-indigo-600 font-semibold uppercase tracking-widest text-sm">Meet the Doctor</h2>
-          <h3 className="text-4xl lg:text-5xl font-serif text-slate-900">Dr. Miremadi, MD</h3>
-          <p className="text-indigo-500 font-medium italic">Veteran Dermatologist & Pathologist</p>
-        </div>
-
-        <p className="text-slate-600 leading-relaxed text-lg">
-          For over four decades, Dr. Miremadi has been a fixture of the La Jolla medical community. His dual expertise in clinical dermatology and laboratory pathology allows him to provide a depth of insight rarely found in modern practices.
-        </p>
-
+      <div className="lg:w-1/2 space-y-10">
         <div className="space-y-6">
-          <div className="flex gap-4">
-            <div className="w-12 h-12 bg-white rounded-full shadow-md flex items-center justify-center text-indigo-600 shrink-0">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <div>
-              <h5 className="font-bold text-slate-900">Academic Excellence</h5>
-              <p className="text-slate-500 text-sm">Former clinical professor and regular contributor to dermatological journals.</p>
-            </div>
+          <div className="flex items-center gap-3">
+            <span className="w-10 h-[2px] bg-indigo-600"></span>
+            <span className="text-xs font-bold text-indigo-600 uppercase tracking-[0.4em]">Expert profile</span>
           </div>
-          
-          <div className="flex gap-4">
-            <div className="w-12 h-12 bg-white rounded-full shadow-md flex items-center justify-center text-indigo-600 shrink-0">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a2 2 0 00-1.96 1.414l-.727 2.903a2 2 0 01-1.311 1.413 9.035 9.035 0 01-5.186 0 2 2 0 01-1.311-1.413l-.727-2.903a2 2 0 00-1.96-1.414l-2.387.477a2 2 0 00-1.022.547l-2.261 2.26a2 2 0 01-2.829 0l-1.414-1.414a2 2 0 010-2.828l2.26-2.26a2 2 0 00.547-1.022l.477-2.387a2 2 0 00-1.414-1.96L2.903 9.17a2 2 0 01-1.413-1.311 9.035 9.035 0 010-5.186 2 2 0 011.413-1.311l2.903-.727a2 2 0 001.414-1.96l.477-2.387a2 2 0 001.022-.547l2.261-2.261a2 2 0 012.829 0l1.414 1.414a2 2 0 010 2.828l-2.26 2.26a2 2 0 00-.547 1.022l-.477 2.387a2 2 0 001.414 1.96l2.903.727a2 2 0 011.413 1.311 9.035 9.035 0 010 5.186 2 2 0 01-1.413 1.311l-2.903.727a2 2 0 00-1.414 1.96l-.477 2.387a2 2 0 00-1.022.547l-2.26 2.26a2 2 0 01-2.829 0l-1.414-1.414a2 2 0 010-2.828l2.26-2.26a2 2 0 00.547-1.022l.477-2.387a2 2 0 00-1.414-1.96l-2.903-.727a2 2 0 01-1.413-1.311 9.035 9.035 0 010-5.186 2 2 0 011.413-1.311l2.903.727a2 2 0 001.414 1.96l.477 2.387z" />
-              </svg>
-            </div>
-            <div>
-              <h5 className="font-bold text-slate-900">Modern Technology</h5>
-              <p className="text-slate-500 text-sm">Investing in cutting-edge laser and diagnostic tools for the best results.</p>
-            </div>
+          <h3 className="text-4xl lg:text-6xl font-serif text-slate-900 leading-tight">Arjang K. <br/> <span className="italic font-light text-slate-400">Miremadi, M.D.</span></h3>
+          <p className="text-indigo-500 font-bold uppercase tracking-widest text-xs">Veteran Dermatopathologist • 55+ Years Experience</p>
+        </div>
+
+        <div className="space-y-6 text-slate-600 text-lg font-light leading-relaxed">
+          <p>
+            Dr. Arjang Miremadi, MD is a distinguished veteran in dermatopathology with over <strong>55 years of experience</strong> in the medical field. His career is defined by meticulous pathological precision and compassionate clinical excellence.
+          </p>
+          <p>
+            A prestigious graduate of the <strong>George Washington University School of Medicine & Health Sciences (Class of 1968)</strong>, Dr. Miremadi has dedicated over half a century to the mastery of skin science. He is triple-certified and remains affiliated with <strong>El Centro Regional Medical Center</strong>, providing elite care across Southern California.
+          </p>
+          <p className="italic font-serif text-xl border-l-4 border-slate-100 pl-6 text-slate-500">
+            "Skin is the largest organ of the body which needs a meticulous care. My goal is to combine clinical intuition with pathological evidence to provide the absolute best outcome for my patients."
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 gap-8 pt-6">
+          <div className="space-y-2">
+            <h5 className="font-bold text-slate-900 uppercase tracking-widest text-[10px]">Education</h5>
+            <p className="text-sm text-slate-500 font-light">George Washington University, 1968</p>
+          </div>
+          <div className="space-y-2">
+            <h5 className="font-bold text-slate-900 uppercase tracking-widest text-[10px]">Board Experience</h5>
+            <p className="text-sm text-slate-500 font-light">Triple Certified Professional</p>
+          </div>
+          <div className="space-y-2">
+            <h5 className="font-bold text-slate-900 uppercase tracking-widest text-[10px]">Affiliation</h5>
+            <p className="text-sm text-slate-500 font-light">El Centro Regional Medical Center</p>
+          </div>
+          <div className="space-y-2">
+            <h5 className="font-bold text-slate-900 uppercase tracking-widest text-[10px]">Location Mastery</h5>
+            <p className="text-sm text-slate-500 font-light underline underline-offset-4 decoration-indigo-200 uppercase tracking-tighter">La Jolla & El Centro</p>
           </div>
         </div>
 
-        <button className="bg-slate-100 text-slate-800 px-8 py-3 rounded-xl font-semibold hover:bg-slate-200 transition-colors">
-          View Full Credentials
+        <button className="bg-slate-900 text-white px-10 py-5 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-indigo-700 transition-all shadow-xl hover:-translate-y-1">
+          View Medical Credentials
         </button>
       </div>
     </div>
