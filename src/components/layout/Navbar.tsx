@@ -31,7 +31,7 @@ export const Navbar = () => {
                     {/* Logo */}
                     {/* Logo */}
                     <Link to="/" className="flex items-center gap-2 group">
-                        <Logo className="w-12 h-12 group-hover:scale-105 transition-transform" />
+                        <Logo className="w-14 h-14 group-hover:scale-105 transition-transform" />
                         <div className="flex flex-col justify-center -space-y-0.5">
                             <span className="text-xl font-display font-bold text-slate-900 dark:text-white leading-tight tracking-tight">
                                 Miremadi
