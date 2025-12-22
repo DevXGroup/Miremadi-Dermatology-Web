@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { Product, CartItem, User, Order } from '../types';
+import { Product, CartItem, UserProfile } from '../types';
+import { supabase } from '../lib/supabase';
 
 // Mock Data
 const MOCK_PRODUCTS: Product[] = [
@@ -10,8 +11,8 @@ const MOCK_PRODUCTS: Product[] = [
         description: 'Expertly formulated daily moisturizer for deep hydration.',
         price: 85,
         category: 'Moisturizers',
-        image: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=800',
-        tags: ['Best Seller', 'Hydrating'],
+        image_url: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=800',
+        is_featured: true,
         inventory: 50
     },
     {
@@ -20,8 +21,8 @@ const MOCK_PRODUCTS: Product[] = [
         description: 'Brightening serum to even out skin tone and texture.',
         price: 120,
         category: 'Serums',
-        image: 'https://images.unsplash.com/photo-1620916297397-a4a5402a3c6c?auto=format&fit=crop&q=80&w=800',
-        tags: ['Brightening', 'Anti-aging'],
+        image_url: 'https://images.unsplash.com/photo-1620916297397-a4a5402a3c6c?auto=format&fit=crop&q=80&w=800',
+        is_featured: true,
         inventory: 35
     },
     {
@@ -30,8 +31,8 @@ const MOCK_PRODUCTS: Product[] = [
         description: 'Removes impurities without stripping natural oils.',
         price: 45,
         category: 'Cleansers',
-        image: 'https://images.unsplash.com/photo-1556228720-1957be919ba1?auto=format&fit=crop&q=80&w=800',
-        tags: ['Daily Use'],
+        image_url: 'https://images.unsplash.com/photo-1556228720-1957be919ba1?auto=format&fit=crop&q=80&w=800',
+        is_featured: false,
         inventory: 100
     },
     {
@@ -40,8 +41,8 @@ const MOCK_PRODUCTS: Product[] = [
         description: 'Powerful night treatment for skin renewal.',
         price: 150,
         category: 'Treatments',
-        image: 'https://images.unsplash.com/photo-1611080541599-8c6dbde6edb8?auto=format&fit=crop&q=80&w=800',
-        tags: ['Night Care', 'Anti-aging'],
+        image_url: 'https://images.unsplash.com/photo-1611080541599-8c6dbde6edb8?auto=format&fit=crop&q=80&w=800',
+        is_featured: true,
         inventory: 20
     }
 ];
@@ -49,26 +50,65 @@ const MOCK_PRODUCTS: Product[] = [
 interface ShopState {
     products: Product[];
     cart: CartItem[];
-    user: User | null;
+    user: UserProfile | null;
     wishlist: string[]; // Product IDs
+    loading: boolean;
+    isAuthModalOpen: boolean;
+    isCartOpen: boolean;
 
     // Actions
+    fetchProducts: () => Promise<void>;
     addToCart: (product: Product) => void;
     removeFromCart: (productId: string) => void;
     updateQuantity: (productId: string, quantity: number) => void;
     clearCart: () => void;
     toggleWishlist: (productId: string) => void;
-    login: (email: string) => void; // Mock login
+
+    // Auth
+    login: (user: UserProfile) => void;
     logout: () => void;
+    openAuthModal: () => void;
+    closeAuthModal: () => void;
+
+    // UI
+    openCart: () => void;
+    closeCart: () => void;
 }
 
 export const useShopStore = create<ShopState>()(
-    persist(
+    persist<ShopState>(
         (set, get) => ({
             products: MOCK_PRODUCTS,
             cart: [],
             user: null,
             wishlist: [],
+            loading: false,
+            isAuthModalOpen: false,
+            isCartOpen: false,
+
+            fetchProducts: async () => {
+                set({ loading: true });
+                const { data, error } = await supabase
+                    .from('products')
+                    .select('*');
+
+                if (error) {
+                    console.error('Error fetching products:', error);
+                } else if (data) {
+                    const mappedProducts: Product[] = data.map((p: any) => ({
+                        id: p.id,
+                        name: p.name,
+                        description: p.description,
+                        price: p.price,
+                        category: p.category, // Assuming DB matches 'Moisturizers' | 'Serums' etc.
+                        image_url: p.image_url || 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=800',
+                        is_featured: p.is_featured || false,
+                        inventory: p.stock || 100
+                    }));
+                    set({ products: mappedProducts.length > 0 ? mappedProducts : MOCK_PRODUCTS });
+                }
+                set({ loading: false });
+            },
 
             addToCart: (product) => {
                 const cart = get().cart;
@@ -106,7 +146,12 @@ export const useShopStore = create<ShopState>()(
             clearCart: () => set({ cart: [] }),
 
             toggleWishlist: (productId) => {
-                const current = get().wishlist;
+                const state = get();
+                if (!state.user) {
+                    set({ isAuthModalOpen: true });
+                    return;
+                }
+                const current = state.wishlist;
                 if (current.includes(productId)) {
                     set({ wishlist: current.filter(id => id !== productId) });
                 } else {
@@ -114,21 +159,22 @@ export const useShopStore = create<ShopState>()(
                 }
             },
 
-            login: (email) => {
-                set({
-                    user: {
-                        id: 'u_123',
-                        name: 'Demo User',
-                        email,
-                        orders: []
-                    }
-                });
-            },
+            login: (user) => set({ user }),
+            logout: () => set({ user: null, wishlist: [], cart: [] }), // Clear data on logout
 
-            logout: () => set({ user: null })
+            openAuthModal: () => set({ isAuthModalOpen: true }),
+            closeAuthModal: () => set({ isAuthModalOpen: false }),
+
+            openCart: () => set({ isCartOpen: true }),
+            closeCart: () => set({ isCartOpen: false }),
         }),
         {
             name: 'miremadi-shop-storage',
+            partialize: (state) => ({
+                cart: state.cart,
+                user: state.user,
+                wishlist: state.wishlist
+            }), // Only persist these
         }
     )
 );

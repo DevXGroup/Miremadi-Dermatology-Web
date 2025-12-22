@@ -67,6 +67,58 @@ export const Home = () => {
                 </div>
             </section>
 
+            {/* Philosophy Section */}
+            <section className="py-24 bg-white dark:bg-slate-950">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="text-center max-w-3xl mx-auto mb-16">
+                        <span className="text-xs font-bold text-primary-DEFAULT uppercase tracking-[0.2em] mb-4 block">Our Philosophy</span>
+                        <h2 className="text-4xl md:text-5xl font-display font-medium text-slate-900 dark:text-white mb-6">
+                            Radiance Rooted in <span className="italic font-light text-slate-400">Science</span>
+                        </h2>
+                        <p className="text-lg text-slate-500 dark:text-slate-400 leading-relaxed">
+                            We believe in a holistic approach to skin health, combining cutting-edge technology with personalized care plans that treat the person, not just the symptom.
+                        </p>
+                    </div>
+
+                    <div className="grid md:grid-cols-3 gap-8">
+                        {[
+                            {
+                                title: "Patient-First Care",
+                                desc: "Your comfort and long-term health are our top priorities. We co-author treatment plans with you to ensure they align with your lifestyle and goals.",
+                                icon: "♥"
+                            },
+                            {
+                                title: "Holistic Approach",
+                                desc: "We analyze lifestyle, nutrition, and environmental factors to address the root causes of skin concerns, promoting lasting wellness.",
+                                icon: "✦"
+                            },
+                            {
+                                title: "Cutting-Edge Tech",
+                                desc: "Utilizing the latest FDA-approved lasers and medical-grade treatments to deliver safe, effective, and transformative results.",
+                                icon: "⚡"
+                            }
+                        ].map((item, i) => (
+                            <motion.div
+                                key={i}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: i * 0.1 }}
+                                className="p-8 rounded-3xl bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800 hover:border-primary-DEFAULT/30 transition-colors"
+                            >
+                                <div className="w-12 h-12 bg-white dark:bg-slate-800 rounded-2xl flex items-center justify-center text-2xl mb-6 shadow-sm text-primary-DEFAULT">
+                                    {item.icon}
+                                </div>
+                                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">{item.title}</h3>
+                                <p className="text-slate-500 dark:text-slate-400 leading-relaxed">
+                                    {item.desc}
+                                </p>
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
             {/* Quick Services Preview */}
             <section className="bg-slate-50 dark:bg-slate-900/50 py-24 px-4">
                 <div className="max-w-7xl mx-auto">

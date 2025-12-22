@@ -8,7 +8,7 @@ interface LogoProps {
 export const Logo: React.FC<LogoProps> = ({ className }) => {
     return (
         <img
-            src="/logo.png"
+            src="/Miremadi-logo.webp"
             alt="Miremadi Dermatology Logo"
             className={cn("object-contain", className)}
         />

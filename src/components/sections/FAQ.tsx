@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Minus } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
 const faqs = [
@@ -10,7 +10,7 @@ const faqs = [
     },
     {
         question: "What insurance plans do you accept?",
-        answer: "We accept most major PPO insurance plans including Blue Cross, Blue Shield, Aetna, Cigna, and United Healthcare. Please verify your specific coverage with our office prior to your appointment."
+        answer: "We accept most major PPO and HMO insurance plans including Blue Cross, Blue Shield, Aetna, Cigna, and United Healthcare. We strongly advise that you call our office to verify your specific coverage and ensure your plan is accepted prior to scheduling your appointment."
     },
     {
         question: "What should I bring to my appointment?",
@@ -79,10 +79,10 @@ const FAQItem = ({ question, answer, isOpen, onClick }: { question: string, answ
                     {question}
                 </span>
                 <span className={cn(
-                    "ml-6 flex-shrink-0 transition-transform duration-300",
+                    "ml-6 flex-shrink-0 transition-transform duration-300 flex items-center justify-center w-6 h-6",
                     isOpen ? "rotate-45" : ""
                 )}>
-                    {isOpen ? <Minus className="w-5 h-5 text-primary-DEFAULT" /> : <Plus className="w-5 h-5 text-slate-400" />}
+                    <Plus className={cn("w-5 h-5 transition-colors", isOpen ? "text-primary-DEFAULT" : "text-slate-400")} />
                 </span>
             </button>
             <AnimatePresence>

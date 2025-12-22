@@ -79,26 +79,27 @@ A modern, clean, and fast web application for Dr. Arjang Miremadi, a dermatologi
 - [x] **Blog**: Blog listing and article view UI.
 - [x] **Components**: Buttons, Cards, Inputs with "Attio" style linear aesthetics.
 
-### Phase 3: Backend Integration (IMMEDIATE NEXT STEPS)
-- [ ] **Supabase Setup**: 
-  - [ ] Create Project.
-  - [ ] Add keys to `.env.local`.
-  - [ ] Initialize Supabase client (`src/lib/supabase.ts`).
-- [ ] **Database Schema**:
-  - [ ] Create `products` table (id, name, price, image, category, stock).
-  - [ ] Create `profiles` table (linked to auth.users).
-  - [ ] Create `orders` table.
-- [ ] **Authentication**:
-  - [ ] Build Login/Signup Pages.
-  - [ ] Connect Supabase Auth to Zustand store.
-- [ ] **Store Logic**:
-  - [ ] Refactor `useShopStore` to fetch from Supabase instead of mock data.
+### Phase 3: Backend Integration (COMPLETED)
+- [x] **Supabase Setup**: 
+  - [x] Create Project (User Action Required).
+  - [x] Add keys to `.env.local` (File created, User to fill).
+  - [x] Initialize Supabase client (`src/lib/supabase.ts`).
+- [x] **Database Schema**:
+  - [x] Create `products` table (SQL provided in `supabase/schema.sql`).
+  - [x] Create `profiles` table (SQL provided in `supabase/schema.sql`).
+  - [x] Create `orders` table (SQL provided in `supabase/schema.sql`).
+- [x] **Authentication**:
+  - [x] Build Login/Signup Pages (Replaced with specific Auth Modal).
+  - [x] Connect Supabase Auth to Zustand store.
+- [x] **Store Logic**:
+  - [x] Refactor `useShopStore` to fetch from Supabase.
+  - [x] Add Cart and User logic.
 
-### Phase 4: Payments & Admin (FOLLOWING)
+### Phase 4: Payments & Admin (IN PROGRESS)
 - [ ] **Payments (Stripe)**:
   - [ ] Set up Stripe account & keys.
-  - [ ] Create Edge Function for Payment Intent.
-  - [ ] Integrate `<PaymentElement />` in Checkout.
+  - [x] Create Payment & Billing UI (`/billing`).
+  - [ ] Integrate `<PaymentElement />` in Checkout (Placeholder created).
 - [ ] **Admin Dashboard**:
   - [ ] Create protected `/admin` route.
   - [ ] Build "Add Product" form.

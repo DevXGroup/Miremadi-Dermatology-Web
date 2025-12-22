@@ -1,18 +1,50 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ShoppingBag, User, Sun, Moon, Search } from 'lucide-react';
+import { Menu, X, ShoppingBag, User, Sun, Moon, Search, LogOut, Settings, CreditCard } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Logo } from '../ui/Logo';
+import { useShopStore } from '../../store/useStore';
+import { supabase } from '../../lib/supabase';
+import { useClickAway } from 'react-use';
+import { SearchModal } from '../ui/SearchModal';
 
 export const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const [isDark, setIsDark] = useState(false); // Mock state for now
+    const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+    const [isSearchOpen, setIsSearchOpen] = useState(false);
+    const [isDark, setIsDark] = useState(false);
     const location = useLocation();
+    const { user, logout, openAuthModal, cart, openCart } = useShopStore();
+    const userMenuRef = useRef(null);
+
+    useEffect(() => {
+        // Theme persistence
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            setIsDark(true);
+            document.documentElement.classList.add('dark');
+        }
+    }, []);
+
+    useClickAway(userMenuRef, () => setIsUserMenuOpen(false));
+
+    const handleLogout = async () => {
+        await supabase.auth.signOut();
+        logout();
+        setIsUserMenuOpen(false);
+    };
 
     const toggleDark = () => {
-        setIsDark(!isDark);
-        document.documentElement.classList.toggle('dark');
+        const newTheme = !isDark;
+        setIsDark(newTheme);
+        if (newTheme) {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('theme', 'light');
+        }
     };
 
     const navLinks = [
@@ -29,10 +61,9 @@ export const Navbar = () => {
                 <div className="flex justify-between items-center h-16">
 
                     {/* Logo */}
-                    {/* Logo */}
-                    <Link to="/" className="flex items-center gap-2 group">
-                        <Logo className="w-14 h-14 group-hover:scale-105 transition-transform" />
-                        <div className="flex flex-col justify-center -space-y-0.5">
+                    <Link to="/" className="flex items-center gap-[7px] group">
+                        <Logo className="h-[34px] w-auto group-hover:scale-105 transition-transform" />
+                        <div className="flex flex-col justify-center -space-y-0.5 translate-y-[1px]">
                             <span className="text-xl font-display font-bold text-slate-900 dark:text-white leading-tight tracking-tight">
                                 Miremadi
                             </span>
@@ -50,7 +81,7 @@ export const Navbar = () => {
                                 to={link.path}
                                 className={cn(
                                     "text-sm font-medium transition-colors hover:text-secondary-DEFAULT",
-                                    location.pathname === link.path
+                                    location.pathname === link.path || (link.path === '/shop' && location.pathname.startsWith('/shop')) // Highlight shop when active
                                         ? "text-secondary-DEFAULT"
                                         : "text-slate-600 dark:text-slate-300"
                                 )}
@@ -63,7 +94,7 @@ export const Navbar = () => {
                     {/* Actions */}
                     <div className="hidden md:flex items-center space-x-4">
                         <button
-                            onClick={() => { }}
+                            onClick={() => setIsSearchOpen(true)}
                             className="p-2 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors"
                         >
                             <Search className="w-5 h-5" />
@@ -74,13 +105,97 @@ export const Navbar = () => {
                         >
                             {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
                         </button>
-                        <Link to="/cart" className="relative p-2 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors">
+
+                        <button
+                            onClick={openCart}
+                            className="relative p-2 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors"
+                        >
                             <ShoppingBag className="w-5 h-5" />
-                            <span className="absolute top-1 right-1 w-2 h-2 bg-primary-DEFAULT rounded-full" />
-                        </Link>
-                        <Link to="/login" className="p-2 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors">
-                            <User className="w-5 h-5" />
-                        </Link>
+                            {cart.length > 0 && (
+                                <span className="absolute -top-1 -right-1 w-4 h-4 bg-primary-DEFAULT rounded-full text-[10px] font-bold text-white flex items-center justify-center">
+                                    {cart.length}
+                                </span>
+                            )}
+                        </button>
+
+                        {/* User Menu */}
+                        <div className="relative" ref={userMenuRef}>
+                            {user ? (
+                                <button
+                                    onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                                    className="p-1 flex items-center justify-center rounded-full border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:border-primary-DEFAULT transition-colors"
+                                >
+                                    {user.photo_url ? (
+                                        <img src={user.photo_url} alt="Profile" className="w-8 h-8 rounded-full object-cover" />
+                                    ) : (
+                                        <div className="w-8 h-8 rounded-full bg-primary-DEFAULT/10 text-primary-DEFAULT flex items-center justify-center font-medium text-xs">
+                                            {user.full_name?.charAt(0) || user.email?.charAt(0)}
+                                        </div>
+                                    )}
+                                </button>
+                            ) : (
+                                <button
+                                    onClick={openAuthModal}
+                                    className="p-2 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors"
+                                >
+                                    <User className="w-5 h-5" />
+                                </button>
+                            )}
+
+                            {/* Dropdown */}
+                            <AnimatePresence>
+                                {isUserMenuOpen && user && (
+                                    <motion.div
+                                        initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                                        exit={{ opacity: 0, scale: 0.95, y: 10 }}
+                                        className="absolute right-0 mt-2 w-56 bg-white dark:bg-slate-900 rounded-xl shadow-lg border border-slate-200 dark:border-slate-800 py-2 overflow-hidden"
+                                    >
+                                        <div className="px-4 py-2 border-b border-slate-100 dark:border-slate-800 mb-1">
+                                            <p className="text-sm font-medium text-slate-900 dark:text-white truncate">
+                                                {user.full_name}
+                                            </p>
+                                            <p className="text-xs text-slate-500 dark:text-slate-400 truncate">
+                                                {user.email}
+                                            </p>
+                                        </div>
+                                        <Link
+                                            to="/account"
+                                            className="flex items-center gap-2 px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                                            onClick={() => setIsUserMenuOpen(false)}
+                                        >
+                                            <Settings className="w-4 h-4" />
+                                            Account Settings
+                                        </Link>
+                                        <Link
+                                            to="/billing"
+                                            className="flex items-center gap-2 px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                                            onClick={() => setIsUserMenuOpen(false)}
+                                        >
+                                            <CreditCard className="w-4 h-4" />
+                                            Payment & Billing
+                                        </Link>
+                                        <Link
+                                            to="/wishlist"
+                                            className="flex items-center gap-2 px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                                            onClick={() => setIsUserMenuOpen(false)}
+                                        >
+                                            <span className="w-4 h-4 text-center">♥</span>
+                                            Wishlist
+                                        </Link>
+                                        <div className="border-t border-slate-100 dark:border-slate-800 mt-1 pt-1">
+                                            <button
+                                                onClick={handleLogout}
+                                                className="w-full text-left flex items-center gap-2 px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors"
+                                            >
+                                                <LogOut className="w-4 h-4" />
+                                                Log Out
+                                            </button>
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
                     </div>
 
                     {/* Mobile Menu Button */}
@@ -102,9 +217,9 @@ export const Navbar = () => {
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
-                        className="md:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800"
+                        className="md:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 overflow-hidden"
                     >
-                        <div className="px-4 pt-2 pb-6 space-y-2">
+                        <div className="px-4 pt-2 pb-6 space-y-2 max-h-[calc(100vh-5rem)] overflow-y-auto">
                             {navLinks.map((link) => (
                                 <Link
                                     key={link.name}
@@ -115,21 +230,58 @@ export const Navbar = () => {
                                     {link.name}
                                 </Link>
                             ))}
-                            <div className="flex items-center space-x-4 pt-4 border-t border-slate-100 dark:border-slate-800">
-                                <button onClick={toggleDark} className="p-2 text-slate-500 dark:text-slate-400">
-                                    {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-                                </button>
-                                <Link to="/cart" className="p-2 text-slate-500 dark:text-slate-400">
-                                    <ShoppingBag className="w-5 h-5" />
-                                </Link>
-                                <Link to="/login" className="p-2 text-slate-500 dark:text-slate-400">
-                                    <User className="w-5 h-5" />
-                                </Link>
+                            <button
+                                onClick={() => { setIsOpen(false); setIsSearchOpen(true); }}
+                                className="block w-full text-left py-3 text-base font-medium text-slate-600 dark:text-slate-300 hover:text-secondary-DEFAULT transition-colors"
+                            >
+                                Search
+                            </button>
+                            <div className="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-800">
+                                <div className="flex gap-4">
+                                    <button onClick={toggleDark} className="p-2 text-slate-500 dark:text-slate-400">
+                                        {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            setIsOpen(false);
+                                            openCart();
+                                        }}
+                                        className="p-2 text-slate-500 dark:text-slate-400 relative"
+                                    >
+                                        <ShoppingBag className="w-5 h-5" />
+                                        {cart.length > 0 && <span className="absolute -top-1 -right-1 w-4 h-4 bg-primary-DEFAULT rounded-full text-[10px] font-bold text-white flex items-center justify-center">{cart.length}</span>}
+                                    </button>
+                                </div>
+
+                                {user ? (
+                                    <Link
+                                        to="/account"
+                                        onClick={() => setIsOpen(false)}
+                                        className="flex items-center gap-2 p-2 text-primary-DEFAULT font-medium"
+                                    >
+                                        <div className="w-6 h-6 rounded-full bg-primary-DEFAULT/10 flex items-center justify-center text-xs">
+                                            {user.full_name?.charAt(0)}
+                                        </div>
+                                        {user.full_name}
+                                    </Link>
+                                ) : (
+                                    <button
+                                        onClick={() => {
+                                            setIsOpen(false);
+                                            openAuthModal();
+                                        }}
+                                        className="p-2 text-slate-500 dark:text-slate-400"
+                                    >
+                                        Log In
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </motion.div>
                 )}
             </AnimatePresence>
+
+            <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
         </nav>
     );
 };
