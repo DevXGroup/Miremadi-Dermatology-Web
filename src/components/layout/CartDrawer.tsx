@@ -7,7 +7,7 @@ import { useShopStore } from '../../store/useStore';
 export const CartDrawer = () => {
     const { isCartOpen, closeCart, cart, updateQuantity, removeFromCart } = useShopStore();
 
-    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const subtotal = cart.reduce((sum, item) => sum + ((item.price_cents / 100) * item.quantity), 0);
 
     return (
         <AnimatePresence>
@@ -38,7 +38,7 @@ export const CartDrawer = () => {
                             </h2>
                             <button
                                 onClick={closeCart}
-                                className="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors bg-secondary-DEFAULT/5 dark:bg-slate-800 rounded-full"
+                                className="p-2 text-slate-400 hover:text-primary dark:hover:text-primary transition-all bg-secondary-DEFAULT/5 dark:bg-slate-800 rounded-full cursor-pointer"
                             >
                                 <X className="w-5 h-5" />
                             </button>
@@ -57,7 +57,7 @@ export const CartDrawer = () => {
                                     </div>
                                     <button
                                         onClick={closeCart}
-                                        className="mt-4 px-6 py-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-medium"
+                                        className="mt-4 px-6 py-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-medium hover:bg-primary dark:hover:bg-primary dark:hover:text-white transition-all cursor-pointer"
                                     >
                                         Start Shopping
                                     </button>
@@ -80,7 +80,7 @@ export const CartDrawer = () => {
                                                 <p className="text-xs text-slate-500 mt-1 uppercase tracking-wider">{item.category}</p>
                                             </div>
                                             <div className="flex items-center justify-between">
-                                                <span className="font-medium dark:text-white">${item.price * item.quantity}</span>
+                                                <span className="font-medium dark:text-white">${((item.price_cents / 100) * item.quantity).toFixed(2)}</span>
                                                 <div className="flex items-center gap-3">
                                                     <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 rounded-lg p-1">
                                                         <button
@@ -125,9 +125,9 @@ export const CartDrawer = () => {
                                 <Link
                                     to="/checkout"
                                     onClick={closeCart}
-                                    className="block w-full py-4 bg-primary-DEFAULT hover:bg-primary-dark text-white rounded-xl font-bold text-center shadow-lg shadow-primary-DEFAULT/25 transition-all"
+                                    className="block w-full py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-bold text-center shadow-lg shadow-slate-900/10 dark:shadow-none hover:bg-primary hover:text-white dark:hover:bg-primary dark:hover:text-white transition-all cursor-pointer"
                                 >
-                                    Proceed to Checkout
+                                    Proceed to Payment
                                 </Link>
                             </div>
                         )}

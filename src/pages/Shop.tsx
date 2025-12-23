@@ -82,7 +82,7 @@ export const Shop = () => {
                 {/* Product Grid */}
                 {loading ? (
                     <div className="col-span-full flex justify-center py-24">
-                        <div className="w-12 h-12 border-4 border-primary-DEFAULT border-t-transparent rounded-full animate-spin" />
+                        <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin" />
                     </div>
                 ) : (
                     <motion.div

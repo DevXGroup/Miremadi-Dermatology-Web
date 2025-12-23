@@ -63,13 +63,13 @@ export const Blog = () => {
                                 <span>•</span>
                                 <span>{post.readTime}</span>
                             </div>
-                            <h2 className="text-xl font-display font-medium mb-3 group-hover:text-primary-DEFAULT transition-colors">
+                            <h2 className="text-xl font-display font-medium mb-3 group-hover:text-primary transition-colors">
                                 {post.title}
                             </h2>
                             <p className="text-slate-500 text-sm leading-relaxed mb-4">
                                 {post.excerpt}
                             </p>
-                            <button className="text-sm font-medium underline underline-offset-4 decoration-primary-light hover:decoration-primary-DEFAULT transition-all">
+                            <button className="text-sm font-medium underline underline-offset-4 decoration-primary-light hover:decoration-primary transition-all">
                                 Read Article
                             </button>
                         </motion.article>

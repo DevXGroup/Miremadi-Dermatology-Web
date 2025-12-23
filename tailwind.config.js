@@ -9,9 +9,9 @@ export default {
     extend: {
       colors: {
         primary: {
-          light: '#FFE4E6', // Light Pink
-          DEFAULT: '#F43F5E', // Rose-500
-          dark: '#9F1239',
+          light: '#F5E6E8', // Light dusty rose
+          DEFAULT: '#B06D7A', // Dark Dirty Pink
+          dark: '#8A535E',
         },
         secondary: {
           light: '#99F6E4', // Teal-200

@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const pages = [
-    { title: 'About Us', path: '/about', content: 'Learn about our 55+ years of history and commitment to dermatological excellence.' },
+    { title: 'About Us', path: '/about', content: 'Learn about our 57+ years of history and commitment to dermatological excellence.' },
     { title: 'Services', path: '/services', content: 'Explore our comprehensive range of medical and cosmetic skin treatments.' },
     { title: 'Contact', path: '/contact', content: 'Get in touch with us to schedule your consultation.' },
 ];

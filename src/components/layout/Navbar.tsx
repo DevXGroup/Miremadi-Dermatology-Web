@@ -1,31 +1,45 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ShoppingBag, User, Sun, Moon, Search, LogOut, Settings, CreditCard } from 'lucide-react';
+import { Menu, X, ShoppingBag, User, Sun, Moon, LogOut, Settings } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Logo } from '../ui/Logo';
 import { useShopStore } from '../../store/useStore';
 import { supabase } from '../../lib/supabase';
 import { useClickAway } from 'react-use';
-import { SearchModal } from '../ui/SearchModal';
+
 
 export const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-    const [isSearchOpen, setIsSearchOpen] = useState(false);
-    const [isDark, setIsDark] = useState(false);
+
+    const [isDark, setIsDark] = useState(() => {
+        if (typeof window === 'undefined') return false;
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) return savedTheme === 'dark';
+        return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    });
+
     const location = useLocation();
     const { user, logout, openAuthModal, cart, openCart } = useShopStore();
     const userMenuRef = useRef(null);
 
     useEffect(() => {
-        // Theme persistence
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark') {
-            setIsDark(true);
+        // Expose openCart globally for toasts
+        (window as any).openCart = openCart;
+        return () => { delete (window as any).openCart; };
+    }, [openCart]);
+
+    useEffect(() => {
+        // Sync theme with DOM and persistence
+        if (isDark) {
             document.documentElement.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('theme', 'light');
         }
-    }, []);
+    }, [isDark]);
 
     useClickAway(userMenuRef, () => setIsUserMenuOpen(false));
 
@@ -35,19 +49,10 @@ export const Navbar = () => {
         setIsUserMenuOpen(false);
     };
 
-    const toggleDark = () => {
-        const newTheme = !isDark;
-        setIsDark(newTheme);
-        if (newTheme) {
-            document.documentElement.classList.add('dark');
-            localStorage.setItem('theme', 'dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-            localStorage.setItem('theme', 'light');
-        }
-    };
+    const toggleDark = () => setIsDark(!isDark);
 
     const navLinks = [
+        { name: 'Home', path: '/' },
         { name: 'Services', path: '/services' },
         { name: 'Shop', path: '/shop' },
         { name: 'About', path: '/about' },
@@ -62,7 +67,7 @@ export const Navbar = () => {
 
                     {/* Logo */}
                     <Link to="/" className="flex items-center gap-[7px] group">
-                        <Logo className="h-[34px] w-auto group-hover:scale-105 transition-transform" />
+                        <Logo className="h-[32px] w-auto group-hover:scale-105 transition-transform" />
                         <div className="flex flex-col justify-center -space-y-0.5 translate-y-[1px]">
                             <span className="text-xl font-display font-bold text-slate-900 dark:text-white leading-tight tracking-tight">
                                 Miremadi
@@ -75,44 +80,49 @@ export const Navbar = () => {
 
                     {/* Desktop Nav */}
                     <div className="hidden md:flex items-center space-x-8">
-                        {navLinks.map((link) => (
-                            <Link
-                                key={link.name}
-                                to={link.path}
-                                className={cn(
-                                    "text-sm font-medium transition-colors hover:text-secondary-DEFAULT",
-                                    location.pathname === link.path || (link.path === '/shop' && location.pathname.startsWith('/shop')) // Highlight shop when active
-                                        ? "text-secondary-DEFAULT"
-                                        : "text-slate-600 dark:text-slate-300"
-                                )}
-                            >
-                                {link.name}
-                            </Link>
-                        ))}
+                        {navLinks.map((link) => {
+                            const active = location.pathname === link.path ||
+                                (link.path !== '/' && location.pathname.startsWith(link.path));
+                            return (
+                                <Link
+                                    key={link.name}
+                                    to={link.path}
+                                    className={cn(
+                                        "text-sm font-semibold transition-all hover:text-primary cursor-pointer relative py-1",
+                                        active
+                                            ? "text-primary active-link"
+                                            : "text-slate-600 dark:text-slate-300"
+                                    )}
+                                >
+                                    {link.name}
+                                    {active && (
+                                        <motion.div
+                                            layoutId="nav-underline"
+                                            className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary rounded-full"
+                                        />
+                                    )}
+                                </Link>
+                            );
+                        })}
                     </div>
 
                     {/* Actions */}
                     <div className="hidden md:flex items-center space-x-4">
-                        <button
-                            onClick={() => setIsSearchOpen(true)}
-                            className="p-2 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors"
-                        >
-                            <Search className="w-5 h-5" />
-                        </button>
+
                         <button
                             onClick={toggleDark}
-                            className="p-2 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors"
+                            className="p-2 text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-primary transition-colors cursor-pointer"
                         >
                             {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
                         </button>
 
                         <button
                             onClick={openCart}
-                            className="relative p-2 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors"
+                            className="relative p-2 text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-primary transition-all cursor-pointer group"
                         >
-                            <ShoppingBag className="w-5 h-5" />
+                            <ShoppingBag className="w-5 h-5 group-hover:scale-110 transition-transform" />
                             {cart.length > 0 && (
-                                <span className="absolute -top-1 -right-1 w-4 h-4 bg-primary-DEFAULT rounded-full text-[10px] font-bold text-white flex items-center justify-center">
+                                <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-600 rounded-full text-[10px] font-bold text-white flex items-center justify-center">
                                     {cart.length}
                                 </span>
                             )}
@@ -123,12 +133,17 @@ export const Navbar = () => {
                             {user ? (
                                 <button
                                     onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                                    className="p-1 flex items-center justify-center rounded-full border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:border-primary-DEFAULT transition-colors"
+                                    className={cn(
+                                        "p-1 flex items-center justify-center rounded-full border transition-all cursor-pointer",
+                                        location.pathname === '/account' || location.pathname === '/wishlist'
+                                            ? "border-primary bg-primary/5"
+                                            : "border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:border-primary"
+                                    )}
                                 >
                                     {user.photo_url ? (
                                         <img src={user.photo_url} alt="Profile" className="w-8 h-8 rounded-full object-cover" />
                                     ) : (
-                                        <div className="w-8 h-8 rounded-full bg-primary-DEFAULT/10 text-primary-DEFAULT flex items-center justify-center font-medium text-xs">
+                                        <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-medium text-xs">
                                             {user.full_name?.charAt(0) || user.email?.charAt(0)}
                                         </div>
                                     )}
@@ -136,7 +151,12 @@ export const Navbar = () => {
                             ) : (
                                 <button
                                     onClick={openAuthModal}
-                                    className="p-2 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors"
+                                    className={cn(
+                                        "p-2 transition-all cursor-pointer",
+                                        location.pathname === '/login' || location.pathname === '/signup'
+                                            ? "text-primary"
+                                            : "text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-primary"
+                                    )}
                                 >
                                     <User className="w-5 h-5" />
                                 </button>
@@ -166,14 +186,6 @@ export const Navbar = () => {
                                         >
                                             <Settings className="w-4 h-4" />
                                             Account Settings
-                                        </Link>
-                                        <Link
-                                            to="/billing"
-                                            className="flex items-center gap-2 px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
-                                            onClick={() => setIsUserMenuOpen(false)}
-                                        >
-                                            <CreditCard className="w-4 h-4" />
-                                            Payment & Billing
                                         </Link>
                                         <Link
                                             to="/wishlist"
@@ -220,22 +232,27 @@ export const Navbar = () => {
                         className="md:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 overflow-hidden"
                     >
                         <div className="px-4 pt-2 pb-6 space-y-2 max-h-[calc(100vh-5rem)] overflow-y-auto">
-                            {navLinks.map((link) => (
-                                <Link
-                                    key={link.name}
-                                    to={link.path}
-                                    className="block py-3 text-base font-medium text-slate-600 dark:text-slate-300 hover:text-secondary-DEFAULT dark:hover:text-secondary-DEFAULT transition-colors"
-                                    onClick={() => setIsOpen(false)}
-                                >
-                                    {link.name}
-                                </Link>
-                            ))}
-                            <button
-                                onClick={() => { setIsOpen(false); setIsSearchOpen(true); }}
-                                className="block w-full text-left py-3 text-base font-medium text-slate-600 dark:text-slate-300 hover:text-secondary-DEFAULT transition-colors"
-                            >
-                                Search
-                            </button>
+                            {navLinks.map((link) => {
+                                const active = location.pathname === link.path ||
+                                    (link.path !== '/' && location.pathname.startsWith(link.path));
+                                return (
+                                    <Link
+                                        key={link.name}
+                                        to={link.path}
+                                        className={cn(
+                                            "block py-3 text-lg font-semibold transition-all cursor-pointer flex items-center justify-between",
+                                            active
+                                                ? "text-primary pl-2 border-l-4 border-primary bg-primary/5"
+                                                : "text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary"
+                                        )}
+                                        onClick={() => setIsOpen(false)}
+                                    >
+                                        <span>{link.name}</span>
+                                        {active && <span className="w-1.5 h-1.5 rounded-full bg-primary" />}
+                                    </Link>
+                                );
+                            })}
+
                             <div className="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-800">
                                 <div className="flex gap-4">
                                     <button onClick={toggleDark} className="p-2 text-slate-500 dark:text-slate-400">
@@ -249,7 +266,7 @@ export const Navbar = () => {
                                         className="p-2 text-slate-500 dark:text-slate-400 relative"
                                     >
                                         <ShoppingBag className="w-5 h-5" />
-                                        {cart.length > 0 && <span className="absolute -top-1 -right-1 w-4 h-4 bg-primary-DEFAULT rounded-full text-[10px] font-bold text-white flex items-center justify-center">{cart.length}</span>}
+                                        {cart.length > 0 && <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-600 rounded-full text-[10px] font-bold text-white flex items-center justify-center">{cart.length}</span>}
                                     </button>
                                 </div>
 
@@ -257,9 +274,9 @@ export const Navbar = () => {
                                     <Link
                                         to="/account"
                                         onClick={() => setIsOpen(false)}
-                                        className="flex items-center gap-2 p-2 text-primary-DEFAULT font-medium"
+                                        className="flex items-center gap-2 p-2 text-primary font-medium"
                                     >
-                                        <div className="w-6 h-6 rounded-full bg-primary-DEFAULT/10 flex items-center justify-center text-xs">
+                                        <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center text-xs">
                                             {user.full_name?.charAt(0)}
                                         </div>
                                         {user.full_name}
@@ -281,7 +298,7 @@ export const Navbar = () => {
                 )}
             </AnimatePresence>
 
-            <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+
         </nav>
     );
 };

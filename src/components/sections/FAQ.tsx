@@ -9,8 +9,8 @@ const faqs = [
         answer: "If you are experiencing a medical emergency, please call 911 immediately. For urgent dermatological concerns during business hours, please call our office directly. We prioritize urgent cases whenever possible."
     },
     {
-        question: "What insurance plans do you accept?",
-        answer: "We accept most major PPO and HMO insurance plans including Blue Cross, Blue Shield, Aetna, Cigna, and United Healthcare. We strongly advise that you call our office to verify your specific coverage and ensure your plan is accepted prior to scheduling your appointment."
+        question: "Under what insurance plans do you accept?",
+        answer: "We accept most major PPO and HMO insurance plans including Blue Cross, Blue Shield, Aetna, Cigna, and United Healthcare. We strongly advise that you call our office to verify your specific coverage and ensure your plan is accepted prior to scheduling your appointment. Please call your health insurance to verify if Dr. Miremadi is in network with your insurance policy to avoid unexpected out of pocket expenses prior scheduling your appointment."
     },
     {
         question: "What should I bring to my appointment?",
@@ -22,7 +22,7 @@ const faqs = [
     },
     {
         question: "What are your hours of operation?",
-        answer: "We are open Monday through Friday from 8:00 AM to 5:00 PM. We are closed on weekends and major holidays."
+        answer: "We are open Monday through Friday from 9:00 AM to 5:00 PM. We are closed on weekends and major holidays."
     }
 ];
 
@@ -41,7 +41,7 @@ export const FAQ = () => {
                         <h2 className="text-4xl md:text-5xl font-display font-medium text-slate-900 dark:text-white mb-6">
                             Frequently <br />
                             Asked <br />
-                            <span className="text-secondary-DEFAULT">Questions</span>
+                            <span className="text-primary">Questions</span>
                         </h2>
                         <p className="text-slate-500 dark:text-slate-400 text-lg leading-relaxed">
                             Everything you need to know about our clinic, services, and policies. Can't find the answer you're looking for? Please contact our team.
@@ -65,7 +65,7 @@ export const FAQ = () => {
     );
 };
 
-const FAQItem = ({ question, answer, isOpen, onClick }: { question: string, answer: string, isOpen: boolean, onClick: () => void }) => {
+const FAQItem = ({ question, answer, isOpen, onClick }: { question: string, answer: string, isOpen: boolean, onClick: () => void, key?: React.Key }) => {
     return (
         <div className="border-b border-slate-200 dark:border-slate-800">
             <button
@@ -74,7 +74,7 @@ const FAQItem = ({ question, answer, isOpen, onClick }: { question: string, answ
             >
                 <span className={cn(
                     "text-lg font-medium transition-colors",
-                    isOpen ? "text-primary-DEFAULT" : "text-slate-900 dark:text-white group-hover:text-primary-DEFAULT"
+                    isOpen ? "text-primary" : "text-slate-900 dark:text-white group-hover:text-primary"
                 )}>
                     {question}
                 </span>
@@ -82,7 +82,7 @@ const FAQItem = ({ question, answer, isOpen, onClick }: { question: string, answ
                     "ml-6 flex-shrink-0 transition-transform duration-300 flex items-center justify-center w-6 h-6",
                     isOpen ? "rotate-45" : ""
                 )}>
-                    <Plus className={cn("w-5 h-5 transition-colors", isOpen ? "text-primary-DEFAULT" : "text-slate-400")} />
+                    <Plus className={cn("w-5 h-5 transition-colors", isOpen ? "text-primary" : "text-slate-400")} />
                 </span>
             </button>
             <AnimatePresence>

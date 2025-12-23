@@ -124,7 +124,7 @@ export const AuthModal = () => {
                                 <button
                                     onClick={() => { setMode('login'); resetForm(); }}
                                     className={`flex-1 py-3 text-sm font-medium transition-colors relative ${mode === 'login'
-                                        ? 'text-primary-DEFAULT'
+                                        ? 'text-primary'
                                         : 'text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200'
                                         }`}
                                 >
@@ -132,14 +132,14 @@ export const AuthModal = () => {
                                     {mode === 'login' && (
                                         <motion.div
                                             layoutId="activeTab"
-                                            className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary-DEFAULT"
+                                            className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"
                                         />
                                     )}
                                 </button>
                                 <button
                                     onClick={() => { setMode('signup'); resetForm(); }}
                                     className={`flex-1 py-3 text-sm font-medium transition-colors relative ${mode === 'signup'
-                                        ? 'text-primary-DEFAULT'
+                                        ? 'text-primary'
                                         : 'text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200'
                                         }`}
                                 >
@@ -147,7 +147,7 @@ export const AuthModal = () => {
                                     {mode === 'signup' && (
                                         <motion.div
                                             layoutId="activeTab"
-                                            className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary-DEFAULT"
+                                            className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"
                                         />
                                     )}
                                 </button>
@@ -174,7 +174,7 @@ export const AuthModal = () => {
                                                 required
                                                 value={fullName}
                                                 onChange={(e) => setFullName(e.target.value)}
-                                                className="w-full pl-9 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:ring-2 focus:ring-primary-DEFAULT/20 focus:border-primary-DEFAULT outline-none transition-all"
+                                                className="w-full pl-9 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all"
                                                 placeholder="Dr. Arjang Miremadi"
                                             />
                                         </div>
@@ -192,7 +192,7 @@ export const AuthModal = () => {
                                             required
                                             value={email}
                                             onChange={(e) => setEmail(e.target.value)}
-                                            className="w-full pl-9 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:ring-2 focus:ring-primary-DEFAULT/20 focus:border-primary-DEFAULT outline-none transition-all"
+                                            className="w-full pl-9 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all"
                                             placeholder="you@example.com"
                                         />
                                     </div>
@@ -209,7 +209,7 @@ export const AuthModal = () => {
                                             required
                                             value={password}
                                             onChange={(e) => setPassword(e.target.value)}
-                                            className="w-full pl-9 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:ring-2 focus:ring-primary-DEFAULT/20 focus:border-primary-DEFAULT outline-none transition-all"
+                                            className="w-full pl-9 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all"
                                             placeholder="••••••••"
                                             minLength={6}
                                         />

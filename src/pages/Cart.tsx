@@ -8,7 +8,7 @@ import { formatPrice } from '../lib/utils'; // You might need to make sure this 
 export const Cart = () => {
     const { cart, removeFromCart, updateQuantity } = useShopStore();
 
-    const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    const subtotal = cart.reduce((acc, item) => acc + (item.price_cents / 100) * item.quantity, 0);
     const shipping = subtotal > 100 ? 0 : 15;
     const total = subtotal + shipping;
 
@@ -17,7 +17,7 @@ export const Cart = () => {
             <div className="min-h-screen pt-24 flex flex-col items-center justify-center text-center px-4">
                 <h2 className="text-2xl font-display font-medium mb-4">Your cart is empty</h2>
                 <p className="text-slate-500 mb-8">Looks like you haven't added any treatments yet.</p>
-                <Link to="/shop" className="px-6 py-3 bg-slate-900 text-white rounded-full">Explore Shop</Link>
+                <Link to="/shop" className="px-6 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-full">Explore Shop</Link>
             </div>
         );
     }
@@ -40,16 +40,16 @@ export const Cart = () => {
                                     exit={{ opacity: 0, height: 0 }}
                                     className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm flex gap-6 items-center"
                                 >
-                                    <div className="w-24 h-24 bg-slate-100 rounded-xl overflow-hidden flex-shrink-0">
-                                        <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                                    <div className="w-24 h-24 bg-slate-100 dark:bg-slate-800 rounded-xl overflow-hidden flex-shrink-0">
+                                        <img src={item.image_url} alt={item.name} className="w-full h-full object-cover" />
                                     </div>
                                     <div className="flex-1">
                                         <div className="flex justify-between items-start">
                                             <div>
-                                                <h3 className="font-medium text-lg">{item.name}</h3>
+                                                <h3 className="font-medium text-lg dark:text-white">{item.name}</h3>
                                                 <p className="text-sm text-slate-500">{item.category}</p>
                                             </div>
-                                            <p className="font-medium text-lg">{formatPrice(item.price)}</p>
+                                            <p className="font-medium text-lg dark:text-white">{formatPrice(item.price_cents / 100)}</p>
                                         </div>
 
                                         <div className="flex items-center justify-between mt-4">
@@ -60,7 +60,7 @@ export const Cart = () => {
                                                 >
                                                     <Minus className="w-4 h-4" />
                                                 </button>
-                                                <span className="text-sm w-4 text-center">{item.quantity}</span>
+                                                <span className="text-sm w-4 text-center dark:text-white">{item.quantity}</span>
                                                 <button
                                                     onClick={() => updateQuantity(item.id, item.quantity + 1)}
                                                     className="p-1 hover:bg-white dark:hover:bg-slate-700 rounded-md transition-colors"
@@ -100,8 +100,8 @@ export const Cart = () => {
                                 </div>
                             </div>
 
-                            <Link to="/checkout" className="w-full py-4 bg-secondary-DEFAULT text-white rounded-xl font-medium flex items-center justify-center gap-2 hover:bg-secondary-dark transition-colors">
-                                Proceed to Checkout <ArrowRight className="w-5 h-5" />
+                            <Link to="/checkout" className="w-full py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-bold flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-all">
+                                Proceed to Payment <ArrowRight className="w-5 h-5" />
                             </Link>
                             <div className="mt-4 flex gap-2 justify-center">
                                 {/* Payment Icons */}

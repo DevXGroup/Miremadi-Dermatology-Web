@@ -4,6 +4,111 @@ import { Link } from 'react-router-dom';
 import { User, Shield, Smartphone, Save, X, Loader2, AlertCircle } from 'lucide-react';
 import { useShopStore } from '../store/useStore';
 import { supabase } from '../lib/supabase';
+import { Order } from '../types';
+import { formatPrice } from '../lib/utils';
+import { Package, ExternalLink, Calendar, Clock } from 'lucide-react';
+
+const OrderHistory = ({ userId }: { userId: string }) => {
+    const [orders, setOrders] = React.useState<Order[]>([]);
+    const [loading, setLoading] = React.useState(true);
+
+    React.useEffect(() => {
+        const fetchOrders = async () => {
+            try {
+                const { data, error } = await supabase
+                    .from('orders')
+                    .select('*')
+                    .eq('user_id', userId)
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+                setOrders(data || []);
+            } catch (err) {
+                console.error('Error fetching orders:', err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchOrders();
+    }, [userId]);
+
+    if (loading) return <div className="p-8 text-center"><Loader2 className="w-6 h-6 animate-spin mx-auto text-slate-400" /></div>;
+
+    if (orders.length === 0) {
+        return (
+            <section className="bg-white dark:bg-slate-900 rounded-2xl p-6 md:p-8 shadow-sm border border-slate-100 dark:border-slate-800">
+                <div className="flex items-center gap-3 mb-6">
+                    <div className="p-2 bg-blue-100 dark:bg-blue-900/20 rounded-lg text-blue-600 dark:text-blue-400">
+                        <Package className="w-5 h-5" />
+                    </div>
+                    <h2 className="text-xl font-medium text-slate-900 dark:text-white">Order History</h2>
+                </div>
+                <div className="text-center py-8 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-dashed border-slate-200 dark:border-slate-700">
+                    <p className="text-slate-500 mb-4">You haven't placed any orders yet.</p>
+                    <Link to="/shop" className="text-secondary-DEFAULT hover:underline font-medium">Start Shopping &rarr;</Link>
+                </div>
+            </section>
+        );
+    }
+
+    return (
+        <section className="bg-white dark:bg-slate-900 rounded-2xl p-6 md:p-8 shadow-sm border border-slate-100 dark:border-slate-800">
+            <div className="flex items-center gap-3 mb-6">
+                <div className="p-2 bg-blue-100 dark:bg-blue-900/20 rounded-lg text-blue-600 dark:text-blue-400">
+                    <Package className="w-5 h-5" />
+                </div>
+                <h2 className="text-xl font-medium text-slate-900 dark:text-white">Order History</h2>
+            </div>
+
+            <div className="space-y-4">
+                {orders.map((order) => (
+                    <div key={order.id} className="p-4 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-blue-200 dark:hover:border-blue-800 transition-all">
+                        <div className="flex flex-wrap items-center justify-between gap-4">
+                            <div className="space-y-1">
+                                <div className="flex items-center gap-2">
+                                    <span className="font-mono text-sm font-medium text-slate-900 dark:text-white">#{order.id.slice(0, 8)}</span>
+                                    <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${order.payment_status === 'paid' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-amber-100 text-amber-700'
+                                        }`}>
+                                        {order.payment_status}
+                                    </span>
+                                    {order.recurring !== 'none' && (
+                                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400">
+                                            {order.recurring}
+                                        </span>
+                                    )}
+                                </div>
+                                <div className="flex items-center gap-3 text-xs text-slate-500">
+                                    <div className="flex items-center gap-1">
+                                        <Calendar className="w-3 h-3" />
+                                        {new Date(order.created_at).toLocaleDateString()}
+                                    </div>
+                                    <div className="flex items-center gap-1">
+                                        <Clock className="w-3 h-3" />
+                                        {new Date(order.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="flex items-center gap-6">
+                                <div className="text-right">
+                                    <p className="text-sm text-slate-500">Total</p>
+                                    <p className="font-bold text-slate-900 dark:text-white">{formatPrice((order.total_amount_cents || 0) / 100)}</p>
+                                </div>
+                                <div className="text-right">
+                                    <p className="text-sm text-slate-500">Status</p>
+                                    <p className="font-medium text-slate-900 dark:text-white capitalize">{order.shipping_status}</p>
+                                    {order.tracking_number && <p className="text-xs text-blue-600 font-mono">{order.tracking_number}</p>}
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </section>
+    );
+};
 
 export const Account = () => {
     const { user, login } = useShopStore(); // We use login to update the local user state
@@ -16,10 +121,6 @@ export const Account = () => {
         email: user?.email || '',
         phone_number: user?.phone_number || '',
         address: user?.address || { line1: '', city: '', postal_code: '', state: '', country: '' },
-        agreed_to_terms: user?.agreed_to_terms || false,
-        terms_agreed_at: user?.terms_agreed_at || '',
-        skin_type: user?.skin_type || 'Normal',
-        skin_goals: user?.skin_goals || '',
     });
 
     // Password State
@@ -44,10 +145,6 @@ export const Account = () => {
                     full_name: formData.full_name,
                     phone_number: formData.phone_number,
                     address: formData.address,
-                    agreed_to_terms: formData.agreed_to_terms,
-                    terms_agreed_at: formData.terms_agreed_at,
-                    skin_type: formData.skin_type,
-                    skin_goals: formData.skin_goals,
                     updated_at: new Date().toISOString(),
                 });
 
@@ -117,6 +214,9 @@ export const Account = () => {
                 )}
 
                 <div className="grid gap-8">
+                    {/* Order History Section */}
+                    <OrderHistory userId={user.id} />
+
                     {/* Profile Section */}
                     <section className="bg-white dark:bg-slate-900 rounded-2xl p-6 md:p-8 shadow-sm border border-slate-100 dark:border-slate-800">
                         <div className="flex items-center gap-3 mb-6">
@@ -196,59 +296,18 @@ export const Account = () => {
 
                             {/* Legal Agreement */}
                             <div className="border-t border-slate-100 dark:border-slate-800 pt-6">
-                                <h3 className="text-sm font-medium text-slate-900 dark:text-white mb-4">Legal Agreement</h3>
-                                <div className="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700">
-                                    <label className="flex items-start gap-3 cursor-pointer group">
-                                        <div className="relative flex items-center pt-1">
-                                            <input
-                                                type="checkbox"
-                                                checked={formData.agreed_to_terms}
-                                                // disabled={user?.agreed_to_terms} // Allow re-agreeing if terms changed, but generally keep editable.
-                                                onChange={e => setFormData({
-                                                    ...formData,
-                                                    agreed_to_terms: e.target.checked,
-                                                    terms_agreed_at: e.target.checked ? new Date().toISOString() : ''
-                                                })}
-                                                className="w-4 h-4 text-secondary-DEFAULT border-slate-300 rounded focus:ring-secondary-DEFAULT"
-                                            />
-                                        </div>
-                                        <div className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                                            I have read and agree to the <Link to="/legal/privacy-policy" target="_blank" className="text-secondary-DEFAULT hover:underline">Privacy Policy</Link> and <Link to="/legal/terms-conditions" target="_blank" className="text-secondary-DEFAULT hover:underline">Terms & Conditions</Link>, including the <strong>Final Sale Policy</strong> for cosmetic products.
-                                        </div>
-                                    </label>
-                                    {user?.agreed_to_terms && (
-                                        <p className="mt-2 text-xs text-green-600 dark:text-green-400 pl-7">
-                                            ✓ Accepted on {new Date(user.terms_agreed_at!).toLocaleDateString()}
-                                        </p>
-                                    )}
+                                <h3 className="text-sm font-medium text-slate-900 dark:text-white mb-4">Legal Notice</h3>
+                                <div className="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-200 dark:border-slate-700 flex items-start gap-4">
+                                    <div className="p-2 bg-green-100 dark:bg-green-900/20 rounded-full text-green-600 dark:text-green-400 mt-0.5">
+                                        <Shield className="w-4 h-4" />
+                                    </div>
+                                    <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                                        By using and shopping on this website, you automatically agree to our <Link to="/legal/privacy-policy" target="_blank" className="text-secondary-DEFAULT hover:underline">Privacy Policy</Link> and <Link to="/legal/terms-conditions" target="_blank" className="text-secondary-DEFAULT hover:underline">Terms & Conditions</Link>, including our <strong className="text-slate-900 dark:text-white font-semibold">Final Sale Policy</strong> for cosmetic products.
+                                    </p>
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Skin Type</label>
-                                    <select
-                                        value={formData.skin_type}
-                                        onChange={e => setFormData({ ...formData, skin_type: e.target.value as any })}
-                                        className="w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-secondary-DEFAULT/20 focus:border-secondary-DEFAULT outline-none transition-all dark:text-white"
-                                    >
-                                        {['Normal', 'Dry', 'Oily', 'Combination', 'Sensitive'].map(t => (
-                                            <option key={t} value={t}>{t}</option>
-                                        ))}
-                                    </select>
-                                </div>
-                            </div>
 
-                            <div>
-                                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Skin Goals</label>
-                                <textarea
-                                    value={formData.skin_goals}
-                                    onChange={e => setFormData({ ...formData, skin_goals: e.target.value })}
-                                    rows={3}
-                                    className="w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-secondary-DEFAULT/20 focus:border-secondary-DEFAULT outline-none transition-all dark:text-white resize-none"
-                                    placeholder="e.g. Reduce redness, improve texture..."
-                                />
-                            </div>
 
                             <div className="flex justify-end">
                                 <button

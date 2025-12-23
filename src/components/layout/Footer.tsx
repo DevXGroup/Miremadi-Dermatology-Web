@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Logo } from '../ui/Logo';
-import { Facebook, Instagram, Twitter, Mail, Phone, MapPin } from 'lucide-react';
+import { Facebook, Instagram, Mail, Phone, MapPin } from 'lucide-react';
 
 export const Footer = () => {
     return (
@@ -11,7 +11,7 @@ export const Footer = () => {
                     {/* Brand */}
                     <div className="space-y-6">
                         <Link to="/" className="flex items-center gap-[7px] group">
-                            <Logo className="h-8 w-auto group-hover:scale-105 transition-transform grayscale opacity-80" />
+                            <Logo className="h-[30px] w-auto group-hover:scale-105 transition-transform grayscale opacity-80" />
                             <div className="flex flex-col justify-center -space-y-0.5 translate-y-[1px]">
                                 <span className="text-lg font-display font-bold text-slate-900 dark:text-white leading-tight tracking-tight">
                                     Miremadi
@@ -22,12 +22,11 @@ export const Footer = () => {
                             </div>
                         </Link>
                         <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
-                            Providing over 55 years of exceptional dermatological care. Blending medical expertise with cosmetic innovation.
+                            Providing over 57 years of exceptional dermatological care. Blending medical expertise with cosmetic innovation.
                         </p>
                         <div className="flex gap-4">
                             <SocialLink href="https://www.instagram.com/miremadi___dermatology/?hl=en" icon={Instagram} />
-                            <SocialLink href="#" icon={Facebook} />
-                            <SocialLink href="#" icon={Twitter} />
+                            <SocialLink href="https://www.facebook.com/miremadidermatology/" icon={Facebook} />
                         </div>
                     </div>
 
@@ -71,10 +70,13 @@ export const Footer = () => {
                                 <Mail className="w-5 h-5 shrink-0" />
                                 <span>info@drmiremadi.com</span>
                             </li>
-                            <li className="pt-2 border-t border-slate-200 dark:border-slate-800 mt-2">
-                                <span className="text-xs text-slate-400 font-medium uppercase tracking-wide">
-                                    We speak English, Spanish & Farsi
-                                </span>
+                            <li className="pt-4 border-t border-slate-200 dark:border-slate-800 mt-2 space-y-3">
+                                <div className="flex flex-wrap gap-2">
+                                    <span className="px-2 py-0.5 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-[10px] font-bold uppercase tracking-wide">English</span>
+                                    <span className="px-2 py-0.5 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-full text-[10px] font-bold uppercase tracking-wide">Español</span>
+                                    <span className="px-2 py-0.5 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-full text-[10px] font-bold uppercase tracking-wide">Farsi</span>
+                                </div>
+                                <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium tracking-wide">ما فارسی صحبت می‌کنیم</p>
                             </li>
                         </ul>
                     </div>
@@ -91,7 +93,7 @@ export const Footer = () => {
 
 const FooterLink = ({ to, children }: { to: string, children: React.ReactNode }) => (
     <li>
-        <Link to={to} className="hover:text-secondary-DEFAULT transition-colors">
+        <Link to={to} className="hover:text-primary transition-all cursor-pointer">
             {children}
         </Link>
     </li>
@@ -102,7 +104,7 @@ const SocialLink = ({ href, icon: Icon }: { href: string, icon: any }) => (
         href={href}
         target="_blank"
         rel="noreferrer"
-        className="p-2 bg-slate-100 dark:bg-slate-800 rounded-full text-slate-500 hover:bg-secondary-DEFAULT hover:text-white transition-all transform hover:scale-110"
+        className="p-2 bg-slate-100 dark:bg-slate-800 rounded-full text-slate-500 hover:bg-primary hover:text-white transition-all transform hover:scale-110 cursor-pointer"
     >
         <Icon className="w-4 h-4" />
     </a>

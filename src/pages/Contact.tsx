@@ -7,22 +7,25 @@ export const Contact = () => {
     return (
         <div className="pt-24 min-h-screen bg-white dark:bg-slate-950">
             {/* Header */}
-            <div className="bg-slate-50 dark:bg-slate-900/50 py-20 border-b border-slate-100 dark:border-slate-800">
+            <div className="bg-slate-50 dark:bg-slate-900/50 py-12 border-b border-slate-100 dark:border-slate-800">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="text-4xl md:text-5xl font-display font-medium text-slate-900 dark:text-white mb-6"
+                        className="text-4xl md:text-5xl font-display font-medium text-slate-900 dark:text-white mb-4"
                     >
                         Get in Touch
                     </motion.h1>
                     <p className="text-xl text-slate-500 max-w-2xl mx-auto">
                         We look forward to welcoming you to Miremadi Dermatology. Please contact us to schedule your appointment.
                     </p>
-                    <div className="mt-8 flex items-center justify-center gap-2">
-                        <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-bold uppercase tracking-wide">English</span>
-                        <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-bold uppercase tracking-wide">Español</span>
-                        <span className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-bold uppercase tracking-wide">Farsi</span>
+                    <div className="mt-6">
+                        <div className="flex items-center justify-center gap-2 mb-2">
+                            <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-bold uppercase tracking-wide">English</span>
+                            <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-bold uppercase tracking-wide">Español</span>
+                            <span className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-bold uppercase tracking-wide">Farsi</span>
+                        </div>
+                        <p className="text-slate-500 dark:text-slate-400 font-medium tracking-wide">ما فارسی صحبت می‌کنیم</p>
                     </div>
                 </div>
             </div>

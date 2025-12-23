@@ -81,7 +81,7 @@ export const Login = () => {
                                     required
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    className="block w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-primary-DEFAULT focus:border-transparent transition-all outline-none"
+                                    className="block w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none"
                                     placeholder="you@example.com"
                                 />
                             </div>
@@ -98,7 +98,7 @@ export const Login = () => {
                                     required
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
-                                    className="block w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-primary-DEFAULT focus:border-transparent transition-all outline-none"
+                                    className="block w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none"
                                     placeholder="••••••••"
                                 />
                             </div>
@@ -109,13 +109,13 @@ export const Login = () => {
                             <input
                                 id="remember-me"
                                 type="checkbox"
-                                className="h-4 w-4 text-primary-DEFAULT focus:ring-primary-DEFAULT border-slate-300 rounded"
+                                className="h-4 w-4 text-primary focus:ring-primary border-slate-300 rounded"
                             />
                             <label htmlFor="remember-me" className="ml-2 block text-sm text-slate-600 dark:text-slate-400">
                                 Remember me
                             </label>
                         </div>
-                        <Link to="/forgot-password" className="text-sm font-medium text-primary-DEFAULT hover:text-primary-dark transition-colors">
+                        <Link to="/forgot-password" className="text-sm font-medium text-primary hover:text-primary-dark transition-colors">
                             Forgot password?
                         </Link>
                     </div>
@@ -123,7 +123,7 @@ export const Login = () => {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-semibold rounded-xl text-white bg-primary-DEFAULT hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-DEFAULT transition-all disabled:opacity-50"
+                            className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-semibold rounded-xl text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all disabled:opacity-50"
                         >
                             {loading ? (
                                 <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
@@ -162,7 +162,7 @@ export const Login = () => {
 
                 <p className="mt-8 text-center text-sm text-slate-600 dark:text-slate-400">
                     Don't have an account?{' '}
-                    <Link to="/signup" className="font-semibold text-primary-DEFAULT hover:text-primary-dark transition-colors underline decoration-2 underline-offset-4">
+                    <Link to="/signup" className="font-semibold text-primary hover:text-primary-dark transition-colors underline decoration-2 underline-offset-4">
                         Create an account
                     </Link>
                 </p>

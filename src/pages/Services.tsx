@@ -8,7 +8,7 @@ export const Services = () => {
         <div className="pt-24 min-h-screen bg-white dark:bg-slate-950 pb-24">
 
             {/* Hero Section */}
-            <section className="relative py-20 overflow-hidden">
+            <section className="relative py-16 overflow-hidden">
                 <div className="absolute inset-0 bg-slate-50 dark:bg-slate-900/20 -z-10" />
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <motion.div
@@ -16,8 +16,8 @@ export const Services = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
                     >
-                        <h1 className="text-5xl md:text-6xl font-display font-medium text-slate-900 dark:text-white mb-6">
-                            Advanced Dermatological <span className="text-secondary-DEFAULT">Solutions</span>
+                        <h1 className="text-5xl md:text-6xl font-display font-medium text-slate-900 dark:text-white mb-4">
+                            Advanced Dermatological <span className="text-primary">Solutions</span>
                         </h1>
                         <p className="text-xl text-slate-500 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
                             Experience the pinnacle of skin health and aesthetics with our comprehensive range of treatments, featuring the cutting-edge Venus concept technology.
@@ -27,10 +27,10 @@ export const Services = () => {
             </section>
 
             {/* Venus Treatments Grid - "The Circle of Services" */}
-            <section className="py-20">
+            <section className="py-16">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-16">
-                        <span className="text-secondary-DEFAULT font-semibold tracking-wider uppercase text-sm">Our Technology</span>
+                        <span className="text-primary font-semibold tracking-wider uppercase text-sm">Our Technology</span>
                         <h2 className="text-3xl md:text-4xl font-display font-medium text-slate-900 dark:text-white mt-2">
                             Signature Venus Treatments
                         </h2>
@@ -44,7 +44,7 @@ export const Services = () => {
                             tags={['Fat Reduction', 'Body Contouring']}
                         />
                         <ServiceCard
-                            title="Venus Viva"
+                            title="Venus Viva MD"
                             description="Advanced skin resurfacing using NanoFractional RF. Dramatically improves acne scars, wrinkles, enlarged pores, and uneven texture."
                             image="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?q=80&w=2940&auto=format&fit=crop"
                             tags={['Acne Scars', 'Resurfacing']}
@@ -66,11 +66,11 @@ export const Services = () => {
             </section>
 
             {/* Hair Restoration Section */}
-            <section className="py-20 bg-slate-50 dark:bg-slate-900/30">
+            <section className="py-16 bg-slate-50 dark:bg-slate-900/30">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid lg:grid-cols-2 gap-16 items-center">
                         <div>
-                            <span className="text-secondary-DEFAULT font-semibold tracking-wider uppercase text-sm">Hair Restoration</span>
+                            <span className="text-primary font-semibold tracking-wider uppercase text-sm">Hair Restoration</span>
                             <h2 className="text-3xl md:text-4xl font-display font-medium text-slate-900 dark:text-white mt-2 mb-6">
                                 Reclaim Your Confidence
                             </h2>
@@ -78,14 +78,17 @@ export const Services = () => {
                                 <TreatmentRow
                                     title="Venus Artas Robotic Transplant"
                                     description="State-of-the-art robotic hair restoration using Artificial Intelligence. The ARTAS system identifies and extracts prime follicles for a precise, minimally invasive transplant with natural-looking results and no linear scarring."
+                                    image="https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&q=80&w=400"
                                 />
                                 <TreatmentRow
                                     title="Advanced Hair Fillers"
                                     description="Non-surgical scalp treatments designed to revitalize hair follicles, stimulate growth, and increase hair thickness for both men and women experiencing thinning."
+                                    image="https://images.unsplash.com/photo-1519415590292-0b6dc365778a?auto=format&fit=crop&q=80&w=400"
                                 />
                                 <TreatmentRow
                                     title="Hair Treatment for Men & Women"
                                     description="Customized medical-grade protocols to address androgenic alopecia, stress-related loss, and scalp health, ensuring a holistic approach to hair wellness."
+                                    image="https://images.unsplash.com/photo-1522337660859-02fbefca4702?auto=format&fit=crop&q=80&w=400"
                                 />
                             </div>
                         </div>
@@ -99,7 +102,7 @@ export const Services = () => {
                             </div>
                             <div className="absolute -bottom-6 -left-6 bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-xl max-w-xs">
                                 <p className="font-medium text-slate-900 dark:text-white flex items-center gap-2">
-                                    <Sparkles className="w-5 h-5 text-secondary-DEFAULT" />
+                                    <Sparkles className="w-5 h-5 text-primary" />
                                     Advanced Robotics
                                 </p>
                                 <p className="text-sm text-slate-500 mt-2">Utilization of AI for precision and natural density.</p>
@@ -114,8 +117,8 @@ export const Services = () => {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid lg:grid-cols-2 gap-12">
                         {/* Injectables */}
-                        <div className="bg-slate-50 dark:bg-slate-900 rounded-3xl p-8 md:p-12 relative overflow-hidden group">
-                            <div className="relative z-10">
+                        <div className="bg-slate-50 dark:bg-slate-900 rounded-3xl overflow-hidden group border border-slate-100 dark:border-slate-800 flex flex-col md:flex-row">
+                            <div className="p-8 md:p-12 flex-1 relative z-10">
                                 <div className="p-3 bg-white dark:bg-slate-800 rounded-xl w-fit mb-6 shadow-sm">
                                     <Zap className="w-6 h-6 text-secondary-DEFAULT" />
                                 </div>
@@ -137,20 +140,22 @@ export const Services = () => {
                                         Facial Contouring
                                     </li>
                                 </ul>
-                                <Link to="/contact" className="inline-flex items-center gap-2 text-secondary-DEFAULT font-medium hover:gap-3 transition-all">
+                                <Link to="/contact" className="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all cursor-pointer">
                                     Book Consult <ArrowRight className="w-4 h-4" />
                                 </Link>
                             </div>
-                            <img
-                                src="https://images.unsplash.com/photo-1599305090598-fe179d501227?q=80&w=2788&auto=format&fit=crop"
-                                alt="Injectables"
-                                className="absolute top-0 right-0 w-1/2 h-full object-cover opacity-10 dark:opacity-20 group-hover:opacity-20 dark:group-hover:opacity-30 transition-opacity"
-                            />
+                            <div className="md:w-1/2 relative h-64 md:h-auto overflow-hidden">
+                                <img
+                                    src="https://images.unsplash.com/photo-1599305090598-fe179d501227?q=80&w=2788&auto=format&fit=crop"
+                                    alt="Injectables"
+                                    className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700"
+                                />
+                            </div>
                         </div>
 
                         {/* Skincare */}
-                        <div className="bg-slate-50 dark:bg-slate-900 rounded-3xl p-8 md:p-12 relative overflow-hidden group">
-                            <div className="relative z-10">
+                        <div className="bg-slate-50 dark:bg-slate-900 rounded-3xl overflow-hidden group border border-slate-100 dark:border-slate-800 flex flex-col md:flex-row-reverse">
+                            <div className="p-8 md:p-12 flex-1 relative z-10">
                                 <div className="p-3 bg-white dark:bg-slate-800 rounded-xl w-fit mb-6 shadow-sm">
                                     <Sun className="w-6 h-6 text-secondary-DEFAULT" />
                                 </div>
@@ -172,15 +177,17 @@ export const Services = () => {
                                         Anti-Aging Solutions
                                     </li>
                                 </ul>
-                                <Link to="/shop" className="inline-flex items-center gap-2 text-secondary-DEFAULT font-medium hover:gap-3 transition-all">
+                                <Link to="/shop" className="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all cursor-pointer">
                                     Visit Shop <ArrowRight className="w-4 h-4" />
                                 </Link>
                             </div>
-                            <img
-                                src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=2787&auto=format&fit=crop"
-                                alt="Skincare"
-                                className="absolute top-0 right-0 w-1/2 h-full object-cover opacity-10 dark:opacity-20 group-hover:opacity-20 dark:group-hover:opacity-30 transition-opacity"
-                            />
+                            <div className="md:w-1/2 relative h-64 md:h-auto overflow-hidden">
+                                <img
+                                    src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=2787&auto=format&fit=crop"
+                                    alt="Skincare"
+                                    className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700"
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -195,7 +202,7 @@ const ServiceCard = ({ title, description, image, tags }: { title: string, descr
         className="bg-white dark:bg-slate-900 rounded-2xl overflow-hidden shadow-sm border border-slate-100 dark:border-slate-800 group"
     >
         <div className="aspect-square relative overflow-hidden">
-            <div className="absolute inset-0 bg-slate-900/10 group-hover:bg-transparent transition-colors z-10" />
+            <div className="absolute inset-0 bg-slate-900/5 group-hover:bg-transparent transition-colors z-10" />
             <img src={image} alt={title} className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" />
         </div>
         <div className="p-6">
@@ -206,7 +213,7 @@ const ServiceCard = ({ title, description, image, tags }: { title: string, descr
                     </span>
                 ))}
             </div>
-            <h3 className="text-xl font-display font-medium text-slate-900 dark:text-white mb-3 group-hover:text-secondary-DEFAULT transition-colors">
+            <h3 className="text-xl font-display font-medium text-slate-900 dark:text-white mb-3 group-hover:text-primary transition-colors">
                 {title}
             </h3>
             <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
@@ -216,15 +223,13 @@ const ServiceCard = ({ title, description, image, tags }: { title: string, descr
     </motion.div>
 );
 
-const TreatmentRow = ({ title, description }: { title: string, description: string }) => (
-    <div className="flex gap-4">
-        <div className="mt-1">
-            <div className="w-8 h-8 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center text-secondary-DEFAULT shadow-sm">
-                <Activity className="w-4 h-4" />
-            </div>
+const TreatmentRow = ({ title, description, image }: { title: string, description: string, image: string }) => (
+    <div className="flex gap-6 items-start group">
+        <div className="w-24 h-24 shrink-0 rounded-2xl overflow-hidden transition-all duration-500 shadow-md">
+            <img src={image} alt={title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
         </div>
-        <div>
-            <h4 className="text-lg font-medium text-slate-900 dark:text-white mb-2">{title}</h4>
+        <div className="flex-1">
+            <h4 className="text-lg font-medium text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors">{title}</h4>
             <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{description}</p>
         </div>
     </div>

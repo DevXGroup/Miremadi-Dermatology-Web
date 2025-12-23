@@ -9,41 +9,41 @@ const MOCK_PRODUCTS: Product[] = [
         id: '1',
         name: 'Hydrating Silk Cream',
         description: 'Expertly formulated daily moisturizer for deep hydration.',
-        price: 85,
+        price_cents: 8500,
+        currency: 'usd',
         category: 'Moisturizers',
         image_url: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=800',
-        is_featured: true,
-        inventory: 50
+        active: true
     },
     {
         id: '2',
         name: 'Vitamin C Serum',
         description: 'Brightening serum to even out skin tone and texture.',
-        price: 120,
+        price_cents: 12000,
+        currency: 'usd',
         category: 'Serums',
         image_url: 'https://images.unsplash.com/photo-1620916297397-a4a5402a3c6c?auto=format&fit=crop&q=80&w=800',
-        is_featured: true,
-        inventory: 35
+        active: true
     },
     {
         id: '3',
         name: 'Gentle Foaming Cleanser',
         description: 'Removes impurities without stripping natural oils.',
-        price: 45,
+        price_cents: 4500,
+        currency: 'usd',
         category: 'Cleansers',
         image_url: 'https://images.unsplash.com/photo-1556228720-1957be919ba1?auto=format&fit=crop&q=80&w=800',
-        is_featured: false,
-        inventory: 100
+        active: true
     },
     {
         id: '4',
         name: 'Retinol Night Repair',
         description: 'Powerful night treatment for skin renewal.',
-        price: 150,
+        price_cents: 15000,
+        currency: 'usd',
         category: 'Treatments',
         image_url: 'https://images.unsplash.com/photo-1611080541599-8c6dbde6edb8?auto=format&fit=crop&q=80&w=800',
-        is_featured: true,
-        inventory: 20
+        active: true
     }
 ];
 
@@ -90,7 +90,8 @@ export const useShopStore = create<ShopState>()(
                 set({ loading: true });
                 const { data, error } = await supabase
                     .from('products')
-                    .select('*');
+                    .select('*')
+                    .eq('active', true);
 
                 if (error) {
                     console.error('Error fetching products:', error);
@@ -99,11 +100,11 @@ export const useShopStore = create<ShopState>()(
                         id: p.id,
                         name: p.name,
                         description: p.description,
-                        price: p.price,
-                        category: p.category, // Assuming DB matches 'Moisturizers' | 'Serums' etc.
+                        price_cents: p.price_cents,
+                        currency: p.currency || 'usd',
+                        category: p.category,
                         image_url: p.image_url || 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=800',
-                        is_featured: p.is_featured || false,
-                        inventory: p.stock || 100
+                        active: p.active
                     }));
                     set({ products: mappedProducts.length > 0 ? mappedProducts : MOCK_PRODUCTS });
                 }
@@ -160,7 +161,7 @@ export const useShopStore = create<ShopState>()(
             },
 
             login: (user) => set({ user }),
-            logout: () => set({ user: null, wishlist: [], cart: [] }), // Clear data on logout
+            logout: () => set({ user: null, wishlist: [], cart: [] }),
 
             openAuthModal: () => set({ isAuthModalOpen: true }),
             closeAuthModal: () => set({ isAuthModalOpen: false }),
@@ -174,7 +175,7 @@ export const useShopStore = create<ShopState>()(
                 cart: state.cart,
                 user: state.user,
                 wishlist: state.wishlist
-            }), // Only persist these
+            }) as any,
         }
     )
 );

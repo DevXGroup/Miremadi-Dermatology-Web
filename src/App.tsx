@@ -7,9 +7,9 @@ import { useShopStore } from './store/useStore';
 import { Shop } from './pages/Shop';
 import { Cart } from './pages/Cart';
 import { Checkout } from './pages/Checkout';
+import { CheckoutSuccess } from './pages/CheckoutSuccess';
 import { Blog } from './pages/Blog';
 import { Account } from './pages/Account';
-import { Billing } from './pages/Billing';
 import { Wishlist } from './pages/Wishlist';
 import { PrivacyPolicy } from './pages/legal/PrivacyPolicy';
 import { TermsConditions } from './pages/legal/TermsConditions';
@@ -21,11 +21,12 @@ import { Footer } from './components/layout/Footer';
 import { About } from './pages/About';
 import { Contact } from './pages/Contact';
 import { Services } from './pages/Services';
+import { Toaster } from 'sonner';
 
 // Skeleton for loading states
 const PageLoader = () => (
     <div className="flex items-center justify-center h-screen bg-white dark:bg-slate-900">
-        <div className="w-8 h-8 border-4 border-primary-DEFAULT border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
     </div>
 );
 
@@ -78,6 +79,7 @@ function App() {
                         <Route path="/shop" element={<Shop />} />
                         <Route path="/cart" element={<Cart />} />
                         <Route path="/checkout" element={<Checkout />} />
+                        <Route path="/checkout/success" element={<CheckoutSuccess />} />
                         <Route path="/blog" element={<Blog />} />
                         <Route path="/about" element={<About />} />
                         <Route path="/services" element={<Services />} />
@@ -85,10 +87,9 @@ function App() {
 
                         {/* Auth Routes */}
                         <Route path="/account" element={<Account />} />
-                        <Route path="/billing" element={<Billing />} />
                         <Route path="/wishlist" element={<Wishlist />} />
-                        <Route path="/wishlist" element={<Wishlist />} />
-                        <Route path="/settings/payments" element={<Billing />} />
+
+
 
                         {/* Legal */}
                         <Route path="/legal/privacy-policy" element={<PrivacyPolicy />} />
@@ -107,6 +108,7 @@ function App() {
                 <SupabaseStatus />
                 <AuthModal />
                 <CartDrawer />
+                <Toaster position="top-center" richColors duration={3000} />
             </div>
         </Router>
     );

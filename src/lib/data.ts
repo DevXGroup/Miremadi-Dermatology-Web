@@ -3,20 +3,14 @@ export const SERVICE_DATA = [
     {
         title: 'Acne Treatment',
         desc: 'Customized plans involving topicals, lasers, and lifestyle changes to clear skin and prevent scarring.',
-        img: 'https://images.unsplash.com/photo-1614859324967-bdaa6e2e8ce8?auto=format&fit=crop&q=80&w=400',
+        img: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=400',
         type: 'Medical'
     },
     {
         title: 'Skin Cancer Screening',
         desc: 'Comprehensive full-body exams for early detection using advanced dermoscopy for accuracy.',
-        img: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=400',
+        img: 'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&q=80&w=400',
         type: 'Medical'
-    },
-    {
-        title: 'Mohs Surgery',
-        desc: 'Precise surgical technique for removing skin cancer with high cure rates and minimal tissue damage.',
-        img: 'https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&q=80&w=400',
-        type: 'Surgical'
     },
     {
         title: 'Botox & Fillers',
@@ -27,19 +21,13 @@ export const SERVICE_DATA = [
     {
         title: 'Laser Hair Removal',
         desc: 'Safe and effective hair reduction for all skin types using the latest medical-grade laser technology.',
-        img: 'https://images.unsplash.com/photo-1600428791234-1b1b1120021b?auto=format&fit=crop&q=80&w=400',
+        img: 'https://images.unsplash.com/photo-1559599144-3e390c5031b4?auto=format&fit=crop&q=80&w=400',
         type: 'Cosmetic'
     },
     {
         title: 'Chemical Peels',
         desc: 'Exfoliating treatments to improve skin texture, tone, and clarity by removing damaged outer layers.',
         img: 'https://images.unsplash.com/photo-1512290901882-d42436d19f8d?auto=format&fit=crop&q=80&w=400',
-        type: 'Cosmetic'
-    },
-    {
-        title: 'Microdermabrasion',
-        desc: 'Minimally invasive procedure to renew overall skin tone and texture, treating sun damage and scars.',
-        img: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&q=80&w=400',
         type: 'Cosmetic'
     },
     {
@@ -72,12 +60,6 @@ export const SERVICE_DATA = [
         desc: 'FDA-approved treatment for cellulite and loose skin using magnetic pulses to stimulate collagen.',
         img: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=400',
         type: 'Body'
-    },
-    {
-        title: 'Collagenizer',
-        desc: 'Advanced ionic transport delivering Collagen, Hyaluronic Acid, and Vitamin C deep into skin.',
-        img: 'https://images.unsplash.com/photo-1552693673-1bf958298935?auto=format&fit=crop&q=80&w=400',
-        type: 'Clinical'
     },
     {
         title: 'Vein Therapy',

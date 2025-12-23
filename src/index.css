@@ -1,11 +1,27 @@
 @import "tailwindcss";
 
+@variant dark (&:where(.dark, .dark *));
+
 :root {
-  --color-primary: #F43F5E;
+  --color-primary: #B06D7A;
+  /* Dark Dirty Pink */
 }
 
 body {
   @apply bg-white text-slate-900 font-sans antialiased transition-colors duration-300;
+}
+
+a,
+button,
+[role="button"],
+select {
+  cursor: pointer !important;
+}
+
+::selection {
+  background-color: rgba(244, 63, 94, 0.3);
+  color: #881337;
+  /* A deep rose/pink shade for contrast */
 }
 
 .dark body {
@@ -16,17 +32,20 @@ body {
 ::-webkit-scrollbar {
   width: 8px;
 }
+
 ::-webkit-scrollbar-track {
   @apply bg-transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   @apply bg-slate-200 dark:bg-slate-700 rounded-full;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   @apply bg-slate-300 dark:bg-slate-600;
 }
 
 /* Custom Cursor Placeholder - Implement with JS if needed, or CSS for simple usage */
 .custom-cursor {
-  cursor: none; 
+  cursor: none;
 }
