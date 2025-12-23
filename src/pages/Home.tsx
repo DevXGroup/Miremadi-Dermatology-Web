@@ -56,16 +56,16 @@ export const Home = () => {
                     >
                         {/* Using the image from the old Hero component directly */}
                         <img
-                            src="/dr-miremadi.jpg"
+                            src="/dr-miremadi-portrait-2.png"
                             alt="Dr. Arjang K. Miremadi"
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-cover object-top"
                         />
 
                         {/* Floating Expert Badge */}
                         <motion.div
                             animate={{ y: [0, -10, 0] }}
                             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                            className="absolute bottom-10 -left-6 p-6 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md rounded-2xl shadow-xl border border-white/20 max-w-[200px]"
+                            className="absolute bottom-10 -left-6 p-6 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md rounded-2xl shadow-xl border border-white/20 max-w-[200px] text-right"
                         >
                             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Dermatology, Pathology, & Dermatopathology</p>
                             <p className="text-sm font-bold text-slate-900 dark:text-white leading-tight">Triple-Certified Specialist</p>
@@ -149,7 +149,7 @@ export const Home = () => {
                                 Our boutique practice combines 57+ years of pathology and dermatology expertise for precision results. We offer a wide range of services tailored to your specific needs, ensuring you receive the best care possible. Experience the difference with us in a family-friendly environment.
                             </p>
                             <div className="h-32 rounded-2xl overflow-hidden shadow-inner bg-slate-100 hidden md:block">
-                                <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover opacity-80" alt="Clinical excellence" />
+                                <img src="/dr-miremadi.jpg" className="w-full h-full object-cover opacity-90" alt="Dr Miremadi" />
                             </div>
                         </div>
                     </div>

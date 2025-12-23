@@ -38,9 +38,9 @@ export const About = () => {
                         >
                             {/* You can replace this src with the actual image URL if available, or keep it as placeholder/upload later */}
                             <img
-                                src="/dr-miremadi.jpg"
+                                src="/dr-miremadi-portrait-1.jpg"
                                 alt="Dr. Arjang Miremadi"
-                                className="w-full h-full object-cover"
+                                className="w-full h-full object-cover object-top"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8">
                                 <div className="text-white">
@@ -57,10 +57,10 @@ export const About = () => {
 
                         {/* Badges */}
                         <div className="grid grid-cols-2 gap-4">
-                            <Badge image="https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&q=80&w=200" icon={Award} label="Board Certified" sub="Dermatology & Pathology" />
-                            <Badge image="https://images.unsplash.com/photo-1547489432-cf93fa6c71ee?auto=format&fit=crop&q=80&w=200" icon={Shield} label="Naval Medical Corp" sub="Retired Captain" />
-                            <Badge image="https://images.unsplash.com/photo-1576091160550-217359f4ecf8?auto=format&fit=crop&q=80&w=200" icon={Stethoscope} label="Cancer Screening" sub="Only Provider in SD County" />
-                            <Badge image="https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?auto=format&fit=crop&q=80&w=200" icon={Star} label="57+ Years" sub="Medical Experience" />
+                            <Badge icon={Award} label="Board Certified" sub="Dermatology & Pathology" />
+                            <Badge icon={Shield} label="U.S. Navy" sub="Retired Captain" />
+                            <Badge icon={Stethoscope} label="Cancer Screening" sub="Only Free Provider in SD" />
+                            <Badge icon={Star} label="57+ Years" sub="Medical Experience" />
                         </div>
                     </div>
 
@@ -118,17 +118,14 @@ export const About = () => {
     );
 };
 
-const Badge = ({ icon: Icon, label, sub, image }: { icon: any, label: string, sub: string, image: string }) => (
-    <div className="group relative overflow-hidden rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800 h-32 cursor-pointer">
-        <img src={image} alt={label} className="absolute inset-0 w-full h-full object-cover opacity-10 group-hover:opacity-20 transition-all duration-700 pointer-events-none grayscale" />
-        <div className="relative z-10 h-full flex flex-col items-center justify-center p-4 text-center gap-2">
-            <div className="p-1.5 bg-white dark:bg-slate-800 rounded-full shadow-sm text-secondary-DEFAULT">
-                <Icon className="w-4 h-4" />
-            </div>
-            <div>
-                <p className="font-bold text-slate-900 dark:text-white text-[11px] leading-tight mb-0.5">{label}</p>
-                <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-tight">{sub}</p>
-            </div>
+const Badge = ({ icon: Icon, label, sub }: { icon: any, label: string, sub: string }) => (
+    <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800 flex flex-col items-center text-center gap-2 hover:border-primary/50 transition-colors cursor-pointer group">
+        <div className="p-2 bg-white dark:bg-slate-800 rounded-full shadow-sm text-secondary-DEFAULT group-hover:scale-110 transition-transform">
+            <Icon className="w-5 h-5" />
+        </div>
+        <div>
+            <p className="font-bold text-slate-900 dark:text-white text-sm">{label}</p>
+            <p className="text-xs text-slate-500 dark:text-slate-400">{sub}</p>
         </div>
     </div>
 );

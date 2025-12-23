@@ -3,7 +3,7 @@ export const SERVICE_DATA = [
     {
         title: 'Acne Treatment',
         desc: 'Customized plans involving topicals, lasers, and lifestyle changes to clear skin and prevent scarring.',
-        img: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=400',
+        img: '/images/services/acne_treatment.png',
         type: 'Medical'
     },
     {
@@ -37,12 +37,6 @@ export const SERVICE_DATA = [
         type: 'Medical'
     },
     // Retaining existing specialized services
-    {
-        title: 'Ultherapy',
-        desc: 'Non-invasive procedure to tighten, firm, and lift lax skin without surgery.',
-        img: 'https://images.unsplash.com/photo-1616391182219-a060c32945b6?auto=format&fit=crop&q=80&w=400',
-        type: 'Lifting'
-    },
     {
         title: 'ReFirme',
         desc: 'Uses Bipolar radiofrequency for skin tightening and sag reduction, primarily for face and neck.',
