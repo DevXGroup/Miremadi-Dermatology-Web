@@ -195,6 +195,16 @@ export const Navbar = () => {
                                             <span className="w-4 h-4 text-center">♥</span>
                                             Wishlist
                                         </Link>
+                                        {user.is_admin && (
+                                            <Link
+                                                to="/admin"
+                                                className="flex items-center gap-2 px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                                                onClick={() => setIsUserMenuOpen(false)}
+                                            >
+                                                <span className="w-4 h-4 text-center">⚡</span>
+                                                Admin Dashboard
+                                            </Link>
+                                        )}
                                         <div className="border-t border-slate-100 dark:border-slate-800 mt-1 pt-1">
                                             <button
                                                 onClick={handleLogout}

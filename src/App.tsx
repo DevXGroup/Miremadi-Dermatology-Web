@@ -22,6 +22,8 @@ import { About } from './pages/About';
 import { Contact } from './pages/Contact';
 import { Services } from './pages/Services';
 import { Toaster } from 'sonner';
+import { AdminLayout } from './pages/admin/AdminLayout';
+import { Dashboard } from './pages/admin/Dashboard';
 
 // Skeleton for loading states
 const PageLoader = () => (
@@ -37,16 +39,22 @@ function App() {
         // Helper to map session to user profile
         const syncUser = async (session: any) => {
             if (session?.user) {
-                // In a real app, we'd fetch the profile from the 'profiles' table here
-                // For now, we'll derive it from the session metadata
+                // Fetch full profile from DB
+                const { data: profile } = await supabase
+                    .from('profiles')
+                    .select('*')
+                    .eq('id', session.user.id)
+                    .single();
+
                 const userProfile = {
                     id: session.user.id,
                     email: session.user.email || '',
-                    full_name: session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || 'User',
+                    full_name: profile?.full_name || session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || 'User',
                     created_at: session.user.created_at,
                     photo_url: session.user.user_metadata?.avatar_url,
                     privacy_policy_accepted: session.user.user_metadata?.privacy_policy_accepted,
-                    privacy_policy_accepted_at: session.user.user_metadata?.privacy_policy_accepted_at
+                    privacy_policy_accepted_at: session.user.user_metadata?.privacy_policy_accepted_at,
+                    is_admin: profile?.is_admin
                 };
                 login(userProfile);
             }
@@ -88,6 +96,12 @@ function App() {
                         {/* Auth Routes */}
                         <Route path="/account" element={<Account />} />
                         <Route path="/wishlist" element={<Wishlist />} />
+
+                        {/* Admin Routes */}
+                        <Route path="/admin" element={<AdminLayout />}>
+                            <Route index element={<Dashboard />} />
+                            <Route path="dashboard" element={<Dashboard />} />
+                        </Route>
 
 
 

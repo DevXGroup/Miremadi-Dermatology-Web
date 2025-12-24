@@ -58,17 +58,28 @@ export const Footer = () => {
                     <div>
                         <h4 className="font-bold text-slate-900 dark:text-white mb-6">Contact</h4>
                         <ul className="space-y-4 text-sm text-slate-500 dark:text-slate-400">
-                            <li className="flex items-start gap-3">
-                                <MapPin className="w-5 h-5 shrink-0" />
-                                <span>7702-4 Ivanhoe Ave.<br />La Jolla, CA 92037</span>
+                            <li>
+                                <a
+                                    href="https://www.google.com/maps/search/?api=1&query=7702-4+Ivanhoe+Ave,+La+Jolla,+CA+92037"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="flex items-start gap-3 hover:text-primary transition-colors"
+                                >
+                                    <MapPin className="w-5 h-5 shrink-0 mt-0.5" />
+                                    <span>7702-4 Ivanhoe Ave.<br />La Jolla, CA 92037</span>
+                                </a>
                             </li>
-                            <li className="flex items-center gap-3">
-                                <Phone className="w-5 h-5 shrink-0" />
-                                <span>(858) 456-1840</span>
+                            <li>
+                                <a href="tel:+18584561840" className="flex items-center gap-3 hover:text-primary transition-colors">
+                                    <Phone className="w-5 h-5 shrink-0" />
+                                    <span>(858) 456-1840</span>
+                                </a>
                             </li>
-                            <li className="flex items-center gap-3">
-                                <Mail className="w-5 h-5 shrink-0" />
-                                <span>info@drmiremadi.com</span>
+                            <li>
+                                <a href="mailto:info@drmiremadi.com" className="flex items-center gap-3 hover:text-primary transition-colors">
+                                    <Mail className="w-5 h-5 shrink-0" />
+                                    <span>info@drmiremadi.com</span>
+                                </a>
                             </li>
                             <li className="pt-4 border-t border-slate-200 dark:border-slate-800 mt-2 space-y-3">
                                 <div className="flex flex-wrap gap-2">
