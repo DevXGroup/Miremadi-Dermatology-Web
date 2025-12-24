@@ -30,6 +30,58 @@ A premium, high-performance web application for Dr. Arjang Miremadi, combining a
 - **Routing**: [React Router](https://reactrouter.com/)
 - **PWA**: [Vite PWA](https://vite-pwa-org.netlify.app/)
 
+## 🏗 System Architecture
+
+High-level overview of the components and their interactions, including the secure e-commerce and admin fulfillment system.
+
+```mermaid
+graph TD
+    subgraph Client ["Frontend (Vite + React)"]
+        PatientUI[Patient UI<br/>(Shop, Cart, Checkout)]
+        AdminUI[Admin Dashboard<br/>(Stats, Orders, Fulfillment)]
+    end
+
+    subgraph Backend ["Supabase Edge Functions"]
+        CreateSession["create-checkout-session<br/>(Secure Session Creation)"]
+        StripeWebhook["stripe-webhook<br/>(Async Order Processing)"]
+        AdminAPI["admin-api<br/>(Secure Admin Actions)"]
+    end
+
+    subgraph Data ["Supabase Platform"]
+        Auth[Supabase Auth]
+        DB[(Postgres DB)]
+        Storage[Supabase Storage]
+    end
+
+    subgraph External ["External Services"]
+        Stripe[Stripe Payments]
+    end
+
+    %% Auth Flows
+    PatientUI -->|Auth & RLS| Auth
+    AdminUI -->|Auth & Role Check| Auth
+
+    %% Checkout Flow
+    PatientUI -->|POST /create-session| CreateSession
+    CreateSession -->|Create Customer/Session| Stripe
+    CreateSession -.->|Read Profile| DB
+    PatientUI -->|Redirect| Stripe
+
+    %% Webhook Flow
+    Stripe -->|Webhook Event| StripeWebhook
+    StripeWebhook -->|Verify Signature| Stripe
+    StripeWebhook -->|Create Order & Items| DB
+
+    %% Admin Flow
+    AdminUI -->|GET Stats/Orders| AdminAPI
+    AdminUI -->|POST Complete (w/ Image)| AdminAPI
+    AdminAPI -->|Read/Write Data| DB
+    AdminAPI -->|Upload Image| Storage
+    
+    %% Relationships
+    DB <--> Storage
+```
+
 ## 🏃‍♂️ Getting Started
 
 ### Prerequisites
