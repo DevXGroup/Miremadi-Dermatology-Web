@@ -38,6 +38,7 @@ export interface UserProfile {
     skin_type?: 'Normal' | 'Dry' | 'Oily' | 'Combination' | 'Sensitive';
     skin_goals?: string;
     created_at: string;
+    is_admin?: boolean;
 }
 
 // Order History
@@ -78,6 +79,9 @@ export interface Order {
     shipping_country?: string;
     tracking_number?: string;
     shipped_at?: string;
+    purchase_id?: string;
+    tracking_image_url?: string;
+    completed_at?: string;
 
     created_at: string;
     updated_at?: string;

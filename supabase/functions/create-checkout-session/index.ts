@@ -1,6 +1,6 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
-import Stripe from "https://esm.sh/stripe@12.0.0?target=deno"
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.7.1"
+import { serve } from "std/server"
+import Stripe from "stripe"
+import { createClient } from "@supabase/supabase-js"
 
 const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') ?? '', {
     httpClient: Stripe.createFetchHttpClient(),
@@ -31,10 +31,9 @@ serve(async (req) => {
             throw new Error('User not authenticated')
         }
 
-        const { cartItems, recurringType, returnUrl } = await req.json()
+        const { cartItems, recurringType } = await req.json()
 
         // 1. Get or Create Stripe Customer
-        // Check if user has a stripe_customer_id in profiles
         let { data: profile } = await supabaseClient
             .from('profiles')
             .select('stripe_customer_id, email, full_name')
@@ -59,9 +58,11 @@ serve(async (req) => {
                 .eq('id', user.id)
         }
 
-        // 2. Create Session
+        // 2. Generate Purchase ID
+        const purchaseId = `PUR-${Math.floor(Math.random() * 1000000).toString().padStart(6, '0')}`;
+
+        // 3. Create Session
         const origin = req.headers.get('origin') || 'http://localhost:5173'
-        // Ensure we don't have double slashes if returnUrl is provided differently
         const success_url = `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`
         const cancel_url = `${origin}/checkout?canceled=true`
 
@@ -69,15 +70,10 @@ serve(async (req) => {
 
         if (recurringType === 'weekly' || recurringType === 'monthly') {
             // SUBSCRIPTION MODE
-            // You would normally look up Price IDs from your DB or Env vars
-            // For this demo, we assume we receive or map a priceId, or create one on the fly (not recommended for prod)
-            // Ideally: const priceId = recurringType === 'weekly' ? Deno.env.get('PRICE_WEEKLY') : Deno.env.get('PRICE_MONTHLY')
-
-            // Error if no price config
             const priceId = recurringType === 'weekly' ? Deno.env.get('STRIPE_PRICE_WEEKLY') : Deno.env.get('STRIPE_PRICE_MONTHLY')
 
             if (!priceId) {
-                throw new Error(`Price ID for ${recurringType} not configured in .env`)
+                throw new Error(`Price ID for ${recurringType} not configured`)
             }
 
             session = await stripe.checkout.sessions.create({
@@ -86,6 +82,11 @@ serve(async (req) => {
                 line_items: [{ price: priceId, quantity: 1 }],
                 success_url,
                 cancel_url,
+                metadata: {
+                    patient_id: user.id,
+                    purchase_id: purchaseId,
+                    recurring_type: recurringType
+                }
             })
 
         } else {
@@ -109,10 +110,10 @@ serve(async (req) => {
                 success_url,
                 cancel_url,
                 metadata: {
-                    // Pass metadata to reconstruct order in webhook if needed
-                    // Note: large carts might hit metadata limits, better to rely on session expansion in webhook
-                    user_id: user.id,
-                    cart_snapshot: JSON.stringify(cartItems.map((i: any) => ({ id: i.id, q: i.quantity }))).substring(0, 500)
+                    patient_id: user.id,
+                    purchase_id: purchaseId,
+                    // Store cart snapshot only if small enough, or handle item recreation in webhook
+                    cart_snapshot_ok: 'true'
                 }
             })
         }
