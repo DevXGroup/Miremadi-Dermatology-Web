@@ -46,7 +46,7 @@ graph TD
 
     %% Admin Flow
     AdminUI -->|GET Stats/Orders| AdminAPI
-    AdminUI -->|POST Complete (w/ Image)| AdminAPI
+    AdminUI -->|POST Complete with Image| AdminAPI
     AdminAPI -->|Read/Write Data| DB
     AdminAPI -->|Upload Image| Storage
     
