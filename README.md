@@ -40,8 +40,8 @@ High-level overview of the components and their interactions, including the secu
 ```mermaid
 graph TD
     subgraph Client ["Frontend (Vite + React)"]
-        PatientUI[Patient UI<br/>(Shop, Cart, Checkout)]
-        AdminUI[Admin Dashboard<br/>(Stats, Orders, Fulfillment)]
+        PatientUI["Patient UI<br/>(Shop, Cart, Checkout)"]
+        AdminUI["Admin Dashboard<br/>(Stats, Orders, Fulfillment)"]
     end
 
     subgraph Backend ["Supabase Edge Functions"]
