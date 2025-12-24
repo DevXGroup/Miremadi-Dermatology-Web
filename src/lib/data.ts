@@ -3,19 +3,19 @@ export const SERVICE_DATA = [
     {
         title: 'Acne Treatment',
         desc: 'Customized plans involving topicals, lasers, and lifestyle changes to clear skin and prevent scarring.',
-        img: '/images/services/acne_treatment.png',
+        img: '/images/services/acne_treatment_new.png',
         type: 'Medical'
     },
     {
         title: 'Skin Cancer Screening',
         desc: 'Comprehensive full-body exams for early detection using advanced dermoscopy for accuracy.',
-        img: 'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&q=80&w=400',
+        img: '/images/services/skin_cancer_screening.png',
         type: 'Medical'
     },
     {
         title: 'Botox & Fillers',
         desc: 'Reduce fine lines and wrinkles and restore volume for a youthful, refreshed appearance.',
-        img: 'https://images.unsplash.com/photo-1620331713541-7f1912448896?auto=format&fit=crop&q=80&w=400',
+        img: '/images/services/botox_fillers.png',
         type: 'Cosmetic'
     },
     {
@@ -33,7 +33,7 @@ export const SERVICE_DATA = [
     {
         title: 'Psoriasis Care',
         desc: 'Advanced biologic and topical therapies for managing chronic psoriasis and improving quality of life.',
-        img: 'https://images.unsplash.com/photo-1628148865768-45b93d0f419d?auto=format&fit=crop&q=80&w=400',
+        img: '/images/ref-2.png',
         type: 'Medical'
     },
     // Retaining existing specialized services
@@ -52,7 +52,7 @@ export const SERVICE_DATA = [
     {
         title: 'Venus Freeze',
         desc: 'FDA-approved treatment for cellulite and loose skin using magnetic pulses to stimulate collagen.',
-        img: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=400',
+        img: '/images/ref-3.png',
         type: 'Body'
     },
     {

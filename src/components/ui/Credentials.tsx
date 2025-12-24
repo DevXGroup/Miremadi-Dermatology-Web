@@ -4,12 +4,8 @@ export const Credentials = () => {
     return (
         <div className="flex flex-wrap gap-6 items-center">
             {/* AAD Card */}
-            <div className="group relative overflow-hidden rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-4 transition-all hover:border-primary/50 shadow-sm flex items-center gap-4">
-                <img
-                    src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=200"
-                    className="absolute inset-0 w-full h-full object-cover opacity-[0.03] dark:opacity-[0.07] group-hover:opacity-[0.05] transition-opacity"
-                    alt=""
-                />
+            <div className="group relative overflow-hidden rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-800 p-4 transition-all hover:border-primary/50 shadow-sm flex items-center gap-4">
+
                 {/* American Academy of Dermatology (AAD) Logo SVG */}
                 <svg viewBox="0 0 100 100" className="h-14 w-14 shrink-0" aria-labelledby="aad-title">
                     <title id="aad-title">American Academy of Dermatology</title>
@@ -24,12 +20,8 @@ export const Credentials = () => {
             </div>
 
             {/* ABD Card */}
-            <div className="group relative overflow-hidden rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-4 transition-all hover:border-primary/50 shadow-sm flex items-center gap-4">
-                <img
-                    src="https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?auto=format&fit=crop&q=80&w=200"
-                    className="absolute inset-0 w-full h-full object-cover opacity-[0.03] dark:opacity-[0.07] group-hover:opacity-[0.05] transition-opacity"
-                    alt=""
-                />
+            <div className="group relative overflow-hidden rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-800 p-4 transition-all hover:border-primary/50 shadow-sm flex items-center gap-4">
+
                 {/* American Board of Dermatology (ABD) Logo SVG */}
                 <svg viewBox="0 0 100 100" className="h-14 w-14 shrink-0" aria-labelledby="abd-title">
                     <title id="abd-title">American Board of Dermatology</title>

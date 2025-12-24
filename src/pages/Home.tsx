@@ -134,7 +134,7 @@ export const Home = () => {
                     <div className="flex flex-col md:flex-row justify-between items-start mb-16">
                         <div>
                             <div className="flex items-center mb-4">
-                                <span className="text-xs font-bold text-primary uppercase tracking-[0.4em]">Clinical Excellence</span>
+                                <span className="text-xs font-bold text-primary uppercase tracking-[0.4em] ml-[5px]">Clinical Excellence</span>
                             </div>
                             <h2 className="text-4xl md:text-5xl font-display font-medium mb-6">
                                 Our Medical & <br className="hidden md:block" />
@@ -144,13 +144,10 @@ export const Home = () => {
                                 <Credentials />
                             </div>
                         </div>
-                        <div className="flex flex-col gap-6 max-w-md">
+                        <div className="flex flex-col gap-6 max-w-md text-right ml-auto">
                             <p className="text-slate-500 leading-relaxed text-sm md:text-base">
-                                Our boutique practice combines 57+ years of pathology and dermatology expertise for precision results. We offer a wide range of services tailored to your specific needs, ensuring you receive the best care possible. Experience the difference with us in a family-friendly environment.
+                                Our boutique practice combines 57+ years of pathology and dermatology expertise for precision results. We offer a wide range of services tailored to your specific needs, ensuring you receive the best care possible.
                             </p>
-                            <div className="h-32 rounded-2xl overflow-hidden shadow-inner bg-slate-100 hidden md:block">
-                                <img src="/dr-miremadi.jpg" className="w-full h-full object-cover opacity-90" alt="Dr Miremadi" />
-                            </div>
                         </div>
                     </div>
 
@@ -170,7 +167,7 @@ export const Home = () => {
                                     </div>
                                 </div>
                                 <h3 className="text-xl font-medium mb-3 group-hover:text-primary transition-colors">{service.title}</h3>
-                                <p className="text-slate-500 text-sm leading-relaxed mb-4 line-clamp-3">
+                                <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4 line-clamp-3">
                                     {service.desc}
                                 </p>
                             </div>
