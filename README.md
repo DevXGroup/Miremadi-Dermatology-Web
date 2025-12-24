@@ -13,8 +13,9 @@ A premium, high-performance web application for Dr. Arjang Miremadi, combining a
 ### E-Commerce (Shop)
 - **Product Management**: Grid view with filtering and search.
 - **Cart System**: High-performance cart state management using `zustand`.
+- **Private Admin Dashboard**: Secure area for order management, fulfillment, and revenue tracking.
 - **Wishlist**: Save favorite products (persisted locally).
-- **Checkout Flow**: Multi-step checkout UI ready for Stripe integration.
+- **Checkout Flow**: Secure Stripe-integrated checkout with server-side session creation.
 
 ### Content
 - **Blog Engine**: A rich journal section for dermatology insights.
@@ -26,8 +27,10 @@ A premium, high-performance web application for Dr. Arjang Miremadi, combining a
 - **Language**: [TypeScript](https://www.typescriptlang.org/)
 - **Styling**: [TailwindCSS](https://tailwindcss.com/) (v4) + Custom Design System
 - **State Management**: [Zustand](https://github.com/pmndrs/zustand)
+- **Backend**: [Supabase](https://supabase.com/) (Auth, Database, Storage)
+- **Edge Runtime**: [Deno](https://deno.com/) (Supabase Edge Functions)
+- **Payments**: [Stripe](https://stripe.com/)
 - **Animations**: [Framer Motion](https://www.framer.com/motion/)
-- **Routing**: [React Router](https://reactrouter.com/)
 - **PWA**: [Vite PWA](https://vite-pwa-org.netlify.app/)
 
 ## 🏗 System Architecture
@@ -112,19 +115,21 @@ graph TD
    npm run build
    ```
 
-## 📍 Next Steps (Immediate Action Items)
+## 📍 Project Status & Roadmap
 
-The frontend foundation is complete. The next phase focuses on backend integration and "real" data.
+The application has reached **Phase 3 Completion**. The core frontend, backend secure payments, and admin fulfillment loop are implemented.
 
-### 1. Backend Setup (Phase 3)
-- [ ] **Connect Supabase**: Set up Supabase project for specific Auth and Database needs.
-- [ ] **Database Schema**: Create tables for `products`, `users`, `orders`, and `blog_posts` to replace mock data.
-- [ ] **Authentication**: Implement real Sign-up/Login flow in the frontend.
+### ✅ Completed
+- [x] **Frontend Architecture**: Complete React+Vite app with Attio-style design system.
+- [x] **Product Store & Cart**: Functional shopping cart with local persistence.
+- [x] **Admin Dashboard**: Secure backend-driven dashboard for order management.
+- [x] **Backend Logic**: Cloud Edge Functions for `checkout`, `webhooks`, and `admin-api`.
+- [x] **Security**: Row Level Security (RLS) and Role-Based Access Control (RBAC).
 
-### 2. Payments
-- [ ] **Stripe Integration**: Replace the mock checkout form with Stripe Elements.
-- [ ] **Server Functions**: Set up Edge Functions (via Supabase) to handle secure payment intents.
+### 🚧 In Progress / Next Steps
+- [ ] **Live Deployment**: Deploy frontend to Vercel/Netlify.
+- [ ] **Stripe Production**: Switch Stripe keys from Test to Live mode.
+- [ ] **Domain Setup**: configure custom domain and SSL.
+- [ ] **Content Population**: Replace placeholder product images with real inventory photos.
 
-### 3. Admin Dashboard
-- [ ] **Admin Routes**: Create a protected `/admin` area.
-- [ ] **Management UI**: Build forms to add/edit products and blog posts without coding.
+For detailed Stripe Setup instructions, see: [`STRIPE_SETUP_AND_TESTING.md`](./STRIPE_SETUP_AND_TESTING.md)
