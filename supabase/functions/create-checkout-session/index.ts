@@ -1,10 +1,7 @@
-import { serve } from "std/server"
-import Stripe from "stripe"
-import { createClient } from "@supabase/supabase-js"
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
+import Stripe from "https://esm.sh/stripe@12.18.0?target=deno"
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
 
-const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') ?? '', {
-    httpClient: Stripe.createFetchHttpClient(),
-})
 const corsHeaders = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
@@ -16,43 +13,61 @@ serve(async (req) => {
     }
 
     try {
-        const supabaseClient = createClient(
-            Deno.env.get('SUPABASE_URL') ?? '',
-            Deno.env.get('SUPABASE_ANON_KEY') ?? '',
-            { global: { headers: { Authorization: req.headers.get('Authorization')! } } }
-        )
+        const stripeSecret = Deno.env.get('STRIPE_SECRET_KEY')
+        if (!stripeSecret) throw new Error('STRIPE_SECRET_KEY is not configured in Supabase secrets')
 
-        // Get current user
-        const {
-            data: { user },
-        } = await supabaseClient.auth.getUser()
+        const stripe = new Stripe(stripeSecret, {
+            apiVersion: '2022-11-15',
+            httpClient: Stripe.createFetchHttpClient(),
+        })
 
-        if (!user) {
+        const supabaseUrl = Deno.env.get('SUPABASE_URL') ?? ''
+        const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
+
+        // We use service role key to bypass RLS for customer management
+        const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey)
+
+        // Get current user to verify identity
+        const authHeader = req.headers.get('Authorization')!
+        const { data: { user }, error: userError } = await createClient(supabaseUrl, Deno.env.get('SUPABASE_ANON_KEY') ?? '', {
+            global: { headers: { Authorization: authHeader } }
+        }).auth.getUser()
+
+        if (userError || !user) {
             throw new Error('User not authenticated')
         }
 
         const { cartItems, recurringType } = await req.json()
 
+        if (!cartItems || !Array.isArray(cartItems)) {
+            throw new Error('Invalid cart items')
+        }
+
         // 1. Get or Create Stripe Customer
-        let { data: profile } = await supabaseClient
+        let { data: profile, error: profileError } = await supabaseAdmin
             .from('profiles')
             .select('stripe_customer_id, email, full_name')
             .eq('id', user.id)
             .single()
 
+        if (profileError) {
+            console.error('Error fetching profile:', profileError)
+        }
+
         let customerId = profile?.stripe_customer_id
 
         if (!customerId) {
+            console.log('Creating new Stripe customer for user:', user.id)
             const customer = await stripe.customers.create({
                 email: user.email,
-                name: profile?.full_name ?? user.user_metadata.full_name,
+                name: profile?.full_name || user.user_metadata?.full_name || 'Valued Customer',
                 metadata: {
                     supabase_uid: user.id
                 }
             })
             customerId = customer.id
             // Update profile
-            await supabaseClient
+            await supabaseAdmin
                 .from('profiles')
                 .update({ stripe_customer_id: customerId })
                 .eq('id', user.id)
@@ -69,11 +84,11 @@ serve(async (req) => {
         let session;
 
         if (recurringType === 'weekly' || recurringType === 'monthly') {
-            // SUBSCRIPTION MODE
-            const priceId = recurringType === 'weekly' ? Deno.env.get('STRIPE_PRICE_WEEKLY') : Deno.env.get('STRIPE_PRICE_MONTHLY')
+            const priceKey = recurringType === 'weekly' ? 'STRIPE_PRICE_WEEKLY' : 'STRIPE_PRICE_MONTHLY'
+            const priceId = Deno.env.get(priceKey)
 
             if (!priceId) {
-                throw new Error(`Price ID for ${recurringType} not configured`)
+                throw new Error(`Price ID for ${recurringType} (${priceKey}) not configured in secrets`)
             }
 
             session = await stripe.checkout.sessions.create({
@@ -91,17 +106,22 @@ serve(async (req) => {
 
         } else {
             // ONE-TIME PAYMENT MODE
-            const line_items = cartItems.map((item: any) => ({
-                price_data: {
-                    currency: 'usd',
-                    product_data: {
-                        name: item.name,
-                        images: item.image_url ? [item.image_url] : undefined,
+            const line_items = cartItems.map((item: any) => {
+                if (!item.price_cents || item.price_cents <= 0) {
+                    throw new Error(`Invalid price for item: ${item.name}`)
+                }
+                return {
+                    price_data: {
+                        currency: 'usd',
+                        product_data: {
+                            name: item.name,
+                            images: item.image_url ? [item.image_url] : undefined,
+                        },
+                        unit_amount: Math.round(item.price_cents),
                     },
-                    unit_amount: item.price_cents,
-                },
-                quantity: item.quantity,
-            }))
+                    quantity: item.quantity || 1,
+                }
+            })
 
             session = await stripe.checkout.sessions.create({
                 mode: 'payment',
@@ -112,11 +132,12 @@ serve(async (req) => {
                 metadata: {
                     patient_id: user.id,
                     purchase_id: purchaseId,
-                    // Store cart snapshot only if small enough, or handle item recreation in webhook
                     cart_snapshot_ok: 'true'
                 }
             })
         }
+
+        console.log('Checkout session created:', session.id)
 
         return new Response(
             JSON.stringify({ url: session.url }),
@@ -124,6 +145,7 @@ serve(async (req) => {
         )
 
     } catch (error: any) {
+        console.error('Checkout Function Error:', error.message)
         return new Response(JSON.stringify({ error: error.message }), {
             status: 400,
             headers: { ...corsHeaders, 'Content-Type': 'application/json' },

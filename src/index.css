@@ -18,11 +18,7 @@ select {
   cursor: pointer !important;
 }
 
-::selection {
-  background-color: rgba(244, 63, 94, 0.3);
-  color: #881337;
-  /* A deep rose/pink shade for contrast */
-}
+
 
 .dark body {
   @apply bg-slate-900 text-white;

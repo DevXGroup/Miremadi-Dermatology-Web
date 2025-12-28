@@ -1,14 +1,24 @@
-import { serve } from "std/server"
-import Stripe from "stripe"
-import { createClient } from "@supabase/supabase-js"
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
+import Stripe from "https://esm.sh/stripe@12.18.0?target=deno"
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
 
-const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') ?? '', {
-    httpClient: Stripe.createFetchHttpClient(),
-})
-const endpointSecret = Deno.env.get('STRIPE_WEBHOOK_SECRET') ?? '';
+const corsHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+}
 
 serve(async (req) => {
     try {
+        const stripeSecret = Deno.env.get('STRIPE_SECRET_KEY')
+        if (!stripeSecret) throw new Error('STRIPE_SECRET_KEY is not configured')
+
+        const stripe = new Stripe(stripeSecret, {
+            apiVersion: '2022-11-15',
+            httpClient: Stripe.createFetchHttpClient(),
+        })
+
+        const endpointSecret = Deno.env.get('STRIPE_WEBHOOK_SECRET') ?? '';
+
         const signature = req.headers.get('stripe-signature')
         if (!signature) throw new Error('No signature')
 
@@ -21,22 +31,20 @@ serve(async (req) => {
             return new Response(err.message, { status: 400 });
         }
 
-        const supabaseClient = createClient(
-            Deno.env.get('SUPABASE_URL') ?? '',
-            Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
-        )
+        const supabaseUrl = Deno.env.get('SUPABASE_URL') ?? ''
+        const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
+        const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey)
+
+        console.log('Processing event:', event.type)
 
         if (event.type === 'checkout.session.completed') {
             const session = event.data.object as Stripe.Checkout.Session;
 
-            // Strict Security Check: Verify patient_id from metadata
             const patientId = session.metadata?.patient_id;
             const purchaseId = session.metadata?.purchase_id;
 
             if (!patientId) {
                 console.error('Missing patient_id in metadata');
-                // We could try to fallback to email lookup, but for secure flow we expect metadata
-                // return new Response('Missing metadata', { status: 400 });
             }
 
             // Retrieve full session with line items
@@ -45,21 +53,21 @@ serve(async (req) => {
             });
 
             // 1. Create Order
-            const { data: order, error: orderError } = await supabaseClient
+            const { data: order, error: orderError } = await supabaseAdmin
                 .from('orders')
                 .insert({
-                    user_id: patientId, // Trusted from server-side metadata
-                    purchase_id: purchaseId, // Trusted from server-side metadata
+                    user_id: patientId,
+                    purchase_id: purchaseId,
                     total_amount_cents: session.amount_total,
                     currency: session.currency,
                     stripe_payment_intent_id: session.payment_intent as string,
                     stripe_subscription_id: session.subscription as string,
                     payment_status: 'paid',
-                    shipping_status: 'pending',
+                    status: 'pending', // Main order status
                     recurring: session.mode === 'subscription' ? 'monthly' : 'none',
 
                     // Shipping Info
-                    shipping_name: session.shipping_details?.name,
+                    shipping_name: session.shipping_details?.name || session.customer_details?.name,
                     shipping_address_line1: session.shipping_details?.address?.line1,
                     shipping_address_line2: session.shipping_details?.address?.line2,
                     shipping_city: session.shipping_details?.address?.city,
@@ -71,7 +79,6 @@ serve(async (req) => {
                 .single()
 
             if (orderError) {
-                // If purchase_id collision or other error
                 console.error('Order creation error:', orderError);
                 throw orderError;
             }
@@ -79,38 +86,24 @@ serve(async (req) => {
             // 2. Create Order Items
             const lineItems = fullSession.line_items?.data || [];
 
-            // Allow for parallel processing of items
             for (const item of lineItems) {
                 let productId = null;
                 const productName = item.description;
 
-                // Try to match product by name (MVP) or Metadata if we had it
-                // Ideally Stripe Product Metadata has 'supabase_product_id'
-                const stripeProduct = item.price?.product as Stripe.Product;
-                // if (stripeProduct?.metadata?.supabase_id) ...
+                const { data: product } = await supabaseAdmin
+                    .from('products')
+                    .select('id')
+                    .eq('name', productName)
+                    .maybeSingle();
+
+                if (product) productId = product.id;
 
                 if (!productId) {
-                    const { data: product } = await supabaseClient
-                        .from('products')
-                        .select('id')
-                        .eq('name', productName)
-                        .maybeSingle();
-
-                    if (product) productId = product.id;
-                }
-
-                // If still no product ID, we might need a fallback or just log it is a "Custom" item
-                // For constraint safety, if we have a strict FK, we need a fallback product.
-                if (!productId) {
-                    // Fallback to avoid webhook crashing, or creating a 'Miscellaneous' product on fly
-                    // For now, logging. The insert will fail if FK is strict and we pass null.
-                    // Assuming FK is strictly linking to products table.
-                    // Let's try to get ANY product to start with.
-                    const { data: fallback } = await supabaseClient.from('products').select('id').limit(1).single();
+                    const { data: fallback } = await supabaseAdmin.from('products').select('id').limit(1).single();
                     productId = fallback?.id;
                 }
 
-                await supabaseClient.from('order_items').insert({
+                await supabaseAdmin.from('order_items').insert({
                     order_id: order.id,
                     product_id: productId,
                     product_name_snapshot: productName,
@@ -119,10 +112,14 @@ serve(async (req) => {
                     line_total_cents: item.amount_total
                 });
             }
+            console.log('Order processed successfully:', order.id)
         }
 
-        return new Response(JSON.stringify({ received: true }), { headers: { 'Content-Type': 'application/json' } })
+        return new Response(JSON.stringify({ received: true }), {
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        })
     } catch (err: any) {
+        console.error('Webhook Error:', err.message)
         return new Response(err.message, { status: 400 })
     }
 })

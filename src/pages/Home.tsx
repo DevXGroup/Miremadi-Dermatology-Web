@@ -58,7 +58,7 @@ export const Home = () => {
                         <img
                             src="/dr-miremadi-portrait-2.png"
                             alt="Dr. Arjang K. Miremadi"
-                            className="w-full h-full object-cover object-top"
+                            className="w-full h-full object-cover object-top grayscale hover:grayscale-0 transition-all duration-700"
                         />
 
                         {/* Floating Expert Badge */}

@@ -24,6 +24,7 @@ import { Services } from './pages/Services';
 import { Toaster } from 'sonner';
 import { AdminLayout } from './pages/admin/AdminLayout';
 import { Dashboard } from './pages/admin/Dashboard';
+import { OrderHistory } from './pages/OrderHistory';
 
 // Skeleton for loading states
 const PageLoader = () => (
@@ -79,7 +80,7 @@ function App() {
 
     return (
         <Router>
-            <div className="min-h-screen bg-white dark:bg-slate-900 text-slate-900 dark:text-white font-sans selection:bg-secondary-light selection:text-secondary-dark transition-colors duration-300">
+            <div className="min-h-screen bg-white dark:bg-slate-900 text-slate-900 dark:text-white font-sans transition-colors duration-300">
                 <Navbar />
                 <Suspense fallback={<PageLoader />}>
                     <Routes>
@@ -95,6 +96,7 @@ function App() {
 
                         {/* Auth Routes */}
                         <Route path="/account" element={<Account />} />
+                        <Route path="/orders" element={<OrderHistory />} />
                         <Route path="/wishlist" element={<Wishlist />} />
 
                         {/* Admin Routes */}

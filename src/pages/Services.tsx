@@ -1,7 +1,7 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Sparkles, Zap, Activity, Heart, ShieldCheck, Sun } from 'lucide-react';
+import { ArrowRight, Zap, Activity, Heart, ShieldCheck, Sun } from 'lucide-react';
 
 export const Services = () => {
     return (
@@ -26,172 +26,251 @@ export const Services = () => {
                 </div>
             </section>
 
-            {/* Venus Treatments Grid - "The Circle of Services" */}
+            {/* Cosmetic Section */}
             <section className="py-16">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-16">
-                        <span className="text-primary font-semibold tracking-wider uppercase text-sm">Our Technology</span>
+                        <span className="text-primary font-semibold tracking-wider uppercase text-sm">Cosmetic Dermatology</span>
                         <h2 className="text-3xl md:text-4xl font-display font-medium text-slate-900 dark:text-white mt-2">
-                            Signature Venus Treatments
+                            Advanced Aesthetic Solutions
                         </h2>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
                         <ServiceCard
                             title="Venus Bliss"
                             description="Non-invasive lipo and body contouring. Target stubborn fat and cellulite with effective laser technology for a slimmer silhouette."
-                            image="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=2940&auto=format&fit=crop"
+                            image="/images/services/venus_bliss.png"
                             tags={['Fat Reduction', 'Body Contouring']}
                         />
                         <ServiceCard
                             title="Venus Viva MD"
                             description="Advanced skin resurfacing using NanoFractional RF. Dramatically improves acne scars, wrinkles, enlarged pores, and uneven texture."
-                            image="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?q=80&w=2940&auto=format&fit=crop"
+                            image="/images/services/venus_viva.png"
                             tags={['Acne Scars', 'Resurfacing']}
                         />
                         <ServiceCard
                             title="Venus Versa"
                             description="A versatile powerhouse for photofacials (IPL) to treat sun damage and discoloration, plus active acne treatments and skin rejuvenation."
-                            image="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?q=80&w=2940&auto=format&fit=crop"
+                            image="/images/services/venus_versa.png"
                             tags={['IPL', 'Acne', 'Rejuvenation']}
                         />
                         <ServiceCard
-                            title="Venus Freeze"
-                            description="Anti-aging skin tightening that uses magnetic fields to boost collagen. Softens wrinkles and firms skin on the face, neck, and body."
-                            image="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=2940&auto=format&fit=crop"
-                            tags={['Anti-Aging', 'Skin Tightening']}
+                            title="Laser Hair Removal"
+                            description="Safe and effective hair reduction for all skin types using the latest medical-grade laser technology."
+                            image="/images/services/laser_hair_removal.png"
+                            tags={['Hair Reduction', 'Smooth Skin']}
                         />
                     </div>
                 </div>
             </section>
 
-            {/* Hair Restoration Section */}
-            <section className="py-16 bg-slate-50 dark:bg-slate-900/30">
+            {/* Injectables Section */}
+            <section className="py-16 bg-slate-50 dark:bg-slate-900/40">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="grid lg:grid-cols-2 gap-12 items-center">
+                        <div>
+                            <span className="text-primary font-semibold tracking-wider uppercase text-sm">Injectables</span>
+                            <h2 className="text-3xl md:text-4xl font-display font-medium text-slate-900 dark:text-white mt-2 mb-6">
+                                Restore & Rejuvenate
+                            </h2>
+                            <p className="text-slate-500 dark:text-slate-400 mb-8 leading-relaxed">
+                                Our expert cosmetic injectors use a combination of neuromodulators, fillers, and boosters to achieve natural, youthful results tailored to your unique facial structure.
+                            </p>
+
+                            <div className="space-y-6">
+                                <TreatmentRow
+                                    title="Botox & Neuromodulators"
+                                    description="Smooth fine lines and dynamic wrinkles for a refreshed look."
+                                    image="https://images.unsplash.com/photo-1512290923902-8a9f81dc2069?q=80&w=400&auto=format&fit=crop"
+                                />
+                                <TreatmentRow
+                                    title="Dermal Fillers"
+                                    description="Restore lost volume and contour features with premium fillers."
+                                    image="https://images.unsplash.com/photo-1599305090598-fe179d501227?q=80&w=400&auto=format&fit=crop"
+                                />
+                                <TreatmentRow
+                                    title="Collagen Boosters"
+                                    description="Injectable treatments that stimulate your own collagen production."
+                                    image="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?q=80&w=400&auto=format&fit=crop"
+                                />
+                            </div>
+                        </div>
+                        <div className="h-full min-h-[500px] rounded-3xl overflow-hidden shadow-xl">
+                            <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=1200" alt="Injectables" className="w-full h-full object-cover" />
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Hair Growth Section */}
+            <section className="py-16">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid lg:grid-cols-2 gap-16 items-center">
+                        <div className="relative order-last lg:order-first">
+                            <ScannerCircle />
+                        </div>
                         <div>
-                            <span className="text-primary font-semibold tracking-wider uppercase text-sm">Hair Restoration</span>
+                            <span className="text-primary font-semibold tracking-wider uppercase text-sm">Hair Growth</span>
                             <h2 className="text-3xl md:text-4xl font-display font-medium text-slate-900 dark:text-white mt-2 mb-6">
-                                Reclaim Your Confidence
+                                Advanced Hair Solutions
                             </h2>
                             <div className="space-y-8">
                                 <TreatmentRow
-                                    title="Venus Artas Robotic Transplant"
-                                    description="State-of-the-art robotic hair restoration using Artificial Intelligence. The ARTAS system identifies and extracts prime follicles for a precise, minimally invasive transplant with natural-looking results and no linear scarring."
-                                    image="https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&q=80&w=400"
+                                    title="Hair Filler (Injectable)"
+                                    description="Non-surgical scalp treatments designed to revitalize hair follicles, stimulate growth, and increase hair thickness."
+                                    image="/images/services/hair_filler.png"
                                 />
                                 <TreatmentRow
-                                    title="Advanced Hair Fillers"
-                                    description="Non-surgical scalp treatments designed to revitalize hair follicles, stimulate growth, and increase hair thickness for both men and women experiencing thinning."
-                                    image="https://images.unsplash.com/photo-1519415590292-0b6dc365778a?auto=format&fit=crop&q=80&w=400"
+                                    title="Peptides (Hair Drops)"
+                                    description="Targeted topical peptide therapy to support follicle health and promote active growth phases."
+                                    image="/images/services/peptides.png"
                                 />
-                                <TreatmentRow
-                                    title="Hair Treatment for Men & Women"
-                                    description="Customized medical-grade protocols to address androgenic alopecia, stress-related loss, and scalp health, ensuring a holistic approach to hair wellness."
-                                    image="https://images.unsplash.com/photo-1522337660859-02fbefca4702?auto=format&fit=crop&q=80&w=400"
-                                />
-                            </div>
-                        </div>
-                        <div className="relative">
-                            <div className="aspect-square rounded-full overflow-hidden border-8 border-white dark:border-slate-800 shadow-2xl">
-                                <img
-                                    src="https://images.unsplash.com/photo-1620331313123-6c26880bee7c?q=80&w=2940&auto=format&fit=crop"
-                                    alt="Hair Restoration"
-                                    className="w-full h-full object-cover"
-                                />
-                            </div>
-                            <div className="absolute -bottom-6 -left-6 bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-xl max-w-xs">
-                                <p className="font-medium text-slate-900 dark:text-white flex items-center gap-2">
-                                    <Sparkles className="w-5 h-5 text-primary" />
-                                    Advanced Robotics
-                                </p>
-                                <p className="text-sm text-slate-500 mt-2">Utilization of AI for precision and natural density.</p>
+                                <div className="pt-4 border-t border-slate-100 dark:border-slate-800">
+                                    <p className="text-sm font-medium text-slate-900 dark:text-white mb-4">Comprehensive Care For:</p>
+                                    <div className="grid gap-4">
+                                        <TreatmentRow
+                                            title="Male Pattern Baldness"
+                                            description="Strategized medical protocols to halt loss and encourage regrowth."
+                                        />
+                                        <TreatmentRow
+                                            title="Female Hair Thinning"
+                                            description="Customized solutions addressing hormonal and stress-related thinning."
+                                        />
+                                        <TreatmentRow
+                                            title="Alopecia Areata"
+                                            description="Medical management for autoimmune hair loss conditions."
+                                        />
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* Injectables & Skincare */}
-            <section className="py-20">
+            {/* General Medical Section */}
+            <section className="py-16 bg-slate-50 dark:bg-slate-900/40">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="grid lg:grid-cols-2 gap-12">
-                        {/* Injectables */}
-                        <div className="bg-slate-50 dark:bg-slate-900 rounded-3xl overflow-hidden group border border-slate-100 dark:border-slate-800 flex flex-col md:flex-row">
-                            <div className="p-8 md:p-12 flex-1 relative z-10">
-                                <div className="p-3 bg-white dark:bg-slate-800 rounded-xl w-fit mb-6 shadow-sm">
-                                    <Zap className="w-6 h-6 text-secondary-DEFAULT" />
-                                </div>
-                                <h3 className="text-2xl font-display font-medium text-slate-900 dark:text-white mb-4">Injectables & Aesthetics</h3>
-                                <p className="text-slate-500 dark:text-slate-400 mb-8 leading-relaxed">
-                                    Refresh your look with our expert injectable treatments. We offer <strong>Botox</strong> to smooth fine lines and dynamic wrinkles, alongside a variety of dermal fillers to restore volume and contour the face naturally.
-                                </p>
-                                <ul className="space-y-3 mb-8">
-                                    <li className="flex items-center gap-3 text-slate-700 dark:text-slate-300">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-secondary-DEFAULT" />
-                                        Botox & Neuromodulators
-                                    </li>
-                                    <li className="flex items-center gap-3 text-slate-700 dark:text-slate-300">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-secondary-DEFAULT" />
-                                        Dermal Fillers
-                                    </li>
-                                    <li className="flex items-center gap-3 text-slate-700 dark:text-slate-300">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-secondary-DEFAULT" />
-                                        Facial Contouring
-                                    </li>
-                                </ul>
-                                <Link to="/contact" className="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all cursor-pointer">
-                                    Book Consult <ArrowRight className="w-4 h-4" />
-                                </Link>
-                            </div>
-                            <div className="md:w-1/2 relative h-64 md:h-auto overflow-hidden">
-                                <img
-                                    src="https://images.unsplash.com/photo-1599305090598-fe179d501227?q=80&w=2788&auto=format&fit=crop"
-                                    alt="Injectables"
-                                    className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700"
-                                />
-                            </div>
-                        </div>
-
-                        {/* Skincare */}
-                        <div className="bg-slate-50 dark:bg-slate-900 rounded-3xl overflow-hidden group border border-slate-100 dark:border-slate-800 flex flex-col md:flex-row-reverse">
-                            <div className="p-8 md:p-12 flex-1 relative z-10">
-                                <div className="p-3 bg-white dark:bg-slate-800 rounded-xl w-fit mb-6 shadow-sm">
-                                    <Sun className="w-6 h-6 text-secondary-DEFAULT" />
-                                </div>
-                                <h3 className="text-2xl font-display font-medium text-slate-900 dark:text-white mb-4">Mirage Products</h3>
-                                <p className="text-slate-500 dark:text-slate-400 mb-8 leading-relaxed">
-                                    Discover our exclusive medical-grade skincare line, <strong>Mirage</strong>. Formulated with potent active ingredients, these products are designed to maintain your treatment results and promote long-term skin health at home.
-                                </p>
-                                <ul className="space-y-3 mb-8">
-                                    <li className="flex items-center gap-3 text-slate-700 dark:text-slate-300">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-secondary-DEFAULT" />
-                                        Medical-Grade Formulas
-                                    </li>
-                                    <li className="flex items-center gap-3 text-slate-700 dark:text-slate-300">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-secondary-DEFAULT" />
-                                        Daily Maintenance Systems
-                                    </li>
-                                    <li className="flex items-center gap-3 text-slate-700 dark:text-slate-300">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-secondary-DEFAULT" />
-                                        Anti-Aging Solutions
-                                    </li>
-                                </ul>
-                                <Link to="/shop" className="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all cursor-pointer">
-                                    Visit Shop <ArrowRight className="w-4 h-4" />
-                                </Link>
-                            </div>
-                            <div className="md:w-1/2 relative h-64 md:h-auto overflow-hidden">
-                                <img
-                                    src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=2787&auto=format&fit=crop"
-                                    alt="Skincare"
-                                    className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700"
-                                />
-                            </div>
-                        </div>
+                    <div className="text-center mb-16">
+                        <span className="text-primary font-semibold tracking-wider uppercase text-sm">Medical Dermatology</span>
+                        <h2 className="text-3xl md:text-4xl font-display font-medium text-slate-900 dark:text-white mt-2">
+                            Expert Medical Care
+                        </h2>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <ServiceCard
+                            title="General Dermatology"
+                            description="Diagnosis and treatment of all skin, hair, and nail conditions. From rashes to chronic diseases, we provide expert medical management."
+                            image="/images/services/general_dermatology.png"
+                            tags={['Skin', 'Hair', 'Nails']}
+                        />
+                        <ServiceCard
+                            title="Acne Treatments"
+                            description="Comprehensive acne management using medical-grade therapies, extractions, and advanced prescription protocols to clear skin."
+                            image="/images/services/acne_treatment.png"
+                            tags={['Clear Skin', 'Therapy']}
+                        />
+                        <ServiceCard
+                            title="Skin Cancer Screenings"
+                            description="Thorough full-body examinations for early detection of melanomas and other skin cancers using advanced dermoscopy."
+                            image="/images/services/skin_cancer_screening.png"
+                            tags={['Prevention', 'Early Detection']}
+                        />
+                        <ServiceCard
+                            title="Skin Cancer Surgery"
+                            description="Precise surgical removal of cancerous lesions with a focus on medical cure and optimal cosmetic outcomes."
+                            image="/images/services/skin_cancer_surgery.png"
+                            tags={['Surgery', 'Treatment']}
+                        />
+                        <ServiceCard
+                            title="Earlobe Repair"
+                            description="Surgical correction for torn, stretched, or gauged earlobes to restore a natural appearance."
+                            image="/images/services/earlobe_repair.png"
+                            tags={['Repair', 'Surgery']}
+                        />
                     </div>
                 </div>
             </section>
+        </div>
+    );
+};
+
+const ScannerCircle = () => {
+    const slides = [
+        {
+            image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=800",
+            position: "object-center",
+            text: "Restore Density"
+        },
+        {
+            image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=800",
+            position: "object-[center_15%]",
+            text: "Real Results"
+        },
+        {
+            image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=800",
+            position: "object-center",
+            text: "Expert Care"
+        }
+    ];
+
+    const [index, setIndex] = React.useState(0);
+
+    React.useEffect(() => {
+        const timer = setInterval(() => {
+            setIndex((prev) => (prev + 1) % slides.length);
+        }, 3500);
+        return () => clearInterval(timer);
+    }, []);
+
+    return (
+        <div className="aspect-square rounded-full overflow-hidden border-8 border-white dark:border-slate-800 shadow-2xl relative bg-slate-100 group cursor-default">
+            <AnimatePresence mode='wait'>
+                <motion.div
+                    key={index}
+                    initial={{ opacity: 0, scale: 1.1 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.8 }}
+                    className="absolute inset-0 w-full h-full"
+                >
+                    <img
+                        src={slides[index].image}
+                        className={`w-full h-full object-cover ${slides[index].position}`}
+                        alt="Hair Restoration"
+                    />
+                    <div className="absolute inset-0 bg-black/20" />
+                </motion.div>
+            </AnimatePresence>
+
+            {/* Animated Text Overlay - Bottom Banner */}
+            <div className="absolute bottom-6 left-0 right-0 z-20 flex justify-center w-full">
+                <AnimatePresence mode='wait'>
+                    <motion.div
+                        key={index}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 20 }}
+                        transition={{ duration: 0.4 }}
+                        className="bg-white/95 dark:bg-slate-950/90 backdrop-blur-md py-3 w-full text-center border-y border-white/20 shadow-sm"
+                    >
+                        <span className="font-display font-medium text-slate-900 dark:text-white text-sm tracking-wider uppercase">
+                            {slides[index].text}
+                        </span>
+                    </motion.div>
+                </AnimatePresence>
+            </div>
+
+            {/* Scanner Line */}
+            <motion.div
+                animate={{ top: ['0%', '100%', '0%'] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                className="absolute left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary to-transparent z-10 shadow-[0_0_15px_rgba(var(--primary-rgb),0.5)] opacity-60"
+            />
+
+            {/* Overlay Gradient for professionalism */}
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-slate-900/10 pointer-events-none" />
         </div>
     );
 };
@@ -223,11 +302,17 @@ const ServiceCard = ({ title, description, image, tags }: { title: string, descr
     </motion.div>
 );
 
-const TreatmentRow = ({ title, description, image }: { title: string, description: string, image: string }) => (
+const TreatmentRow = ({ title, description, image }: { title: string, description: string, image?: string }) => (
     <div className="flex gap-6 items-start group">
-        <div className="w-24 h-24 shrink-0 rounded-2xl overflow-hidden transition-all duration-500 shadow-md">
-            <img src={image} alt={title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-        </div>
+        {image ? (
+            <div className="w-24 h-24 shrink-0 rounded-2xl overflow-hidden transition-all duration-500 shadow-md">
+                <img src={image} alt={title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+            </div>
+        ) : (
+            <div className="w-24 h-24 shrink-0 flex items-center justify-center rounded-2xl bg-secondary-DEFAULT/10 text-secondary-DEFAULT">
+                <div className="w-3 h-3 rounded-full bg-current" />
+            </div>
+        )}
         <div className="flex-1">
             <h4 className="text-lg font-medium text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors">{title}</h4>
             <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{description}</p>

@@ -54,7 +54,7 @@ export const SupabaseStatus = () => {
                                     : message}
                         </p>
                         <div className="mt-2 pt-2 border-t border-red-50 dark:border-red-900/20 text-[10px] italic">
-                            Check .env.local for VITE_SUPABASE_ANON_KEY
+                            Check .env.local for VITE_SUPABASE_PUBLISHABLE_DEFAULT_KEY
                         </div>
                     </div>
                 )}

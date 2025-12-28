@@ -21,32 +21,32 @@ export const SERVICE_DATA = [
     {
         title: 'Laser Hair Removal',
         desc: 'Safe and effective hair reduction for all skin types using the latest medical-grade laser technology.',
-        img: 'https://images.unsplash.com/photo-1559599144-3e390c5031b4?auto=format&fit=crop&q=80&w=400',
+        img: '/images/services/laser_hair_removal.png',
         type: 'Cosmetic'
     },
     {
         title: 'Chemical Peels',
         desc: 'Exfoliating treatments to improve skin texture, tone, and clarity by removing damaged outer layers.',
-        img: 'https://images.unsplash.com/photo-1512290901882-d42436d19f8d?auto=format&fit=crop&q=80&w=400',
+        img: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?auto=format&fit=crop&q=80&w=400',
         type: 'Cosmetic'
     },
     {
         title: 'Psoriasis Care',
         desc: 'Advanced biologic and topical therapies for managing chronic psoriasis and improving quality of life.',
-        img: '/images/ref-2.png',
+        img: '/images/services/psoriasis_care.png',
         type: 'Medical'
     },
     // Retaining existing specialized services
     {
         title: 'ReFirme',
         desc: 'Uses Bipolar radiofrequency for skin tightening and sag reduction, primarily for face and neck.',
-        img: 'https://images.unsplash.com/photo-1512290923902-8a9f81dc2069?auto=format&fit=crop&q=80&w=400',
+        img: 'https://images.unsplash.com/photo-1600334129128-685c5582fd35?auto=format&fit=crop&q=80&w=400',
         type: 'Tightening'
     },
     {
         title: 'IPL Photofacial',
         desc: 'Intense Pulsed Light breakthrough for age spots and various skin conditions without injury.',
-        img: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&q=80&w=400',
+        img: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=400',
         type: 'Rejuvenation'
     },
     {
@@ -58,7 +58,7 @@ export const SERVICE_DATA = [
     {
         title: 'Vein Therapy',
         desc: 'Fast disappearance of noticeable veins through specialized laser and clinical techniques.',
-        img: 'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&q=80&w=400',
+        img: '/images/services/vein_therapy.png',
         type: 'Vascular'
     }
 ];

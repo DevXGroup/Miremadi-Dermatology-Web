@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ShoppingBag, User, Sun, Moon, LogOut, Settings } from 'lucide-react';
+import { Menu, X, ShoppingBag, User, Sun, Moon, LogOut, Settings, Package } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Logo } from '../ui/Logo';
@@ -88,10 +88,10 @@ export const Navbar = () => {
                                     key={link.name}
                                     to={link.path}
                                     className={cn(
-                                        "text-sm font-semibold transition-all hover:text-primary cursor-pointer relative py-1",
+                                        "text-sm transition-all hover:text-primary cursor-pointer relative py-1",
                                         active
-                                            ? "text-primary active-link"
-                                            : "text-slate-600 dark:text-slate-300"
+                                            ? "text-primary font-bold active-link"
+                                            : "text-slate-600 dark:text-slate-300 font-medium"
                                     )}
                                 >
                                     {link.name}
@@ -194,6 +194,14 @@ export const Navbar = () => {
                                         >
                                             <span className="w-4 h-4 text-center">♥</span>
                                             Wishlist
+                                        </Link>
+                                        <Link
+                                            to="/orders"
+                                            className="flex items-center gap-2 px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                                            onClick={() => setIsUserMenuOpen(false)}
+                                        >
+                                            <Package className="w-4 h-4" />
+                                            Order History
                                         </Link>
                                         {user.is_admin && (
                                             <Link
