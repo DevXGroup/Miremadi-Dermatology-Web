@@ -1,13 +1,12 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
-import Stripe from "https://esm.sh/stripe@12.18.0?target=deno"
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
+import Stripe from "https://esm.sh/stripe@13.10.0?target=deno"
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.38.4"
 
 const corsHeaders = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
-serve(async (req) => {
+Deno.serve(async (req) => {
     try {
         const stripeSecret = Deno.env.get('STRIPE_SECRET_KEY')
         if (!stripeSecret) throw new Error('STRIPE_SECRET_KEY is not configured')
@@ -43,8 +42,9 @@ serve(async (req) => {
             const patientId = session.metadata?.patient_id;
             const purchaseId = session.metadata?.purchase_id;
 
-            if (!patientId) {
-                console.error('Missing patient_id in metadata');
+            if (!patientId || !purchaseId) {
+                console.error('Missing required metadata in session:', session.id);
+                return new Response(JSON.stringify({ error: 'Missing metadata' }), { status: 400 });
             }
 
             // Retrieve full session with line items

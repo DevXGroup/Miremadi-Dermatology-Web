@@ -24,11 +24,6 @@ export const Navbar = () => {
     const { user, logout, openAuthModal, cart, openCart } = useShopStore();
     const userMenuRef = useRef(null);
 
-    useEffect(() => {
-        // Expose openCart globally for toasts
-        (window as any).openCart = openCart;
-        return () => { delete (window as any).openCart; };
-    }, [openCart]);
 
     useEffect(() => {
         // Sync theme with DOM and persistence

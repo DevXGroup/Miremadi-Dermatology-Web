@@ -55,9 +55,11 @@ interface ShopState {
     loading: boolean;
     isAuthModalOpen: boolean;
     isCartOpen: boolean;
+    isInitialized: boolean;
 
     // Actions
     fetchProducts: () => Promise<void>;
+    setInitialized: (val: boolean) => void;
     addToCart: (product: Product) => void;
     removeFromCart: (productId: string) => void;
     updateQuantity: (productId: string, quantity: number) => void;
@@ -85,6 +87,7 @@ export const useShopStore = create<ShopState>()(
             loading: false,
             isAuthModalOpen: false,
             isCartOpen: false,
+            isInitialized: false,
 
             fetchProducts: async () => {
                 set({ loading: true });
@@ -110,6 +113,8 @@ export const useShopStore = create<ShopState>()(
                 }
                 set({ loading: false });
             },
+
+            setInitialized: (val) => set({ isInitialized: val }),
 
             addToCart: (product) => {
                 const cart = get().cart;
@@ -173,7 +178,6 @@ export const useShopStore = create<ShopState>()(
             name: 'miremadi-shop-storage',
             partialize: (state) => ({
                 cart: state.cart,
-                user: state.user,
                 wishlist: state.wishlist
             }) as any,
         }

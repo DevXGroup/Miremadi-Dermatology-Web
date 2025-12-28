@@ -1,13 +1,19 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
-import Stripe from "https://esm.sh/stripe@12.18.0?target=deno"
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
+import Stripe from "https://esm.sh/stripe@13.10.0?target=deno"
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.38.4"
 
-const corsHeaders = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-}
+const ALLOWED_ORIGINS = [
+    'http://localhost:5173',
+    'http://localhost:3000',
+    // Add production domains here
+]
 
-serve(async (req) => {
+Deno.serve(async (req) => {
+    const origin = req.headers.get('origin')
+    const corsHeaders = {
+        'Access-Control-Allow-Origin': ALLOWED_ORIGINS.includes(origin!) ? origin! : ALLOWED_ORIGINS[0],
+        'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+    }
+
     if (req.method === 'OPTIONS') {
         return new Response('ok', { headers: corsHeaders })
     }
@@ -74,7 +80,7 @@ serve(async (req) => {
         }
 
         // 2. Generate Purchase ID
-        const purchaseId = `PUR-${Math.floor(Math.random() * 1000000).toString().padStart(6, '0')}`;
+        const purchaseId = `PUR-${crypto.randomUUID()}`;
 
         // 3. Create Session
         const origin = req.headers.get('origin') || 'http://localhost:5173'

@@ -73,10 +73,10 @@ export const AuthModal = () => {
             }
         } catch (err: any) {
             console.error('Auth Error:', err);
-            if (err.status === 500 || err.message?.includes('Database error')) {
-                setError('A server-side error occurred. This is likely due to a database trigger failure. Please ensure all SQL migrations have been run in Supabase.');
+            if (err.status === 500 || err.message?.includes('Database error') || err.message?.includes('trigger')) {
+                setError('A system error occurred. Our team has been notified. Please try again later.');
             } else {
-                setError(err.message || 'An unexpected error occurred');
+                setError(err.message || 'An unexpected error occurred during authentication');
             }
         } finally {
             setLoading(false);
@@ -236,7 +236,7 @@ export const AuthModal = () => {
                                                     onChange={(e) => setPassword(e.target.value)}
                                                     className="w-full pl-9 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all"
                                                     placeholder="••••••••"
-                                                    minLength={6}
+                                                    minLength={12}
                                                 />
                                             </div>
                                         </div>

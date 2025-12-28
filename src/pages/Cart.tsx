@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Trash2, Plus, Minus, ArrowRight } from 'lucide-react';
+import { Trash2, Plus, Minus, ArrowRight, ShoppingBag } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useShopStore } from '../store/useStore';
 import { formatPrice } from '../lib/utils'; // You might need to make sure this is exported/moved to utils properly
@@ -17,7 +17,7 @@ export const Cart = () => {
             <div className="min-h-screen pt-24 flex flex-col items-center justify-center text-center px-4">
                 <h2 className="text-2xl font-display font-medium mb-4">Your cart is empty</h2>
                 <p className="text-slate-500 mb-8">Looks like you haven't added any treatments yet.</p>
-                <Link to="/shop" className="px-6 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-full">Explore Shop</Link>
+                <Link to="/shop" className="px-6 py-3 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 rounded-full hover:bg-slate-800 dark:hover:bg-white transition-all shadow-lg shadow-slate-900/10 hover:scale-[1.02] active:scale-[0.98]">Explore Shop</Link>
             </div>
         );
     }
@@ -40,8 +40,12 @@ export const Cart = () => {
                                     exit={{ opacity: 0, height: 0 }}
                                     className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm flex gap-6 items-center"
                                 >
-                                    <div className="w-24 h-24 bg-slate-100 dark:bg-slate-800 rounded-xl overflow-hidden flex-shrink-0">
-                                        <img src={item.image_url} alt={item.name} className="w-full h-full object-cover" />
+                                    <div className="w-24 h-24 bg-slate-100 dark:bg-slate-800 rounded-xl overflow-hidden flex-shrink-0 flex items-center justify-center">
+                                        {item.image_url ? (
+                                            <img src={item.image_url} alt={item.name} className="w-full h-full object-cover" />
+                                        ) : (
+                                            <ShoppingBag className="w-10 h-10 text-slate-400" />
+                                        )}
                                     </div>
                                     <div className="flex-1">
                                         <div className="flex justify-between items-start">
@@ -100,7 +104,7 @@ export const Cart = () => {
                                 </div>
                             </div>
 
-                            <Link to="/checkout" className="w-full py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-bold flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-all">
+                            <Link to="/checkout" className="w-full py-4 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-slate-800 dark:hover:bg-white hover:scale-[1.01] active:scale-[0.99] transition-all border border-transparent shadow-lg shadow-slate-900/10">
                                 Proceed to Payment <ArrowRight className="w-5 h-5" />
                             </Link>
                             <div className="mt-4 flex gap-2 justify-center">

@@ -82,17 +82,17 @@ export const Services = () => {
                                 <TreatmentRow
                                     title="Botox & Neuromodulators"
                                     description="Smooth fine lines and dynamic wrinkles for a refreshed look."
-                                    image="https://images.unsplash.com/photo-1512290923902-8a9f81dc2069?q=80&w=400&auto=format&fit=crop"
+                                    image="/images/services/botox_treatment.png"
                                 />
                                 <TreatmentRow
                                     title="Dermal Fillers"
                                     description="Restore lost volume and contour features with premium fillers."
-                                    image="https://images.unsplash.com/photo-1599305090598-fe179d501227?q=80&w=400&auto=format&fit=crop"
+                                    image="/images/services/dermal_fillers.png"
                                 />
                                 <TreatmentRow
                                     title="Collagen Boosters"
                                     description="Injectable treatments that stimulate your own collagen production."
-                                    image="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?q=80&w=400&auto=format&fit=crop"
+                                    image="/images/services/collagen_boosters.png"
                                 />
                             </div>
                         </div>
@@ -132,14 +132,17 @@ export const Services = () => {
                                         <TreatmentRow
                                             title="Male Pattern Baldness"
                                             description="Strategized medical protocols to halt loss and encourage regrowth."
+                                            image="/images/services/male_hair_loss.png"
                                         />
                                         <TreatmentRow
                                             title="Female Hair Thinning"
                                             description="Customized solutions addressing hormonal and stress-related thinning."
+                                            image="/images/services/female_hair_thinning.png"
                                         />
                                         <TreatmentRow
                                             title="Alopecia Areata"
                                             description="Medical management for autoimmune hair loss conditions."
+                                            image="/images/services/hair_treatment.png"
                                         />
                                     </div>
                                 </div>
@@ -199,17 +202,17 @@ export const Services = () => {
 const ScannerCircle = () => {
     const slides = [
         {
-            image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=800",
+            image: "/images/services/male_hair_loss.png",
             position: "object-center",
             text: "Restore Density"
         },
         {
-            image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=800",
-            position: "object-[center_15%]",
+            image: "/images/services/female_hair_thinning.png",
+            position: "object-center",
             text: "Real Results"
         },
         {
-            image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=800",
+            image: "/images/services/hair_treatment.png",
             position: "object-center",
             text: "Expert Care"
         }
@@ -277,17 +280,28 @@ const ScannerCircle = () => {
 
 const ServiceCard = ({ title, description, image, tags }: { title: string, description: string, image: string, tags: string[] }) => (
     <motion.div
-        whileHover={{ y: -5 }}
-        className="bg-white dark:bg-slate-900 rounded-2xl overflow-hidden shadow-sm border border-slate-100 dark:border-slate-800 group"
+        whileHover={{ y: -8, transition: { duration: 0.3, ease: "easeOut" } }}
+        className="bg-white dark:bg-slate-900 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl border border-slate-100 dark:border-slate-800 group transition-all duration-300"
     >
-        <div className="aspect-square relative overflow-hidden">
-            <div className="absolute inset-0 bg-slate-900/5 group-hover:bg-transparent transition-colors z-10" />
-            <img src={image} alt={title} className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" />
-        </div>
-        <div className="p-6">
-            <div className="flex flex-wrap gap-2 mb-4">
+        <div className="aspect-[4/5] relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10" />
+            <img
+                src={image}
+                alt={title}
+                className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out"
+            />
+            <div className="absolute top-4 right-4 z-20 flex flex-wrap gap-2 justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-2 group-hover:translate-y-0">
                 {tags.map((tag, i) => (
-                    <span key={i} className="text-[10px] uppercase tracking-wider font-bold text-secondary-DEFAULT bg-secondary-DEFAULT/10 px-2 py-1 rounded-full">
+                    <span key={i} className="text-[10px] uppercase tracking-wider font-bold text-white bg-primary/80 backdrop-blur-md px-3 py-1 rounded-full shadow-lg">
+                        {tag}
+                    </span>
+                ))}
+            </div>
+        </div>
+        <div className="p-6 relative">
+            <div className="flex flex-wrap gap-2 mb-4 group-hover:opacity-0 transition-opacity duration-300">
+                {tags.map((tag, i) => (
+                    <span key={i} className="text-[10px] uppercase tracking-wider font-bold text-primary bg-primary/5 px-2 py-1 rounded-full">
                         {tag}
                     </span>
                 ))}
@@ -295,26 +309,32 @@ const ServiceCard = ({ title, description, image, tags }: { title: string, descr
             <h3 className="text-xl font-display font-medium text-slate-900 dark:text-white mb-3 group-hover:text-primary transition-colors">
                 {title}
             </h3>
-            <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+            <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-4 line-clamp-3">
                 {description}
             </p>
+            <div className="pt-4 border-t border-slate-50 dark:border-slate-800/50 flex items-center justify-between">
+                <span className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Medical Grade</span>
+                <span className="text-primary opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 text-sm font-medium">
+                    Details <ArrowRight className="w-4 h-4" />
+                </span>
+            </div>
         </div>
     </motion.div>
 );
 
 const TreatmentRow = ({ title, description, image }: { title: string, description: string, image?: string }) => (
-    <div className="flex gap-6 items-start group">
+    <div className="flex gap-6 items-start group p-4 -mx-4 rounded-2xl hover:bg-white dark:hover:bg-slate-900/50 hover:shadow-sm transition-all duration-300">
         {image ? (
-            <div className="w-24 h-24 shrink-0 rounded-2xl overflow-hidden transition-all duration-500 shadow-md">
+            <div className="w-24 h-24 shrink-0 rounded-2xl overflow-hidden transition-all duration-500 shadow-md group-hover:shadow-lg border border-white dark:border-slate-800">
                 <img src={image} alt={title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
             </div>
         ) : (
-            <div className="w-24 h-24 shrink-0 flex items-center justify-center rounded-2xl bg-secondary-DEFAULT/10 text-secondary-DEFAULT">
+            <div className="w-24 h-24 shrink-0 flex items-center justify-center rounded-2xl bg-primary/5 text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-500">
                 <div className="w-3 h-3 rounded-full bg-current" />
             </div>
         )}
         <div className="flex-1">
-            <h4 className="text-lg font-medium text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors">{title}</h4>
+            <h4 className="text-lg font-medium text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors font-display">{title}</h4>
             <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{description}</p>
         </div>
     </div>

@@ -116,7 +116,21 @@ export const FulfillOrderModal = ({ order, onClose, onSuccess }: FulfillOrderMod
                                                     className="sr-only"
                                                     accept="image/*"
                                                     onChange={(e) => {
-                                                        if (e.target.files?.[0]) setFile(e.target.files[0]);
+                                                        const selectedFile = e.target.files?.[0];
+                                                        if (!selectedFile) return;
+
+                                                        // Validation
+                                                        if (selectedFile.size > 5 * 1024 * 1024) {
+                                                            toast.error('File size must be less than 5MB');
+                                                            return;
+                                                        }
+
+                                                        if (!selectedFile.type.startsWith('image/')) {
+                                                            toast.error('Only image files are allowed');
+                                                            return;
+                                                        }
+
+                                                        setFile(selectedFile);
                                                     }}
                                                 />
                                             </label>

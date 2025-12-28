@@ -11,7 +11,7 @@ interface ProductCardProps {
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-    const { addToCart, toggleWishlist, wishlist } = useShopStore();
+    const { addToCart, toggleWishlist, wishlist, openCart } = useShopStore();
     const isWishlisted = wishlist.includes(product.id);
 
     const handleAddToCart = () => {
@@ -20,7 +20,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             description: "View your cart to checkout.",
             action: {
                 label: "View Cart",
-                onClick: () => (window as any).openCart?.() // Assuming store has openCart but for global access we might need a workaround or just rely on the navbar
+                onClick: () => openCart()
             }
         });
     };

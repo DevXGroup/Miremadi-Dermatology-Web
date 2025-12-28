@@ -57,7 +57,7 @@ export const CartDrawer = () => {
                                     </div>
                                     <button
                                         onClick={closeCart}
-                                        className="mt-4 px-6 py-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-medium hover:bg-primary dark:hover:bg-primary dark:hover:text-white transition-all cursor-pointer"
+                                        className="mt-4 px-6 py-2 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 rounded-xl font-medium hover:bg-slate-800 dark:hover:bg-white hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer shadow-lg shadow-slate-900/10"
                                     >
                                         Start Shopping
                                     </button>
@@ -69,8 +69,12 @@ export const CartDrawer = () => {
                                         key={item.id}
                                         className="flex gap-4"
                                     >
-                                        <div className="w-20 h-24 bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden shrink-0">
-                                            <img src={item.image_url} alt={item.name} className="w-full h-full object-cover" />
+                                        <div className="w-20 h-24 bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden shrink-0 flex items-center justify-center">
+                                            {item.image_url ? (
+                                                <img src={item.image_url} alt={item.name} className="w-full h-full object-cover" />
+                                            ) : (
+                                                <ShoppingBag className="w-8 h-8 text-slate-400" />
+                                            )}
                                         </div>
                                         <div className="flex-1 flex flex-col justify-between py-1">
                                             <div>
@@ -125,7 +129,7 @@ export const CartDrawer = () => {
                                 <Link
                                     to="/checkout"
                                     onClick={closeCart}
-                                    className="block w-full py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-bold text-center shadow-lg shadow-slate-900/10 dark:shadow-none hover:bg-primary hover:text-white dark:hover:bg-primary dark:hover:text-white transition-all cursor-pointer"
+                                    className="block w-full py-4 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 rounded-xl font-bold text-center shadow-lg shadow-slate-900/10 dark:shadow-none hover:bg-slate-800 dark:hover:bg-white hover:scale-[1.01] active:scale-[0.99] transition-all cursor-pointer border border-transparent"
                                 >
                                     Proceed to Payment
                                 </Link>

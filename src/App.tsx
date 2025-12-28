@@ -33,8 +33,28 @@ const PageLoader = () => (
     </div>
 );
 
+// Protected Route Component
+const ProtectedRoute = ({ children, requireAdmin = false }: { children: React.ReactNode; requireAdmin?: boolean }) => {
+    const { user, isInitialized } = useShopStore();
+
+    // While we are still determining the auth state, don't redirect
+    if (!isInitialized) {
+        return <PageLoader />;
+    }
+
+    if (!user) {
+        return <Navigate to="/" replace />;
+    }
+
+    if (requireAdmin && !user.is_admin) {
+        return <Navigate to="/" replace />;
+    }
+
+    return <>{children}</>;
+};
+
 function App() {
-    const { login, logout } = useShopStore();
+    const { user, login, logout, setInitialized } = useShopStore();
 
     React.useEffect(() => {
         // Helper to map session to user profile
@@ -52,13 +72,16 @@ function App() {
                     email: session.user.email || '',
                     full_name: profile?.full_name || session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || 'User',
                     created_at: session.user.created_at,
-                    photo_url: session.user.user_metadata?.avatar_url,
+                    photo_url: profile?.photo_url || session.user.user_metadata?.avatar_url,
+                    phone_number: profile?.phone_number,
+                    address: profile?.address,
                     privacy_policy_accepted: session.user.user_metadata?.privacy_policy_accepted,
                     privacy_policy_accepted_at: session.user.user_metadata?.privacy_policy_accepted_at,
                     is_admin: profile?.is_admin
                 };
                 login(userProfile);
             }
+            setInitialized(true);
         };
 
         // Build-in session check
@@ -72,6 +95,7 @@ function App() {
                 syncUser(session);
             } else {
                 logout();
+                setInitialized(true);
             }
         });
 
@@ -95,24 +119,22 @@ function App() {
                         <Route path="/contact" element={<Contact />} />
 
                         {/* Auth Routes */}
-                        <Route path="/account" element={<Account />} />
-                        <Route path="/orders" element={<OrderHistory />} />
-                        <Route path="/wishlist" element={<Wishlist />} />
+                        <Route path="/account" element={<ProtectedRoute><Account /></ProtectedRoute>} />
+                        <Route path="/orders" element={<ProtectedRoute><OrderHistory /></ProtectedRoute>} />
+                        <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
 
                         {/* Admin Routes */}
-                        <Route path="/admin" element={<AdminLayout />}>
+                        <Route path="/admin" element={<ProtectedRoute requireAdmin><AdminLayout /></ProtectedRoute>}>
                             <Route index element={<Dashboard />} />
                             <Route path="dashboard" element={<Dashboard />} />
                         </Route>
-
-
 
                         {/* Legal */}
                         <Route path="/legal/privacy-policy" element={<PrivacyPolicy />} />
                         <Route path="/legal/terms-conditions" element={<TermsConditions />} />
                         <Route path="/sitemap" element={<Sitemap />} />
 
-                        {/* Legacy Redirects or Direct Links could trigger modal, but for now we just redirect home or show modal logic later if needed */}
+                        {/* Legacy Redirects */}
                         <Route path="/login" element={<Navigate to="/" replace />} />
                         <Route path="/signup" element={<Navigate to="/" replace />} />
 
