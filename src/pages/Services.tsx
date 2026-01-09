@@ -40,7 +40,7 @@ export const Services = () => {
                         <ServiceCard
                             title="Venus Bliss"
                             description="Non-invasive lipo and body contouring. Target stubborn fat and cellulite with effective laser technology for a slimmer silhouette."
-                            image="/images/services/venus_bliss.png"
+                            image="/images/services/venus_bliss.webp"
                             tags={['Fat Reduction', 'Body Contouring']}
                         />
                         <ServiceCard
@@ -290,34 +290,21 @@ const ServiceCard = ({ title, description, image, tags }: { title: string, descr
                 alt={title}
                 className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out"
             />
-            <div className="absolute top-4 right-4 z-20 flex flex-wrap gap-2 justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-2 group-hover:translate-y-0">
+            <div className="absolute top-4 right-4 z-20 flex flex-wrap gap-2 justify-end">
                 {tags.map((tag, i) => (
-                    <span key={i} className="text-[10px] uppercase tracking-wider font-bold text-white bg-primary/80 backdrop-blur-md px-3 py-1 rounded-full shadow-lg">
+                    <span key={i} className="text-[10px] uppercase tracking-wider font-bold text-slate-900 bg-primary-light/95 backdrop-blur-md px-3 py-1.5 rounded-full shadow-lg border border-white/20">
                         {tag}
                     </span>
                 ))}
             </div>
         </div>
         <div className="p-6 relative">
-            <div className="flex flex-wrap gap-2 mb-4 group-hover:opacity-0 transition-opacity duration-300">
-                {tags.map((tag, i) => (
-                    <span key={i} className="text-[10px] uppercase tracking-wider font-bold text-primary bg-primary/5 px-2 py-1 rounded-full">
-                        {tag}
-                    </span>
-                ))}
-            </div>
             <h3 className="text-xl font-display font-medium text-slate-900 dark:text-white mb-3 group-hover:text-primary transition-colors">
                 {title}
             </h3>
             <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-4 line-clamp-3">
                 {description}
             </p>
-            <div className="pt-4 border-t border-slate-50 dark:border-slate-800/50 flex items-center justify-between">
-                <span className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Medical Grade</span>
-                <span className="text-primary opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 text-sm font-medium">
-                    Details <ArrowRight className="w-4 h-4" />
-                </span>
-            </div>
         </div>
     </motion.div>
 );

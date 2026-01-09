@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { FAQ } from '../components/sections/FAQ';
 import { Credentials } from '../components/ui/Credentials';
 import { SERVICE_DATA } from '../lib/data';
+import { MOCK_PRODUCTS } from '../store/useStore';
+import { ProductCard } from '../components/ui/ProductCard';
 
 export const Home = () => {
     return (
@@ -122,6 +124,73 @@ export const Home = () => {
                                         {item.desc}
                                     </p>
                                 </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Mirage Collection Promo */}
+            <section className="relative h-[650px] flex items-center overflow-hidden group">
+                <div className="absolute inset-0">
+                    <img
+                        src="/images/promo/mirage_promo.png"
+                        alt="Mirage Skincare Collection"
+                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000"
+                    />
+                    <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-[1px]" />
+                </div>
+                <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+                    <motion.div
+                        initial={{ opacity: 0, x: -30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8 }}
+                        className="max-w-2xl text-white"
+                    >
+                        <span className="text-xs font-bold uppercase tracking-[0.4em] mb-4 block text-white/70">New Arrival</span>
+                        <h2 className="text-4xl sm:text-5xl md:text-7xl font-display font-medium mb-6 leading-tight">
+                            The <span className="italic font-light text-primary">Mirage</span> <br />
+                            Collection
+                        </h2>
+                        <p className="text-xl text-white/90 mb-10 font-light leading-relaxed">
+                            Experience the pinnacle of dermatological science with our new signature skincare line. Meticulously formulated for transformative results and professional-grade precision.
+                        </p>
+                        <Link
+                            to="/shop"
+                            className="inline-block px-10 py-5 bg-slate-900 text-white border border-white/20 rounded-full font-bold uppercase tracking-widest text-sm hover:bg-white hover:text-slate-900 transition-all transform hover:scale-105"
+                        >
+                            Shop the Collection
+                        </Link>
+                    </motion.div>
+                </div>
+            </section>
+
+            {/* Curated Skincare Shelf */}
+            <section className="py-24 bg-white dark:bg-slate-950 overflow-hidden">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="flex justify-between items-end mb-12">
+                        <div>
+                            <span className="text-xs font-bold text-primary uppercase tracking-[0.4em] mb-4 block">New Arrivals</span>
+                            <h2 className="text-4xl font-display font-medium text-slate-900 dark:text-white">
+                                Curated <span className="italic font-light text-primary">Skincare</span>
+                            </h2>
+                        </div>
+                        <Link to="/shop" className="text-sm font-bold uppercase tracking-widest text-slate-400 hover:text-primary transition-colors">
+                            View All Items →
+                        </Link>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                        {MOCK_PRODUCTS.slice(0, 4).map((product, i) => (
+                            <motion.div
+                                key={product.id}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: i * 0.1 }}
+                            >
+                                <ProductCard product={product} />
                             </motion.div>
                         ))}
                     </div>

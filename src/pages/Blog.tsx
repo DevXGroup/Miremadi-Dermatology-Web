@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Clock, Calendar, ChevronRight, Share2 } from 'lucide-react';
+import { toast } from 'sonner';
 
 const POSTS = [
+    // ... (rest of the constants remain unchanged)
     {
         id: 1,
         title: 'The Science of Hydration',
@@ -46,7 +48,7 @@ const POSTS = [
         excerpt: 'Everything you need to know about the gold standard of anti-aging ingredients.',
         content: `
             <p>Retinoids are arguably the most studied and proven ingredients in dermatology. Often referred to as the "Gold Standard," they offer benefits ranging from acne reduction to significant anti-aging effects.</p>
-            <h3>How Retinoids Work</h3>
+            <h3>How Ret.   ojsidhsuiahdiuashidinoids Work</h3>
             <p>Retinoids work by communicating with skin cells to increase turnover and stimulate collagen production. This process helps to thicken the deeper layers of the skin while smoothing the surface texture.</p>
             <h3>The Transition Period</h3>
             <p>Known as "retinization," the first few weeks of use can involve redness and peeling. At Miremadi Dermatology, we recommend the "Sandwich Method" to minimize irritation while maintaining efficacy.</p>
@@ -62,6 +64,30 @@ const POSTS = [
 
 export const Blog = () => {
     const [selectedPost, setSelectedPost] = useState<typeof POSTS[0] | null>(null);
+
+    // Deep-linking: Open modal if post ID is in URL
+    React.useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        const postId = params.get('post');
+        if (postId) {
+            const post = POSTS.find(p => p.id === parseInt(postId));
+            if (post) setSelectedPost(post);
+        }
+    }, []);
+
+    const handleShare = (post: typeof POSTS[0]) => {
+        const shareUrl = `${window.location.origin}/blog?post=${post.id}`;
+
+        if (navigator.share) {
+            navigator.share({
+                title: post.title,
+                url: shareUrl,
+            }).catch(console.error);
+        } else {
+            navigator.clipboard.writeText(shareUrl);
+            toast.success('Link copied to clipboard!');
+        }
+    };
 
     return (
         <div className="pt-24 min-h-screen bg-white dark:bg-slate-950 font-sans">
@@ -176,7 +202,10 @@ export const Blog = () => {
                                     <div className="flex items-center gap-2">
                                         <Clock className="w-3 h-3" /> {selectedPost.readTime}
                                     </div>
-                                    <button className="flex items-center gap-2 hover:text-primary transition-colors ml-auto">
+                                    <button
+                                        onClick={() => handleShare(selectedPost)}
+                                        className="flex items-center gap-2 hover:text-primary transition-colors ml-auto"
+                                    >
                                         <Share2 className="w-3 h-3" /> Share
                                     </button>
                                 </div>

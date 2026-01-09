@@ -36,6 +36,11 @@ export const Checkout = () => {
             });
 
             if (error) throw error;
+
+            if (data?.error) {
+                throw new Error(data.error);
+            }
+
             if (data?.url) {
                 window.location.href = data.url;
             } else {
@@ -43,7 +48,19 @@ export const Checkout = () => {
             }
         } catch (err: any) {
             console.error('Checkout error:', err);
-            alert(`Checkout failed: ${err.message}`);
+            // Try to extract the actual error message from the response body if available
+            let errorMessage = err.message;
+            if (err.context && typeof err.context.json === 'function') {
+                try {
+                    const errorBody = await err.context.json();
+                    if (errorBody && errorBody.error) {
+                        errorMessage = errorBody.error;
+                    }
+                } catch (e) {
+                    console.warn('Failed to parse error body', e);
+                }
+            }
+            alert(`Checkout failed: ${errorMessage}`);
         } finally {
             setLoading(false);
         }

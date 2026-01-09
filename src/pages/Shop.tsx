@@ -4,7 +4,7 @@ import { useShopStore } from '../store/useStore';
 import { ProductCard } from '../components/ui/ProductCard';
 import { Product } from '../types';
 
-const CATEGORIES = ['All', 'Moisturizers', 'Serums', 'Treatments', 'Cleansers'];
+const CATEGORIES = ['All', 'Moisturizers', 'Rejuvenation', 'Cleansers'];
 
 export const Shop = () => {
     const { products, fetchProducts, loading, user } = useShopStore();
@@ -51,14 +51,33 @@ export const Shop = () => {
                 )}
 
                 {/* Header Section */}
+                <div className="relative rounded-[2.5rem] overflow-hidden mb-16 h-[400px] flex items-center shadow-2xl group">
+                    <div className="absolute inset-0">
+                        <img
+                            src="/images/promo/mirage_promo.png"
+                            alt="The Mirage Collection"
+                            className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-r from-slate-900/80 to-transparent" />
+                    </div>
+                    <div className="relative px-12 max-w-2xl">
+                        <span className="text-white/60 font-bold tracking-[0.4em] uppercase text-xs mb-4 block">Exclusive Selection</span>
+                        <h1 className="text-5xl md:text-6xl font-display font-medium text-white mb-6 leading-tight">
+                            The <span className="italic font-light text-primary">Mirage</span> <br /> Collection
+                        </h1>
+                        <p className="text-white/80 text-lg leading-relaxed font-light">
+                            Experience dermatologist-formulated precision. Professional-grade results, expertly crafted for your unique skin health.
+                        </p>
+                    </div>
+                </div>
+
                 <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
                     <div>
-                        <span className="text-secondary-DEFAULT font-medium tracking-wider uppercase text-sm mb-2 block">Shop Collection</span>
-                        <h1 className="text-4xl md:text-5xl font-display font-medium text-slate-900 dark:text-white mb-4">
+                        <h2 className="text-3xl font-display font-medium text-slate-900 dark:text-white mb-2">
                             Curated Skincare
-                        </h1>
-                        <p className="text-slate-500 dark:text-slate-400 max-w-xl text-lg leading-relaxed">
-                            Discover our dermatologist-approved products designed to transform your skin health.
+                        </h2>
+                        <p className="text-slate-500 dark:text-slate-400 max-w-xl leading-relaxed">
+                            Discover the perfect balance of science and luxury.
                         </p>
                     </div>
 
@@ -69,8 +88,8 @@ export const Shop = () => {
                                 key={category}
                                 onClick={() => setSelectedCategory(category)}
                                 className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${selectedCategory === category
-                                        ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-md transform scale-105'
-                                        : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800'
+                                    ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-md transform scale-105'
+                                    : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800'
                                     }`}
                             >
                                 {category}

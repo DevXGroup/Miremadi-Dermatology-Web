@@ -4,45 +4,65 @@ import { Product, CartItem, UserProfile } from '../types';
 import { supabase } from '../lib/supabase';
 
 // Mock Data
-const MOCK_PRODUCTS: Product[] = [
+export const MOCK_PRODUCTS: Product[] = [
     {
-        id: '1',
-        name: 'Hydrating Silk Cream',
-        description: 'Expertly formulated daily moisturizer for deep hydration.',
-        price_cents: 8500,
-        currency: 'usd',
-        category: 'Moisturizers',
-        image_url: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=800',
-        active: true
-    },
-    {
-        id: '2',
-        name: 'Vitamin C Serum',
-        description: 'Brightening serum to even out skin tone and texture.',
+        id: 'mirage-gentle-wash',
+        name: 'Mirage Silky Gentle Wash',
+        description: 'A luxurious, ultra-gentle cleansing formula designed for sensitive skin. Infused with botanical extracts to remove impurities while leaving a silky, hydrated finish without stripping essential moisture.',
         price_cents: 12000,
         currency: 'usd',
-        category: 'Serums',
-        image_url: 'https://images.unsplash.com/photo-1620916297397-a4a5402a3c6c?auto=format&fit=crop&q=80&w=800',
+        category: 'Cleansers',
+        image_url: '/images/products/silky_gentle_wash.png',
         active: true
     },
     {
-        id: '3',
-        name: 'Gentle Foaming Cleanser',
-        description: 'Removes impurities without stripping natural oils.',
-        price_cents: 4500,
+        id: 'mirage-facial-wash',
+        name: 'Mirage Silky Facial Wash',
+        description: 'A sophisticated daily facial cleanser that utilizes micro-cleansing technology to refine pores and refresh the complexion. Perfectly balanced for all skin types to maintain a healthy pH level.',
+        price_cents: 12000,
         currency: 'usd',
         category: 'Cleansers',
-        image_url: 'https://images.unsplash.com/photo-1556228720-1957be919ba1?auto=format&fit=crop&q=80&w=800',
+        image_url: '/images/products/silky_facial_wash.png',
         active: true
     },
     {
-        id: '4',
-        name: 'Retinol Night Repair',
-        description: 'Powerful night treatment for skin renewal.',
-        price_cents: 15000,
+        id: 'mirage-c-reti',
+        name: 'Mirage C Reti Cream',
+        description: 'An intensive age-defying treatment combining the brightening power of stabilized Vitamin C with the regenerative benefits of Retinol. Stimulates collagen production and targets fine lines for a radiant glow.',
+        price_cents: 12000,
         currency: 'usd',
-        category: 'Treatments',
-        image_url: 'https://images.unsplash.com/photo-1611080541599-8c6dbde6edb8?auto=format&fit=crop&q=80&w=800',
+        category: 'Rejuvenation',
+        image_url: '/images/products/c_reti_cream.png',
+        active: true
+    },
+    {
+        id: 'mirage-night-cream',
+        name: 'Mirage Collagen Night Cream',
+        description: 'A rich, restorative nightly balm that works in harmony with the skin’s nocturnal repair cycle. Deeply mimics natural lipids to firm, plum, and eliminate signs of fatigue by morning.',
+        price_cents: 12000,
+        currency: 'usd',
+        category: 'Moisturizers',
+        image_url: '/images/products/collagen_night_cream.png',
+        active: true
+    },
+    {
+        id: 'mirage-day-cream',
+        name: 'Mirage Collagen Day Cream',
+        description: 'A high-performance daytime moisturizer that provides long-lasting hydration and environmental protection. Infused with marine collagen to improve skin elasticity and create a smooth, luminous base.',
+        price_cents: 12000,
+        currency: 'usd',
+        category: 'Moisturizers',
+        image_url: '/images/products/collagen_day_cream.png',
+        active: true
+    },
+    {
+        id: 'mirage-eye-cream',
+        name: 'Mirage Collagen Eye Cream',
+        description: 'A targeted clinical treatment for the delicate periocular area. Formulated with peptide complexes and collagen to visibly reduce dark circles, puffiness, and crow’s feet.',
+        price_cents: 12000,
+        currency: 'usd',
+        category: 'Moisturizers',
+        image_url: '/images/products/collagen_eye_cream.png',
         active: true
     }
 ];
@@ -91,25 +111,53 @@ export const useShopStore = create<ShopState>()(
 
             fetchProducts: async () => {
                 set({ loading: true });
-                const { data, error } = await supabase
-                    .from('products')
-                    .select('*')
-                    .eq('active', true);
+                try {
+                    const { data, error } = await supabase
+                        .from('products')
+                        .select('*')
+                        .eq('active', true);
 
-                if (error) {
-                    console.error('Error fetching products:', error);
-                } else if (data) {
-                    const mappedProducts: Product[] = data.map((p: any) => ({
-                        id: p.id,
-                        name: p.name,
-                        description: p.description,
-                        price_cents: p.price_cents,
-                        currency: p.currency || 'usd',
-                        category: p.category,
-                        image_url: p.image_url || 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=800',
-                        active: p.active
-                    }));
-                    set({ products: mappedProducts.length > 0 ? mappedProducts : MOCK_PRODUCTS });
+                    if (error) {
+                        console.warn('Error fetching products from DB:', error);
+                        set({ products: MOCK_PRODUCTS });
+                    } else if (data && data.length > 0) {
+                        const dbProducts: Product[] = data
+                            .map((p: any) => ({
+                                id: p.id,
+                                name: p.name,
+                                description: p.description,
+                                price_cents: p.price_cents,
+                                currency: p.currency || 'usd',
+                                category: p.category,
+                                image_url: p.image_url || '',
+                                active: p.active
+                            }))
+                            .filter((p: Product) => {
+                                // Filter out placeholders and empty products
+                                const name = p.name?.toLowerCase() || '';
+                                const isPlaceholder =
+                                    name.includes('botox') ||
+                                    name.includes('acne treatment') ||
+                                    name.includes('chemical peel') ||
+                                    name.includes('placeholder') ||
+                                    !p.name ||
+                                    !p.image_url;
+                                return !isPlaceholder;
+                            });
+
+                        // Merge Mocks with DB products, ensuring ID uniqueness, favoring Mirage mocks
+                        const combined = [...MOCK_PRODUCTS];
+                        dbProducts.forEach(dbProd => {
+                            if (!combined.find(m => m.id === dbProd.id)) {
+                                combined.push(dbProd);
+                            }
+                        });
+                        set({ products: combined });
+                    } else {
+                        set({ products: MOCK_PRODUCTS });
+                    }
+                } catch (e) {
+                    set({ products: MOCK_PRODUCTS });
                 }
                 set({ loading: false });
             },

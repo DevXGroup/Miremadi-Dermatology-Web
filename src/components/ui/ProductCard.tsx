@@ -38,7 +38,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                 <img
                     src={product.image_url}
                     alt={product.name}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
                 />
 
                 {/* Wishlist Button */}
@@ -59,9 +59,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             {/* Info */}
             <div className="p-5 flex flex-col flex-grow">
                 <div className="mb-4 flex-grow">
-                    <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-widest">{product.category}</p>
+                    <span className="inline-block text-[10px] font-bold text-slate-900 bg-secondary-light/90 px-3 py-1 rounded-full mb-3 uppercase tracking-widest shadow-sm">
+                        {product.category}
+                    </span>
                     <h3 className="text-lg font-display font-medium text-slate-900 dark:text-white mb-2 leading-tight group-hover:text-primary transition-colors">
-                        {product.name}
+                        {product.name.split(' ').map((word, i) =>
+                            word === 'Mirage' ? <span key={i} className="text-primary">{word} </span> : word + ' '
+                        )}
                     </h3>
                     <p className="text-slate-500 dark:text-slate-400 text-sm line-clamp-2 leading-relaxed">
                         {product.description}

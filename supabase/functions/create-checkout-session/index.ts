@@ -83,9 +83,9 @@ Deno.serve(async (req) => {
         const purchaseId = `PUR-${crypto.randomUUID()}`;
 
         // 3. Create Session
-        const origin = req.headers.get('origin') || 'http://localhost:5173'
-        const success_url = `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`
-        const cancel_url = `${origin}/checkout?canceled=true`
+        const originUrl = req.headers.get('origin') || 'http://localhost:5173'
+        const success_url = `${originUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`
+        const cancel_url = `${originUrl}/checkout?canceled=true`
 
         let session;
 
@@ -152,8 +152,9 @@ Deno.serve(async (req) => {
 
     } catch (error: any) {
         console.error('Checkout Function Error:', error.message)
+        // Return 200 with error to debug client-side masking
         return new Response(JSON.stringify({ error: error.message }), {
-            status: 400,
+            status: 200,
             headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         })
     }
