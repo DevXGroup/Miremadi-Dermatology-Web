@@ -72,16 +72,15 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                     </p>
                 </div>
 
-                <div className="flex items-center gap-3 pt-4 border-t border-slate-100 dark:border-slate-800">
-                    <span className="text-lg font-medium text-slate-900 dark:text-white">
-                        ${(product.price_cents / 100).toFixed(2)}
-                    </span>
+                <div className="flex flex-col gap-3 pt-4 border-t border-slate-100 dark:border-slate-800">
+                    <p className="text-[10px] text-slate-500 dark:text-slate-400 font-medium">
+                        Please call our office at <span className="text-secondary-DEFAULT">(858) 456-1840</span> to place your order.
+                    </p>
                     <button
-                        onClick={handleAddToCart}
-                        className="ml-auto w-auto px-4 py-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-sm font-medium rounded-lg hover:bg-primary hover:text-white dark:hover:bg-primary dark:hover:text-white transition-all duration-300 flex items-center gap-2 cursor-pointer active:scale-95"
+                        onClick={() => window.location.href = 'tel:8584561840'}
+                        className="w-full px-4 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-sm font-semibold rounded-lg hover:bg-white dark:hover:bg-slate-900 hover:text-slate-900 dark:hover:text-white border border-slate-900 dark:border-white transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer active:scale-95 shadow-sm hover:shadow-xl"
                     >
-                        <ShoppingBag className="w-4 h-4" />
-                        Add
+                        Call to Order
                     </button>
                 </div>
             </div>

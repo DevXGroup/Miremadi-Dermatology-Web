@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://miremadi.com/sitemap.xml

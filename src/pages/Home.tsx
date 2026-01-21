@@ -37,13 +37,13 @@ export const Home = () => {
                         <div className="flex gap-4">
                             <Link
                                 to="/contact"
-                                className="px-8 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-full font-medium hover:scale-105 hover:bg-primary dark:hover:bg-primary dark:hover:text-white transition-all uppercase tracking-wider text-sm cursor-pointer text-center"
+                                className="px-8 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-full font-medium hover:scale-105 hover:bg-white dark:hover:bg-slate-900 hover:text-slate-900 dark:hover:text-white border border-slate-900 dark:border-white transition-all uppercase tracking-wider text-sm cursor-pointer text-center shadow-lg"
                             >
                                 Start Your Beauty Journey
                             </Link>
                             <Link
                                 to="/services"
-                                className="px-8 py-4 border border-slate-200 dark:border-slate-700 rounded-full font-medium hover:border-primary hover:text-primary dark:hover:hover:text-primary dark:hover:border-primary transition-all uppercase tracking-wider text-sm cursor-pointer text-center"
+                                className="px-8 py-4 border border-slate-200 dark:border-slate-700 rounded-full font-medium hover:bg-slate-900 dark:hover:bg-white hover:text-white dark:hover:text-slate-900 transition-all uppercase tracking-wider text-sm cursor-pointer text-center"
                             >
                                 Explore Services
                             </Link>
@@ -58,7 +58,7 @@ export const Home = () => {
                     >
                         {/* Using the image from the old Hero component directly */}
                         <img
-                            src="/dr-miremadi-portrait-2.png"
+                            src="/dr-miremadi-portrait-new.webp"
                             alt="Dr. Arjang K. Miremadi"
                             className="w-full h-full object-cover object-top grayscale hover:grayscale-0 transition-all duration-700"
                         />
@@ -158,7 +158,7 @@ export const Home = () => {
                         </p>
                         <Link
                             to="/shop"
-                            className="inline-block px-10 py-5 bg-slate-900 text-white border border-white/20 rounded-full font-bold uppercase tracking-widest text-sm hover:bg-white hover:text-slate-900 transition-all transform hover:scale-105"
+                            className="inline-block px-10 py-5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 border border-transparent hover:border-slate-900 dark:hover:border-white rounded-full font-bold uppercase tracking-widest text-sm hover:bg-white dark:hover:bg-slate-900 hover:text-slate-900 dark:hover:text-white transition-all transform hover:scale-105"
                         >
                             Shop the Collection
                         </Link>

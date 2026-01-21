@@ -221,7 +221,7 @@ export const Blog = () => {
                                 <div className="mt-12 pt-8 border-t border-slate-100 dark:border-slate-800 text-center">
                                     <button
                                         onClick={() => setSelectedPost(null)}
-                                        className="px-8 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-full font-bold text-[10px] uppercase tracking-widest hover:scale-105 transition-all"
+                                        className="px-8 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-full font-bold text-[10px] uppercase tracking-widest hover:scale-105 hover:bg-white dark:hover:bg-slate-900 hover:text-slate-900 dark:hover:text-white border border-slate-900 dark:border-white transition-all"
                                     >
                                         Back to Journal
                                     </button>

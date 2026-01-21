@@ -37,31 +37,9 @@ export const AuthModal = () => {
 
         try {
             if (mode === 'signup') {
-                if (!agreedToPrivacy) {
-                    setError('You must agree to the Privacy Policy to create an account.');
-                    setLoading(false);
-                    return;
-                }
-                const { data, error: signUpError } = await supabase.auth.signUp({
-                    email,
-                    password,
-                    options: {
-                        data: {
-                            full_name: fullName,
-                            privacy_policy_accepted: true,
-                            privacy_policy_accepted_at: new Date().toISOString(),
-                        },
-                    },
-                });
-
-                if (signUpError) throw signUpError;
-
-                if (data.session) {
-                    handleClose();
-                } else {
-                    setError('Please check your email to confirm your account.');
-                }
-
+                setError('Online registration is currently disabled. Please contact our office at (858) 456-1840 for assistance with your order or account.');
+                setLoading(false);
+                return;
             } else {
                 const { error: signInError } = await supabase.auth.signInWithPassword({
                     email,
@@ -261,7 +239,7 @@ export const AuthModal = () => {
                                         <button
                                             type="submit"
                                             disabled={loading}
-                                            className="w-full py-3 px-4 bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 font-medium rounded-xl transition-all shadow-lg hover:shadow-xl disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-6"
+                                            className="w-full py-3 px-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-medium rounded-xl transition-all shadow-lg hover:bg-white dark:hover:bg-slate-900 hover:text-slate-900 dark:hover:text-white border border-slate-900 dark:border-white disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-6"
                                         >
                                             {loading ? (
                                                 <Loader2 className="w-4 h-4 animate-spin" />

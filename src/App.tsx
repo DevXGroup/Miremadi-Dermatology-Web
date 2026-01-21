@@ -14,9 +14,7 @@ import { Wishlist } from './pages/Wishlist';
 import { PrivacyPolicy } from './pages/legal/PrivacyPolicy';
 import { TermsConditions } from './pages/legal/TermsConditions';
 import { Sitemap } from './pages/Sitemap';
-import { SupabaseStatus } from './components/ui/SupabaseStatus';
 import { AuthModal } from './components/auth/AuthModal';
-import { CartDrawer } from './components/layout/CartDrawer';
 import { Footer } from './components/layout/Footer';
 import { About } from './pages/About';
 import { Contact } from './pages/Contact';
@@ -110,9 +108,9 @@ function App() {
                     <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/shop" element={<Shop />} />
-                        <Route path="/cart" element={<Cart />} />
-                        <Route path="/checkout" element={<Checkout />} />
-                        <Route path="/checkout/success" element={<CheckoutSuccess />} />
+                        <Route path="/cart" element={<Navigate to="/" replace />} />
+                        <Route path="/checkout" element={<Navigate to="/" replace />} />
+                        <Route path="/checkout/success" element={<Navigate to="/" replace />} />
                         <Route path="/blog" element={<Blog />} />
                         <Route path="/about" element={<About />} />
                         <Route path="/services" element={<Services />} />
@@ -143,9 +141,8 @@ function App() {
                     </Routes>
                 </Suspense>
                 <Footer />
-                <SupabaseStatus />
                 <AuthModal />
-                <CartDrawer />
+                {/* CartDrawer removed for prod */}
                 <Toaster position="top-center" richColors duration={3000} />
             </div>
         </Router>

@@ -79,7 +79,7 @@ export const About = () => {
                             </p>
 
                             <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
-                                Dr. Miremadi serves the Dermatological needs of both adults and children in his <strong>La Jolla and El Centro, California</strong> practices. Realizing a universal desire for beautiful, healthy, clear skin, Dr. Miremadi spent several years evaluating all methods of skin rejuvenation and the latest technology to create the <strong>Miremadi System</strong>.
+                                Dr. Miremadi serves the Dermatological needs of both adults and children in his <strong>La Jolla, California</strong> practice. Realizing a universal desire for beautiful, healthy, clear skin, Dr. Miremadi spent several years evaluating all methods of skin rejuvenation and the latest technology to create the <strong>Miremadi System</strong>.
                             </p>
 
                             <div className="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl border-l-4 border-secondary-DEFAULT my-8">
@@ -100,13 +100,13 @@ export const About = () => {
                         <div className="pt-8 flex flex-wrap gap-4">
                             <Link
                                 to="/contact"
-                                className="px-8 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-full font-medium hover:bg-primary dark:hover:bg-primary dark:hover:text-white transition-all cursor-pointer"
+                                className="px-8 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-full font-medium hover:bg-white dark:hover:bg-slate-900 hover:text-slate-900 dark:hover:text-white border border-slate-900 dark:border-white transition-all cursor-pointer"
                             >
                                 Schedule Consultation
                             </Link>
                             <Link
                                 to="/services"
-                                className="px-8 py-3 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white rounded-full font-medium hover:bg-primary hover:text-white dark:hover:bg-primary transition-all cursor-pointer"
+                                className="px-8 py-3 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white rounded-full font-medium hover:bg-slate-900 dark:hover:bg-white hover:text-white dark:hover:text-slate-900 border border-transparent hover:border-slate-900 dark:hover:border-white transition-all cursor-pointer"
                             >
                                 View Services
                             </Link>

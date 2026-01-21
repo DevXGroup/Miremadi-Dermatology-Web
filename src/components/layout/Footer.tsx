@@ -93,9 +93,26 @@ export const Footer = () => {
                     </div>
                 </div>
 
-                <div className="pt-8 border-t border-slate-200 dark:border-slate-800 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-400">
-                    <p>© {new Date().getFullYear()} Miremadi Dermatology. All rights reserved.</p>
-                    <p>Designed for Excellence.</p>
+                <div className="pt-8 border-t border-slate-200 dark:border-slate-800 flex flex-col md:flex-row justify-between items-center gap-6 text-xs text-slate-400">
+                    <div className="flex flex-col md:flex-row items-center gap-4">
+                        <p>© {new Date().getFullYear()} Miremadi Dermatology. All rights reserved.</p>
+                        <span className="hidden md:block w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-700" />
+                        <p>Designed for Excellence.</p>
+                    </div>
+
+                    <a
+                        href="https://devxgroup.io"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 group hover:text-slate-600 dark:hover:text-slate-200 transition-colors"
+                    >
+                        <span className="font-medium">Handcrafted by</span>
+                        <img
+                            src="/devx-logo.webp"
+                            alt="DevX Group LLC Software Company"
+                            className="h-4 w-auto opacity-70 group-hover:opacity-100 transition-opacity grayscale-[0.5] group-hover:grayscale-0"
+                        />
+                    </a>
                 </div>
             </div>
         </footer>

@@ -111,17 +111,7 @@ export const Navbar = () => {
                             {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
                         </button>
 
-                        <button
-                            onClick={openCart}
-                            className="relative p-2 text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-primary transition-all cursor-pointer group"
-                        >
-                            <ShoppingBag className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                            {cart.length > 0 && (
-                                <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-600 rounded-full text-[10px] font-bold text-white flex items-center justify-center">
-                                    {cart.length}
-                                </span>
-                            )}
-                        </button>
+
 
                         {/* User Menu */}
                         <div className="relative" ref={userMenuRef}>
@@ -271,16 +261,7 @@ export const Navbar = () => {
                                     <button onClick={toggleDark} className="p-2 text-slate-500 dark:text-slate-400">
                                         {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
                                     </button>
-                                    <button
-                                        onClick={() => {
-                                            setIsOpen(false);
-                                            openCart();
-                                        }}
-                                        className="p-2 text-slate-500 dark:text-slate-400 relative"
-                                    >
-                                        <ShoppingBag className="w-5 h-5" />
-                                        {cart.length > 0 && <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-600 rounded-full text-[10px] font-bold text-white flex items-center justify-center">{cart.length}</span>}
-                                    </button>
+
                                 </div>
 
                                 {user ? (

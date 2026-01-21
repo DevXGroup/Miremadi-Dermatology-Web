@@ -75,20 +75,17 @@ export const Contact = () => {
                                         <div className="text-slate-500">Monday</div>
                                         <div className="text-right text-slate-900 dark:text-white">9:00 AM - 5:00 PM</div>
 
+                                        <div className="text-slate-500">Tuesday</div>
+                                        <div className="text-right text-slate-900 dark:text-white">9:00 AM - 5:00 PM</div>
+
                                         <div className="text-slate-500">Wednesday</div>
                                         <div className="text-right text-slate-900 dark:text-white">9:00 AM - 5:00 PM</div>
 
-                                        <div className="text-slate-500">Thursday (Alt)</div>
+                                        <div className="text-slate-500">Thursday</div>
                                         <div className="text-right text-slate-900 dark:text-white">9:00 AM - 5:00 PM</div>
 
                                         <div className="text-slate-500">Friday</div>
                                         <div className="text-right text-slate-900 dark:text-white">9:00 AM - 5:00 PM</div>
-                                    </div>
-
-                                    <div className="pt-4 mt-4 border-t border-slate-200 dark:border-slate-700">
-                                        <p className="text-xs text-slate-400 italic text-center">
-                                            * We also see patients in El Centro on Tuesdays and alternate Thursdays. Please call for details.
-                                        </p>
                                     </div>
                                 </div>
                             </div>
