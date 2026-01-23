@@ -116,16 +116,13 @@ function App() {
                         <Route path="/services" element={<Services />} />
                         <Route path="/contact" element={<Contact />} />
 
-                        {/* Auth Routes */}
-                        <Route path="/account" element={<ProtectedRoute><Account /></ProtectedRoute>} />
-                        <Route path="/orders" element={<ProtectedRoute><OrderHistory /></ProtectedRoute>} />
-                        <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
+                        {/* Auth Routes redirected for MVP */}
+                        <Route path="/account" element={<Navigate to="/" replace />} />
+                        <Route path="/orders" element={<Navigate to="/" replace />} />
+                        <Route path="/wishlist" element={<Navigate to="/" replace />} />
 
-                        {/* Admin Routes */}
-                        <Route path="/admin" element={<ProtectedRoute requireAdmin><AdminLayout /></ProtectedRoute>}>
-                            <Route index element={<Dashboard />} />
-                            <Route path="dashboard" element={<Dashboard />} />
-                        </Route>
+                        {/* Admin Routes redirected for MVP */}
+                        <Route path="/admin/*" element={<Navigate to="/" replace />} />
 
                         {/* Legal */}
                         <Route path="/legal/privacy-policy" element={<PrivacyPolicy />} />

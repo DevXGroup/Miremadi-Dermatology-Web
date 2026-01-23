@@ -111,55 +111,9 @@ export const useShopStore = create<ShopState>()(
 
             fetchProducts: async () => {
                 set({ loading: true });
-                try {
-                    const { data, error } = await supabase
-                        .from('products')
-                        .select('*')
-                        .eq('active', true);
-
-                    if (error) {
-                        console.warn('Error fetching products from DB:', error);
-                        set({ products: MOCK_PRODUCTS });
-                    } else if (data && data.length > 0) {
-                        const dbProducts: Product[] = data
-                            .map((p: any) => ({
-                                id: p.id,
-                                name: p.name,
-                                description: p.description,
-                                price_cents: p.price_cents,
-                                currency: p.currency || 'usd',
-                                category: p.category,
-                                image_url: p.image_url || '',
-                                active: p.active
-                            }))
-                            .filter((p: Product) => {
-                                // Filter out placeholders and empty products
-                                const name = p.name?.toLowerCase() || '';
-                                const isPlaceholder =
-                                    name.includes('botox') ||
-                                    name.includes('acne treatment') ||
-                                    name.includes('chemical peel') ||
-                                    name.includes('placeholder') ||
-                                    !p.name ||
-                                    !p.image_url;
-                                return !isPlaceholder;
-                            });
-
-                        // Merge Mocks with DB products, ensuring ID uniqueness, favoring Mirage mocks
-                        const combined = [...MOCK_PRODUCTS];
-                        dbProducts.forEach(dbProd => {
-                            if (!combined.find(m => m.id === dbProd.id)) {
-                                combined.push(dbProd);
-                            }
-                        });
-                        set({ products: combined });
-                    } else {
-                        set({ products: MOCK_PRODUCTS });
-                    }
-                } catch (e) {
-                    set({ products: MOCK_PRODUCTS });
-                }
-                set({ loading: false });
+                // For the informative production MVP, we use the high-quality static product catalog
+                // to ensure consistency, performance, and a clean console.
+                set({ products: MOCK_PRODUCTS, loading: false });
             },
 
             setInitialized: (val) => set({ isInitialized: val }),

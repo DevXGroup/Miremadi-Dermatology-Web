@@ -49,8 +49,6 @@ export const Footer = () => {
                             <FooterLink to="/legal/privacy-policy">Privacy Policy</FooterLink>
                             <FooterLink to="/legal/terms-conditions">Terms & Conditions</FooterLink>
                             <FooterLink to="/sitemap">Sitemap</FooterLink>
-                            <FooterLink to="/account">My Account</FooterLink>
-                            <FooterLink to="/billing">Billing</FooterLink>
                         </ul>
                     </div>
 
