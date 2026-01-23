@@ -18,7 +18,7 @@ export const Navbar = () => {
     });
 
     const location = useLocation();
-    const { toggleDark: storeToggleDark } = useShopStore();
+    const { } = useShopStore();
 
     useEffect(() => {
         if (isDark) {
@@ -59,42 +59,43 @@ export const Navbar = () => {
                         </div>
                     </Link>
 
-                    {/* Desktop Nav */}
+                    {/* Desktop Nav & Actions (Right Aligned) */}
                     <div className="hidden md:flex items-center space-x-8">
-                        {navLinks.map((link) => {
-                            const active = location.pathname === link.path ||
-                                (link.path !== '/' && location.pathname.startsWith(link.path));
-                            return (
-                                <Link
-                                    key={link.name}
-                                    to={link.path}
-                                    className={cn(
-                                        "text-sm transition-all hover:text-primary cursor-pointer relative py-1",
-                                        active
-                                            ? "text-primary font-bold active-link"
-                                            : "text-slate-600 dark:text-slate-300 font-medium"
-                                    )}
-                                >
-                                    {link.name}
-                                    {active && (
-                                        <motion.div
-                                            layoutId="nav-underline"
-                                            className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary rounded-full"
-                                        />
-                                    )}
-                                </Link>
-                            );
-                        })}
-                    </div>
+                        <div className="flex items-center space-x-8">
+                            {navLinks.map((link) => {
+                                const active = location.pathname === link.path ||
+                                    (link.path !== '/' && location.pathname.startsWith(link.path));
+                                return (
+                                    <Link
+                                        key={link.name}
+                                        to={link.path}
+                                        className={cn(
+                                            "text-sm transition-all hover:text-primary cursor-pointer relative py-1",
+                                            active
+                                                ? "text-primary font-bold active-link"
+                                                : "text-slate-600 dark:text-slate-300 font-medium"
+                                        )}
+                                    >
+                                        {link.name}
+                                        {active && (
+                                            <motion.div
+                                                layoutId="nav-underline"
+                                                className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary rounded-full"
+                                            />
+                                        )}
+                                    </Link>
+                                );
+                            })}
+                        </div>
 
-                    {/* Actions */}
-                    <div className="hidden md:flex items-center space-x-4">
-                        <button
-                            onClick={toggleDark}
-                            className="p-2 text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-primary transition-colors cursor-pointer"
-                        >
-                            {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-                        </button>
+                        <div className="flex items-center pl-4 border-l border-slate-200 dark:border-slate-800">
+                            <button
+                                onClick={toggleDark}
+                                className="p-2 text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-primary transition-colors cursor-pointer"
+                            >
+                                {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+                            </button>
+                        </div>
                     </div>
 
                     {/* Mobile Menu Button */}
