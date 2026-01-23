@@ -98,19 +98,24 @@ export const Footer = () => {
                         <p>Designed for Excellence.</p>
                     </div>
 
-                    <a
-                        href="https://devxgroup.io"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 group hover:text-slate-600 dark:hover:text-slate-200 transition-colors"
-                    >
-                        <span className="font-medium">Handcrafted by</span>
-                        <img
-                            src="/devx-logo.webp"
-                            alt="DevX Group LLC Software Company"
-                            className="h-4 w-auto opacity-70 group-hover:opacity-100 transition-opacity grayscale-[0.5] group-hover:grayscale-0"
-                        />
-                    </a>
+                    <div className="flex items-center gap-3">
+                        <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-slate-400 dark:text-slate-500">Handcrafted by</span>
+                        <a
+                            href="https://devxgroup.io"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2.5 group py-1.5 px-3 bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 hover:border-primary/30 transition-all duration-300"
+                        >
+                            <img
+                                src="/devx-logo.webp"
+                                alt="DevX Group"
+                                className="h-3.5 w-auto opacity-80 group-hover:opacity-100 transition-opacity"
+                            />
+                            <span className="text-[11px] font-bold text-slate-700 dark:text-slate-200 group-hover:text-primary transition-colors">
+                                DevX Group LLC
+                            </span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </footer>
