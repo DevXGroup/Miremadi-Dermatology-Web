@@ -27,9 +27,9 @@ export const Home = () => {
     }, []);
 
     return (
-        <div className="pt-24 min-h-screen relative overflow-hidden isolate">
+        <div className="pt-24 min-h-screen relative overflow-x-hidden">
             {/* Background Animation Layer */}
-            <div className="absolute top-0 left-0 right-0 h-screen z-0 pointer-events-none">
+            <div className="absolute top-0 left-0 right-0 h-screen -z-10 pointer-events-none">
                 <div className="absolute top-0 left-0 w-full h-[80vh] opacity-60">
                     <Antigravity
                         count={100}
@@ -40,8 +40,8 @@ export const Home = () => {
                         fieldStrength={8}
                     />
                 </div>
-                {/* Soft Fade Overlay - using explicit colors for Safari compatibility */}
-                <div className="absolute inset-0 bg-gradient-to-b from-white/0 via-white/0 to-white dark:from-slate-950/0 dark:via-slate-950/0 dark:to-slate-950 pointer-events-none transform translate-z-0" />
+                {/* Soft Fade Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-b from-white/0 to-white dark:from-slate-950/0 dark:to-slate-950 pointer-events-none" />
             </div>
 
             {/* Hero Section */}
