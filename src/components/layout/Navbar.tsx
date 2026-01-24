@@ -11,10 +11,11 @@ import { useClickAway } from 'react-use';
 export const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isDark, setIsDark] = useState(() => {
-        if (typeof window === 'undefined') return false;
+        if (typeof window === 'undefined') return true;
         const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) return savedTheme === 'dark';
-        return window.matchMedia('(prefers-color-scheme: dark)').matches;
+        // Default to dark mode if no theme is saved, or if it's explicitly 'dark'
+        if (savedTheme === 'light') return false;
+        return true;
     });
 
     const location = useLocation();
