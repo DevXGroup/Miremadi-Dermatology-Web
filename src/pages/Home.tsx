@@ -7,34 +7,145 @@ import { SERVICE_DATA } from '../lib/data';
 import { MOCK_PRODUCTS } from '../store/useStore';
 import { ProductCard } from '../components/ui/ProductCard';
 
+import Antigravity from '../components/ui/Antigravity';
+
 export const Home = () => {
+    // Simple state to force re-render on theme change if needed, or just let CSS handle background. 
+    // For Canvas color, we need JS.
+    const [isDark, setIsDark] = React.useState(document.documentElement.classList.contains('dark'));
+
+    React.useEffect(() => {
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.attributeName === 'class') {
+                    setIsDark(document.documentElement.classList.contains('dark'));
+                }
+            });
+        });
+        observer.observe(document.documentElement, { attributes: true });
+        return () => observer.disconnect();
+    }, []);
+
     return (
-        <div className="pt-24 min-h-screen">
+        <div className="pt-24 min-h-screen relative overflow-hidden">
+            {/* Background Animation Layer */}
+            <div className="absolute inset-0 z-0 pointer-events-none">
+                <div className="absolute top-0 left-0 w-full h-[80vh] opacity-60">
+                    <Antigravity
+                        count={100}
+                        color={isDark ? '#ffffff' : '#6366f1'}
+                        particleSize={0.6}
+                        magnetRadius={20}
+                        ringRadius={15}
+                        fieldStrength={8}
+                    />
+                </div>
+                {/* Soft Fade Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white dark:to-slate-950" />
+            </div>
+
             {/* Hero Section */}
-            <section className="relative px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto py-16">
+            <section className="relative z-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto py-12 md:py-16">
                 <div className="grid md:grid-cols-2 gap-12 items-center">
                     <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
+                        initial="hidden"
+                        animate="visible"
+                        className="relative z-0"
+                        variants={{
+                            hidden: { opacity: 0 },
+                            visible: {
+                                opacity: 1,
+                                transition: {
+                                    staggerChildren: 0.1,
+                                    delayChildren: 0.2
+                                }
+                            }
+                        }}
                     >
-                        <div className="flex items-center mb-1 text-left">
+                        <motion.div
+                            variants={{
+                                hidden: { opacity: 0, y: 20 },
+                                visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+                            }}
+                            className="flex items-center mb-2 text-left"
+                        >
                             <span className="text-sm font-bold text-secondary-dark uppercase tracking-[0.2em]">57+ Years of Medical Leadership</span>
-                        </div>
+                        </motion.div>
 
-                        <h1 className="text-5xl md:text-7xl font-display font-medium leading-[1.1] mb-5">
-                            Meticulous <span className="italic font-light text-primary">Care</span> <br />
-                            for Your Skin.
+                        <h1 className="text-5xl md:text-7xl font-display font-medium leading-[1.1] mb-6 overflow-hidden">
+                            <motion.span className="block" variants={{
+                                hidden: { y: "100%" },
+                                visible: { y: 0, transition: { duration: 0.8, ease: [0.2, 0.65, 0.3, 0.9] } }
+                            }}>
+                                Meticulous <span className="italic font-light text-primary">Care</span>
+                            </motion.span>
+                            <motion.span className="block" variants={{
+                                hidden: { y: "100%" },
+                                visible: { y: 0, transition: { duration: 0.8, ease: [0.2, 0.65, 0.3, 0.9] } }
+                            }}>
+                                for Your <span className="relative inline-block">
+                                    <motion.span
+                                        className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 dark:from-white dark:via-blue-100 dark:to-white bg-clip-text text-transparent bg-[length:200%_auto] font-medium"
+                                        animate={{
+                                            backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                                        }}
+                                        transition={{
+                                            duration: 5,
+                                            repeat: Infinity,
+                                            ease: "linear",
+                                        }}
+                                    >
+                                        Skin.
+                                    </motion.span>
+                                    <motion.div
+                                        className="absolute inset-0 bg-blue-400/20 dark:bg-blue-300/10 blur-xl rounded-full -z-10"
+                                        animate={{
+                                            scale: [1, 1.2, 1],
+                                            opacity: [0.2, 0.4, 0.2],
+                                        }}
+                                        transition={{
+                                            duration: 3,
+                                            repeat: Infinity,
+                                            ease: "easeInOut",
+                                        }}
+                                    />
+                                    <motion.div
+                                        className="absolute top-0 bottom-0 w-[2px] bg-gradient-to-b from-transparent via-blue-500/50 dark:via-blue-300/50 to-transparent shadow-[0_0_15px_rgba(59,130,246,0.3)]"
+                                        animate={{
+                                            left: ["-10%", "110%"],
+                                            opacity: [0, 1, 0],
+                                        }}
+                                        transition={{
+                                            duration: 3,
+                                            repeat: Infinity,
+                                            repeatDelay: 2,
+                                            ease: "easeInOut",
+                                        }}
+                                    />
+                                </span>
+                            </motion.span>
                         </h1>
 
-                        <div className="relative mb-6 pl-6 border-l-4 border-slate-200 dark:border-slate-700">
+                        <motion.div
+                            variants={{
+                                hidden: { opacity: 0, x: -20 },
+                                visible: { opacity: 1, x: 0, transition: { duration: 0.6 } }
+                            }}
+                            className="relative mb-8 pl-6 border-l-4 border-slate-200 dark:border-slate-700"
+                        >
                             <p className="text-xl italic text-slate-600 dark:text-slate-300 font-display">
                                 Your skin is the largest organ of the body which needs meticulous care
                             </p>
                             <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mt-1.5">— Arjang K. Miremadi, M.D.</p>
-                        </div>
+                        </motion.div>
 
-                        <div className="flex gap-4">
+                        <motion.div
+                            variants={{
+                                hidden: { opacity: 0, y: 20 },
+                                visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+                            }}
+                            className="flex gap-4"
+                        >
                             <Link
                                 to="/contact"
                                 className="px-8 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-full font-medium hover:scale-105 hover:bg-white dark:hover:bg-slate-900 hover:text-slate-900 dark:hover:text-white border border-slate-900 dark:border-white transition-all uppercase tracking-wider text-sm cursor-pointer text-center shadow-lg"
@@ -47,37 +158,50 @@ export const Home = () => {
                             >
                                 Explore Services
                             </Link>
-                        </div>
-                    </motion.div>
-
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.8, delay: 0.2 }}
-                        className="relative h-[600px] bg-slate-100 dark:bg-slate-800 rounded-[2.5rem] overflow-hidden border-8 border-white dark:border-slate-800 shadow-2xl"
-                    >
-                        {/* Using the image from the old Hero component directly */}
-                        <img
-                            src="/dr-miremadi-portrait-new.webp"
-                            alt="Dr. Arjang K. Miremadi"
-                            className="w-full h-full object-cover object-top grayscale hover:grayscale-0 transition-all duration-700"
-                        />
-
-                        {/* Floating Expert Badge */}
-                        <motion.div
-                            animate={{ y: [0, -10, 0] }}
-                            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                            className="absolute bottom-10 -left-6 p-6 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md rounded-2xl shadow-xl border border-white/20 max-w-[200px] text-right"
-                        >
-                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Dermatology, Pathology, & Dermatopathology</p>
-                            <p className="text-sm font-bold text-slate-900 dark:text-white leading-tight">Triple-Certified Specialist</p>
                         </motion.div>
                     </motion.div>
+
+                    <div className="relative">
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 1 }}
+                            className="relative z-10"
+                        >
+                            <motion.div
+                                animate={{ y: [0, -15, 0] }}
+                                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                                className="relative h-[500px] md:h-[650px] bg-slate-100 dark:bg-slate-800 rounded-[2.5rem] overflow-hidden border-8 border-white dark:border-slate-800 shadow-2xl"
+                            >
+                                <img
+                                    src="/dr-miremadi-portrait-new.webp"
+                                    alt="Dr. Arjang K. Miremadi"
+                                    className="w-full h-full object-cover object-top opacity-90 dark:opacity-80"
+                                />
+
+                                {/* Organic Glow Effect Layer */}
+                                <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent mix-blend-overlay pointer-events-none" />
+                            </motion.div>
+
+                            {/* Floating Expert Badge */}
+                            <motion.div
+                                animate={{ y: [0, -10, 0], rotate: [-1, 1, -1] }}
+                                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                                className="absolute bottom-12 -left-6 p-6 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md rounded-2xl shadow-xl border border-white/20 max-w-[220px] text-right z-20"
+                            >
+                                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Dermatology, Pathology, & Dermatopathology</p>
+                                <p className="text-sm font-bold text-slate-900 dark:text-white leading-tight">Triple-Certified Specialist</p>
+                            </motion.div>
+                        </motion.div>
+
+                        {/* Decorative Background Element */}
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-primary/5 rounded-full blur-3xl -z-10" />
+                    </div>
                 </div>
             </section>
 
             {/* Philosophy Section */}
-            <section className="py-24 bg-white dark:bg-slate-950">
+            <section className="py-16 md:py-24 bg-white dark:bg-slate-950">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center max-w-3xl mx-auto mb-16">
                         <span className="text-xs font-bold text-primary uppercase tracking-[0.2em] mb-4 block">Our Philosophy</span>
@@ -131,14 +255,16 @@ export const Home = () => {
             </section>
 
             {/* Mirage Collection Promo */}
-            <section className="relative h-[650px] flex items-center overflow-hidden group">
+            <section className="relative h-[500px] md:h-[650px] flex items-center overflow-hidden group">
                 <div className="absolute inset-0">
                     <img
                         src="/images/promo/mirage_promo.png"
                         alt="Mirage Skincare Collection"
-                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000"
+                        className="w-full h-full object-cover transition-all duration-1000 scale-105 group-hover:scale-110"
                     />
-                    <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-[1px]" />
+                    {/* Multi-layered gradient for depth and readability */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900/60 to-transparent" />
+                    <div className="absolute inset-0 bg-slate-950/20" />
                 </div>
                 <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
                     <motion.div
@@ -148,12 +274,12 @@ export const Home = () => {
                         transition={{ duration: 0.8 }}
                         className="max-w-2xl text-white"
                     >
-                        <span className="text-xs font-bold uppercase tracking-[0.4em] mb-4 block text-white/70">New Arrival</span>
-                        <h2 className="text-4xl sm:text-5xl md:text-7xl font-display font-medium mb-6 leading-tight">
-                            The <span className="italic font-light text-primary">Mirage</span> <br />
-                            Collection
+                        <span className="text-xs font-bold uppercase tracking-[0.5em] mb-4 block text-blue-300">Premium Medical Grade</span>
+                        <h2 className="text-4xl sm:text-5xl md:text-7xl font-display font-medium mb-6 leading-[1.1]">
+                            The <span className="italic font-light text-white drop-shadow-sm">Mirage</span> <br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-blue-200">Collection</span>
                         </h2>
-                        <p className="text-xl text-white/90 mb-10 font-light leading-relaxed">
+                        <p className="text-xl text-slate-200 mb-10 font-light leading-relaxed max-w-xl">
                             Experience the pinnacle of dermatological science with our new signature skincare line. Meticulously formulated for transformative results and professional-grade precision.
                         </p>
                         <Link
@@ -167,13 +293,13 @@ export const Home = () => {
             </section>
 
             {/* Curated Skincare Shelf */}
-            <section className="py-24 bg-white dark:bg-slate-950 overflow-hidden">
+            <section className="py-16 md:py-24 bg-white dark:bg-slate-950 overflow-hidden">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-end mb-12">
                         <div>
                             <span className="text-xs font-bold text-primary uppercase tracking-[0.4em] mb-4 block">New Arrivals</span>
                             <h2 className="text-4xl font-display font-medium text-slate-900 dark:text-white">
-                                Curated <span className="italic font-light text-primary">Skincare</span>
+                                Curated <span className="italic font-light text-slate-900 dark:text-white transition-colors duration-500 underline decoration-blue-500/30 underline-offset-8">Skincare</span>
                             </h2>
                         </div>
                         <Link to="/shop" className="text-sm font-bold uppercase tracking-widest text-slate-400 hover:text-primary transition-colors">
@@ -198,7 +324,7 @@ export const Home = () => {
             </section>
 
             {/* Quick Services Preview */}
-            <section className="bg-slate-50 dark:bg-slate-900/50 py-24 px-4">
+            <section className="bg-slate-50 dark:bg-slate-900/50 py-16 md:py-24 px-4">
                 <div className="max-w-7xl mx-auto">
                     <div className="flex flex-col md:flex-row justify-between items-start mb-16">
                         <div>
