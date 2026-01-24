@@ -84,7 +84,13 @@ export const Checkout = () => {
     return (
         <div className="pt-24 min-h-screen bg-slate-50 dark:bg-slate-950">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                <h1 className="text-3xl md:text-4xl font-display font-medium text-slate-900 dark:text-white mb-8">Checkout</h1>
+                <motion.h1
+                    initial={{ opacity: 0, x: -50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    className="text-3xl md:text-4xl font-display font-medium text-slate-900 dark:text-white mb-8"
+                >
+                    Checkout
+                </motion.h1>
 
                 <div className="grid lg:grid-cols-2 gap-12">
                     {/* Left: Review & Options */}
@@ -107,7 +113,15 @@ export const Checkout = () => {
                         )}
 
                         <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800">
-                            <h2 className="text-xl font-medium mb-6">Review Items</h2>
+                            <motion.h2
+                                initial={{ opacity: 0, x: -50 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.5 }}
+                                className="text-xl font-medium mb-6"
+                            >
+                                Review Items
+                            </motion.h2>
                             <div className="space-y-6">
                                 {cart.map((item) => (
                                     <div key={item.id} className="flex gap-4">
@@ -129,7 +143,15 @@ export const Checkout = () => {
 
                         {/* Subscription Option */}
                         <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800">
-                            <h2 className="text-xl font-medium mb-6">Delivery Frequency</h2>
+                            <motion.h2
+                                initial={{ opacity: 0, x: -50 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.5 }}
+                                className="text-xl font-medium mb-6"
+                            >
+                                Delivery Frequency
+                            </motion.h2>
                             <div className="grid sm:grid-cols-3 gap-4">
                                 <button
                                     onClick={() => setRecurringType('none')}
@@ -168,7 +190,15 @@ export const Checkout = () => {
                     {/* Right: Summary & Pay */}
                     <div className="h-fit space-y-6">
                         <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800">
-                            <h2 className="text-xl font-medium mb-6">Order Summary</h2>
+                            <motion.h2
+                                initial={{ opacity: 0, x: -50 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.5 }}
+                                className="text-xl font-medium mb-6"
+                            >
+                                Order Summary
+                            </motion.h2>
 
                             <div className="space-y-4 mb-8">
                                 <div className="flex justify-between text-slate-500">

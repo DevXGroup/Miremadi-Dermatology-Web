@@ -100,9 +100,14 @@ export const Blog = () => {
                     >
                         Clinical Insights
                     </motion.span>
-                    <h1 className="text-4xl md:text-6xl font-display font-medium mb-6 dark:text-white">
+                    <motion.h1
+                        initial={{ opacity: 0, x: -50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.8 }}
+                        className="text-4xl md:text-6xl font-display font-medium mb-6 dark:text-white"
+                    >
                         The <span className="italic font-light text-slate-400">Journal</span>
-                    </h1>
+                    </motion.h1>
                     <p className="text-slate-500 dark:text-slate-400 max-w-2xl mx-auto text-lg leading-relaxed">
                         Expert perspectives on dermatology, pathology, and the latest in aesthetic science.
                     </p>

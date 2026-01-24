@@ -17,6 +17,9 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Fix Safari compositing issues */
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
 }
 
 a,

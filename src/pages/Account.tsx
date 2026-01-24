@@ -42,7 +42,13 @@ const OrderHistory = ({ userId }: { userId: string }) => {
                     <div className="p-2 bg-blue-100 dark:bg-blue-900/20 rounded-lg text-blue-600 dark:text-blue-400">
                         <Package className="w-5 h-5" />
                     </div>
-                    <h2 className="text-xl font-medium text-slate-900 dark:text-white">Order History</h2>
+                    <motion.h2
+                        initial={{ opacity: 0, x: -50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        className="text-xl font-medium text-slate-900 dark:text-white"
+                    >
+                        Order History
+                    </motion.h2>
                 </div>
                 <div className="text-center py-8 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-dashed border-slate-200 dark:border-slate-700">
                     <p className="text-slate-500 mb-4">You haven't placed any orders yet.</p>
@@ -58,7 +64,13 @@ const OrderHistory = ({ userId }: { userId: string }) => {
                 <div className="p-2 bg-blue-100 dark:bg-blue-900/20 rounded-lg text-blue-600 dark:text-blue-400">
                     <Package className="w-5 h-5" />
                 </div>
-                <h2 className="text-xl font-medium text-slate-900 dark:text-white">Order History</h2>
+                <motion.h2
+                    initial={{ opacity: 0, x: -50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    className="text-xl font-medium text-slate-900 dark:text-white"
+                >
+                    Order History
+                </motion.h2>
             </div>
 
             <div className="space-y-4">
@@ -209,7 +221,13 @@ export const Account = () => {
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 
                 <div className="mb-8">
-                    <h1 className="text-3xl font-display font-medium text-slate-900 dark:text-white">Account Settings</h1>
+                    <motion.h1
+                        initial={{ opacity: 0, x: -50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        className="text-3xl font-display font-medium text-slate-900 dark:text-white"
+                    >
+                        Account Settings
+                    </motion.h1>
                     <p className="text-slate-500 dark:text-slate-400">Manage your profile, security, and preferences.</p>
                 </div>
 
@@ -237,7 +255,15 @@ export const Account = () => {
                             <div className="p-2 bg-secondary-DEFAULT/10 rounded-lg text-secondary-DEFAULT">
                                 <User className="w-5 h-5" />
                             </div>
-                            <h2 className="text-xl font-medium text-slate-900 dark:text-white">Profile Details</h2>
+                            <motion.h2
+                                initial={{ opacity: 0, x: -50 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.5 }}
+                                className="text-xl font-medium text-slate-900 dark:text-white"
+                            >
+                                Profile Details
+                            </motion.h2>
                         </div>
 
                         <form onSubmit={handleProfileUpdate} className="space-y-6 max-w-2xl">
@@ -342,7 +368,15 @@ export const Account = () => {
                             <div className="p-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-slate-600 dark:text-slate-400">
                                 <Shield className="w-5 h-5" />
                             </div>
-                            <h2 className="text-xl font-medium text-slate-900 dark:text-white">Security</h2>
+                            <motion.h2
+                                initial={{ opacity: 0, x: -50 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.5 }}
+                                className="text-xl font-medium text-slate-900 dark:text-white"
+                            >
+                                Security
+                            </motion.h2>
                         </div>
 
                         <form onSubmit={handlePasswordUpdate} className="max-w-xl space-y-4">
@@ -393,7 +427,15 @@ export const Account = () => {
                             <div className="p-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-slate-600 dark:text-slate-400">
                                 <Smartphone className="w-5 h-5" />
                             </div>
-                            <h2 className="text-xl font-medium text-slate-900 dark:text-white">Sessions</h2>
+                            <motion.h2
+                                initial={{ opacity: 0, x: -50 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.5 }}
+                                className="text-xl font-medium text-slate-900 dark:text-white"
+                            >
+                                Sessions
+                            </motion.h2>
                         </div>
                         <p className="text-sm text-slate-500 mb-4">You are currently logged in on this device.</p>
                         <button className="text-sm text-red-600 hover:text-red-700 font-medium border border-red-200 bg-red-50 px-4 py-2 rounded-lg">

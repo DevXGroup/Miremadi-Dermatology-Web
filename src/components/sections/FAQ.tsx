@@ -30,13 +30,14 @@ export const FAQ = () => {
     const [openIndex, setOpenIndex] = useState<number | null>(0);
 
     return (
-        <section className="relative z-10 py-24 bg-surface-light dark:bg-slate-950">
+        <section className="relative py-24 bg-white dark:bg-slate-950" style={{ zIndex: 5, isolation: 'isolate', WebkitBackfaceVisibility: 'hidden', WebkitTransform: 'translate3d(0,0,0)', transform: 'translate3d(0,0,0)' }}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-12 gap-12">
                 <div className="lg:col-span-5">
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
+                        initial={{ opacity: 0, x: -50 }}
+                        whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
+                        transition={{ duration: 0.6 }}
                     >
                         <h2 className="text-4xl md:text-5xl font-display font-medium text-slate-900 dark:text-white mb-6">
                             Frequently <br />

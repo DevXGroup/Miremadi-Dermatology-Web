@@ -31,7 +31,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             whileHover={{ y: -5 }}
-            className="group relative flex flex-col bg-white dark:bg-slate-800/50 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-primary/10 dark:hover:shadow-black/50 transition-all duration-300 border border-slate-100 dark:border-slate-800"
+            className="group relative flex flex-col bg-white dark:bg-slate-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-primary/10 dark:hover:shadow-black/50 transition-all duration-300 border border-slate-100 dark:border-slate-800 h-full"
         >
             {/* Image Container */}
             <div className="aspect-[4/5] overflow-hidden bg-slate-100 dark:bg-slate-900/50 relative">
@@ -58,7 +58,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
             {/* Info */}
             <div className="p-5 flex flex-col flex-grow">
-                <div className="mb-4 flex-grow">
+                <div className="mb-4 flex-grow min-h-[140px] flex flex-col">
                     <span className="inline-block text-[10px] font-bold text-slate-900 bg-secondary-light/90 px-3 py-1 rounded-full mb-3 uppercase tracking-widest shadow-sm">
                         {product.category}
                     </span>

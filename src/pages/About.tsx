@@ -11,8 +11,8 @@ export const About = () => {
                 {/* Header */}
                 <div className="text-center max-w-5xl mx-auto mb-16">
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
+                        initial={{ opacity: 0, x: -50 }}
+                        animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.6 }}
                     >
                         <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-medium text-slate-900 dark:text-white mb-4">
@@ -31,9 +31,9 @@ export const About = () => {
                     <div className="lg:col-span-5 space-y-8">
                         {/* Profile Image Placeholder - In real app, this would be the doctor's photo */}
                         <motion.div
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: 0.2 }}
+                            initial={{ opacity: 0, x: -50 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.2, duration: 0.6 }}
                             className="aspect-[4/5] bg-slate-100 dark:bg-slate-900 rounded-3xl overflow-hidden shadow-2xl relative"
                         >
                             {/* You can replace this src with the actual image URL if available, or keep it as placeholder/upload later */}
@@ -67,9 +67,10 @@ export const About = () => {
                     {/* Right: Biography */}
                     <div className="lg:col-span-7 space-y-8">
                         <motion.div
-                            initial={{ opacity: 0, x: 20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: 0.4 }}
+                            initial={{ opacity: 0, x: -50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.2 }} // slightly reduced delay since it's visible sooner usually
                             className="prose prose-lg prose-slate dark:prose-invert max-w-none"
                         >
                             <h3 className="text-3xl font-display font-medium text-slate-900 dark:text-white mb-6">Biography</h3>

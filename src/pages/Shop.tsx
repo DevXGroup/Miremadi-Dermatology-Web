@@ -63,10 +63,15 @@ export const Shop = () => {
                     </div>
                     <div className="relative px-6 md:px-12 max-w-2xl">
                         <span className="text-blue-300 font-bold tracking-[0.5em] uppercase text-[10px] mb-4 block">Dermatologist Formulated</span>
-                        <h1 className="text-5xl md:text-6xl font-display font-medium text-white mb-6 leading-[1.1]">
+                        <motion.h1
+                            initial={{ opacity: 0, x: -50 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.8 }}
+                            className="text-5xl md:text-6xl font-display font-medium text-white mb-6 leading-[1.1]"
+                        >
                             The <span className="italic font-light text-white">Mirage</span> <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-blue-100">Collection</span>
-                        </h1>
+                        </motion.h1>
                         <p className="text-slate-200 text-lg leading-relaxed font-light max-w-lg">
                             Dermatologist-formulated precision meet luxury. Professional-grade results, expertly crafted for your unique skin health and radiance.
                         </p>
@@ -75,9 +80,15 @@ export const Shop = () => {
 
                 <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
                     <div>
-                        <h2 className="text-3xl font-display font-medium text-slate-900 dark:text-white mb-2">
+                        <motion.h2
+                            initial={{ opacity: 0, x: -50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6 }}
+                            className="text-3xl font-display font-medium text-slate-900 dark:text-white mb-2"
+                        >
                             Curated Skincare
-                        </h2>
+                        </motion.h2>
                         <p className="text-slate-500 dark:text-slate-400 max-w-xl leading-relaxed">
                             Discover the perfect balance of science and luxury.
                         </p>

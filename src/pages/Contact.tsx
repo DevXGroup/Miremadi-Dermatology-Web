@@ -50,8 +50,8 @@ export const Contact = () => {
             <div className="bg-slate-50 dark:bg-slate-900/50 py-12 border-b border-slate-100 dark:border-slate-800">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <motion.h1
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
+                        initial={{ opacity: 0, x: -50 }}
+                        animate={{ opacity: 1, x: 0 }}
                         className="text-4xl md:text-5xl font-display font-medium text-slate-900 dark:text-white mb-4"
                     >
                         Contact Us
@@ -71,7 +71,15 @@ export const Contact = () => {
                         animate={{ opacity: 1, x: 0 }}
                         className="bg-white dark:bg-slate-900 rounded-3xl p-8 md:p-10 shadow-xl border border-slate-100 dark:border-slate-800"
                     >
-                        <h2 className="text-2xl font-display font-bold text-slate-900 dark:text-white mb-6">Send us a Message</h2>
+                        <motion.h2
+                            initial={{ opacity: 0, x: -50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6 }}
+                            className="text-2xl font-display font-bold text-slate-900 dark:text-white mb-6"
+                        >
+                            Send us a Message
+                        </motion.h2>
 
                         {formState === 'success' ? (
                             <motion.div

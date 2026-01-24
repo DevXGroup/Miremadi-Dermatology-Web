@@ -232,9 +232,15 @@ export const Home = () => {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center max-w-3xl mx-auto mb-16">
                         <span className="text-xs font-bold text-primary uppercase tracking-[0.2em] mb-4 block">Our Philosophy</span>
-                        <h2 className="text-4xl md:text-5xl font-display font-medium text-slate-900 dark:text-white mb-6">
+                        <motion.h2
+                            initial={{ opacity: 0, x: -50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.8, ease: "easeOut" }}
+                            className="text-4xl md:text-5xl font-display font-medium text-slate-900 dark:text-white mb-6"
+                        >
                             Radiance Rooted in <span className="italic font-light text-slate-400">Science</span>
-                        </h2>
+                        </motion.h2>
                         <p className="text-lg text-slate-500 dark:text-slate-400 leading-relaxed">
                             We believe in a holistic approach to skin health, combining cutting-edge technology with personalized care plans that treat the person, not just the symptom.
                         </p>
@@ -326,9 +332,15 @@ export const Home = () => {
                     <div className="flex justify-between items-end mb-12">
                         <div>
                             <span className="text-xs font-bold text-primary uppercase tracking-[0.4em] mb-4 block">New Arrivals</span>
-                            <h2 className="text-4xl font-display font-medium text-slate-900 dark:text-white">
+                            <motion.h2
+                                initial={{ opacity: 0, x: -50 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.8, ease: "easeOut" }}
+                                className="text-4xl font-display font-medium text-slate-900 dark:text-white"
+                            >
                                 Curated <span className="italic font-light text-slate-900 dark:text-white transition-colors duration-500 underline decoration-blue-500/30 underline-offset-8">Skincare</span>
-                            </h2>
+                            </motion.h2>
                         </div>
                         <Link to="/shop" className="text-sm font-bold uppercase tracking-widest text-slate-400 hover:text-primary transition-colors">
                             View All Items →
@@ -360,10 +372,16 @@ export const Home = () => {
                             <div className="flex items-center mb-4">
                                 <span className="text-xs font-bold text-primary uppercase tracking-[0.4em] ml-[5px]">Clinical Excellence</span>
                             </div>
-                            <h2 className="text-4xl md:text-5xl font-display font-medium mb-6">
+                            <motion.h2
+                                initial={{ opacity: 0, x: -50 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.8, ease: "easeOut" }}
+                                className="text-4xl md:text-5xl font-display font-medium mb-6"
+                            >
                                 Our Medical & <br className="hidden md:block" />
                                 <span className="italic font-light text-slate-400">Cosmetic Services</span>
-                            </h2>
+                            </motion.h2>
                             <div className="mt-8">
                                 <Credentials />
                             </div>

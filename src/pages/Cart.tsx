@@ -25,7 +25,13 @@ export const Cart = () => {
     return (
         <div className="pt-24 min-h-screen bg-slate-50 dark:bg-slate-950">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                <h1 className="text-3xl font-display font-medium mb-8">Shopping Cart ({cart.length})</h1>
+                <motion.h1
+                    initial={{ opacity: 0, x: -50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    className="text-3xl font-display font-medium mb-8"
+                >
+                    Shopping Cart ({cart.length})
+                </motion.h1>
 
                 <div className="grid lg:grid-cols-3 gap-12">
                     {/* Cart Items */}
@@ -88,7 +94,15 @@ export const Cart = () => {
                     {/* Summary */}
                     <div className="lg:col-span-1">
                         <div className="bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-sm sticky top-28">
-                            <h3 className="text-xl font-medium mb-6">Order Summary</h3>
+                            <motion.h3
+                                initial={{ opacity: 0, x: -50 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.5 }}
+                                className="text-xl font-medium mb-6"
+                            >
+                                Order Summary
+                            </motion.h3>
                             <div className="space-y-4 mb-8">
                                 <div className="flex justify-between text-slate-500">
                                     <span>Subtotal</span>

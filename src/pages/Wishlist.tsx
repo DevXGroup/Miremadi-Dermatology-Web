@@ -16,7 +16,13 @@ export const Wishlist = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
                 <div className="mb-12">
-                    <h1 className="text-4xl font-display font-medium text-slate-900 dark:text-white mb-4">Your Wishlist</h1>
+                    <motion.h1
+                        initial={{ opacity: 0, x: -50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        className="text-4xl font-display font-medium text-slate-900 dark:text-white mb-4"
+                    >
+                        Your Wishlist
+                    </motion.h1>
                     <p className="text-slate-500 dark:text-slate-400 text-lg">
                         Manage your curated skincare favorites.
                     </p>

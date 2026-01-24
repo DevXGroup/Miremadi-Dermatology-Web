@@ -98,7 +98,13 @@ export const OrderHistory = () => {
                         <button onClick={() => navigate(-1)} className="p-2 hover:bg-white dark:hover:bg-slate-800 rounded-full transition-colors">
                             <ArrowLeft className="w-5 h-5" />
                         </button>
-                        <h1 className="text-4xl font-display font-medium">Order <span className="italic font-light text-primary">History</span></h1>
+                        <motion.h1
+                            initial={{ opacity: 0, x: -50 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            className="text-4xl font-display font-medium"
+                        >
+                            Order <span className="italic font-light text-primary">History</span>
+                        </motion.h1>
                     </div>
                     {orders.length > 0 && (
                         <button
