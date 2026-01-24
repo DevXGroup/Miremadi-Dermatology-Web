@@ -51,22 +51,24 @@ export const Shop = () => {
                 )}
 
                 {/* Header Section */}
-                <div className="relative rounded-[2.5rem] overflow-hidden mb-16 h-[400px] flex items-center shadow-2xl group">
+                <div className="relative rounded-[2.5rem] overflow-hidden mb-16 h-[300px] md:h-[450px] flex items-center shadow-2xl group">
                     <div className="absolute inset-0">
                         <img
                             src="/images/promo/mirage_promo.png"
                             alt="The Mirage Collection"
-                            className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000"
+                            className="w-full h-full object-cover scale-105 group-hover:scale-110 transition-transform duration-1000"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-r from-slate-900/80 to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900/40 to-transparent" />
+                        <div className="absolute inset-0 bg-slate-950/20" />
                     </div>
-                    <div className="relative px-12 max-w-2xl">
-                        <span className="text-white/60 font-bold tracking-[0.4em] uppercase text-xs mb-4 block">Exclusive Selection</span>
-                        <h1 className="text-5xl md:text-6xl font-display font-medium text-white mb-6 leading-tight">
-                            The <span className="italic font-light text-primary">Mirage</span> <br /> Collection
+                    <div className="relative px-6 md:px-12 max-w-2xl">
+                        <span className="text-blue-300 font-bold tracking-[0.5em] uppercase text-[10px] mb-4 block">Dermatologist Formulated</span>
+                        <h1 className="text-5xl md:text-6xl font-display font-medium text-white mb-6 leading-[1.1]">
+                            The <span className="italic font-light text-white">Mirage</span> <br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-blue-100">Collection</span>
                         </h1>
-                        <p className="text-white/80 text-lg leading-relaxed font-light">
-                            Experience dermatologist-formulated precision. Professional-grade results, expertly crafted for your unique skin health.
+                        <p className="text-slate-200 text-lg leading-relaxed font-light max-w-lg">
+                            Dermatologist-formulated precision meet luxury. Professional-grade results, expertly crafted for your unique skin health and radiance.
                         </p>
                     </div>
                 </div>
