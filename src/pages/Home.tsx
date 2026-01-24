@@ -29,7 +29,7 @@ export const Home = () => {
     return (
         <div className="pt-24 min-h-screen relative overflow-hidden">
             {/* Background Animation Layer */}
-            <div className="absolute inset-0 z-0 pointer-events-none">
+            <div className="absolute top-0 left-0 right-0 h-screen z-0 pointer-events-none">
                 <div className="absolute top-0 left-0 w-full h-[80vh] opacity-60">
                     <Antigravity
                         count={100}
@@ -201,7 +201,7 @@ export const Home = () => {
             </section>
 
             {/* Philosophy Section */}
-            <section className="py-16 md:py-24 bg-white dark:bg-slate-950">
+            <section className="relative z-10 py-16 md:py-24 bg-white dark:bg-slate-950">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center max-w-3xl mx-auto mb-16">
                         <span className="text-xs font-bold text-primary uppercase tracking-[0.2em] mb-4 block">Our Philosophy</span>
@@ -255,7 +255,7 @@ export const Home = () => {
             </section>
 
             {/* Mirage Collection Promo */}
-            <section className="relative h-[500px] md:h-[650px] flex items-center overflow-hidden group">
+            <section className="relative z-10 h-[500px] md:h-[650px] flex items-center overflow-hidden group">
                 <div className="absolute inset-0">
                     <img
                         src="/images/promo/mirage_promo.png"
@@ -293,7 +293,7 @@ export const Home = () => {
             </section>
 
             {/* Curated Skincare Shelf */}
-            <section className="py-16 md:py-24 bg-white dark:bg-slate-950 overflow-hidden">
+            <section className="relative z-10 py-16 md:py-24 bg-white dark:bg-slate-950 overflow-hidden">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-end mb-12">
                         <div>
@@ -324,7 +324,7 @@ export const Home = () => {
             </section>
 
             {/* Quick Services Preview */}
-            <section className="bg-slate-50 dark:bg-slate-900/50 py-16 md:py-24 px-4">
+            <section className="relative z-10 bg-slate-50 dark:bg-slate-900/50 py-16 md:py-24 px-4">
                 <div className="max-w-7xl mx-auto">
                     <div className="flex flex-col md:flex-row justify-between items-start mb-16">
                         <div>

@@ -30,7 +30,7 @@ export const FAQ = () => {
     const [openIndex, setOpenIndex] = useState<number | null>(0);
 
     return (
-        <section className="py-24 bg-surface-light dark:bg-slate-950">
+        <section className="relative z-10 py-24 bg-surface-light dark:bg-slate-950">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-12 gap-12">
                 <div className="lg:col-span-5">
                     <motion.div
