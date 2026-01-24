@@ -12,7 +12,13 @@ import Antigravity from '../components/ui/Antigravity';
 export const Home = () => {
     // Simple state to force re-render on theme change if needed, or just let CSS handle background. 
     // For Canvas color, we need JS.
-    const [isDark, setIsDark] = React.useState(document.documentElement.classList.contains('dark'));
+    const [isDark, setIsDark] = React.useState(() => {
+        if (typeof window === 'undefined') return true;
+        const savedTheme = localStorage.getItem('theme');
+        // Default to dark mode if no theme is saved, or if it's explicitly 'dark'
+        if (savedTheme === 'light') return false;
+        return true;
+    });
 
     React.useEffect(() => {
         const observer = new MutationObserver((mutations) => {
@@ -28,21 +34,31 @@ export const Home = () => {
 
     return (
         <div className="pt-24 min-h-screen relative overflow-x-hidden">
-            {/* Background Animation Layer */}
-            <div className="absolute top-0 left-0 right-0 h-screen -z-10 pointer-events-none">
-                <div className="absolute top-0 left-0 w-full h-[80vh] opacity-60">
+            {/* Background Animation Layer - Hero Only */}
+            <div className="absolute top-0 left-0 right-0 h-[900px] overflow-hidden" style={{ zIndex: 0 }}>
+                <div className="absolute left-0 right-0 top-[100px] h-full opacity-100 dark:opacity-80">
                     <Antigravity
-                        count={100}
-                        color={isDark ? '#ffffff' : '#6366f1'}
-                        particleSize={0.6}
+                        count={633}
                         magnetRadius={20}
-                        ringRadius={15}
-                        fieldStrength={8}
+                        ringRadius={6}
+                        waveSpeed={2.5}
+                        waveAmplitude={4.1}
+                        particleSize={0.8}
+                        lerpSpeed={0.05}
+                        color={isDark ? '#15b9c8' : '#6300db'}
+                        autoAnimate={false}
+                        particleVariance={1}
+                        rotationSpeed={0}
+                        depthFactor={1}
+                        pulseSpeed={3}
+                        particleShape="sphere"
+                        fieldStrength={10}
                     />
                 </div>
-                {/* Soft Fade Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-b from-white/0 to-white dark:from-slate-950/0 dark:to-slate-950 pointer-events-none" />
+                {/* Soft Fade Overlay - Strictly contained to hero section */}
+                <div className="absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-b from-white/0 via-white/50 to-white dark:from-slate-950/0 dark:via-slate-950/50 dark:to-slate-950 pointer-events-none" />
             </div>
+
 
             {/* Hero Section */}
             <section className="relative z-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto py-12 md:py-16">
@@ -84,21 +100,29 @@ export const Home = () => {
                                 visible: { y: 0, transition: { duration: 0.8, ease: [0.2, 0.65, 0.3, 0.9] } }
                             }}>
                                 for Your <span className="relative inline-block">
-                                    <motion.span
-                                        className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 dark:from-white dark:via-blue-100 dark:to-white bg-clip-text text-transparent bg-[length:200%_auto] font-medium"
-                                        animate={{
-                                            backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-                                        }}
-                                        transition={{
-                                            duration: 5,
-                                            repeat: Infinity,
-                                            ease: "linear",
-                                        }}
-                                    >
-                                        Skin.
-                                    </motion.span>
+                                    <span className="relative inline-block">
+                                        {"Skin.".split("").map((char, i) => (
+                                            <motion.span
+                                                key={i}
+                                                className="inline-block"
+                                                animate={{
+                                                    color: isDark
+                                                        ? ["#ffffff", "#f472b6", "#a78bfa", "#f472b6", "#ffffff"]
+                                                        : ["#0f172a", "#ec4899", "#6366f1", "#ec4899", "#0f172a"],
+                                                }}
+                                                transition={{
+                                                    duration: 4,
+                                                    repeat: Infinity,
+                                                    delay: i * 0.1,
+                                                    ease: "easeInOut",
+                                                }}
+                                            >
+                                                {char}
+                                            </motion.span>
+                                        ))}
+                                    </span>
                                     <motion.div
-                                        className="absolute inset-0 bg-blue-400/20 dark:bg-blue-300/10 blur-xl rounded-full -z-10"
+                                        className="absolute inset-0 bg-pink-400/20 dark:bg-pink-300/10 blur-xl rounded-full -z-10"
                                         animate={{
                                             scale: [1, 1.2, 1],
                                             opacity: [0.2, 0.4, 0.2],
@@ -110,15 +134,14 @@ export const Home = () => {
                                         }}
                                     />
                                     <motion.div
-                                        className="absolute top-0 bottom-0 w-[2px] bg-gradient-to-b from-transparent via-blue-500/50 dark:via-blue-300/50 to-transparent shadow-[0_0_15px_rgba(59,130,246,0.3)]"
+                                        className="absolute top-0 bottom-0 w-[2px] bg-gradient-to-b from-transparent via-pink-500/50 dark:via-pink-300/50 to-transparent shadow-[0_0_15px_rgba(236,72,153,0.3)]"
                                         animate={{
-                                            left: ["-10%", "110%"],
-                                            opacity: [0, 1, 0],
+                                            left: ["-5%", "105%", "-5%"],
+                                            opacity: [0, 1, 1, 0],
                                         }}
                                         transition={{
-                                            duration: 3,
+                                            duration: 4,
                                             repeat: Infinity,
-                                            repeatDelay: 2,
                                             ease: "easeInOut",
                                         }}
                                     />
@@ -180,7 +203,7 @@ export const Home = () => {
                                     height="1600"
                                     loading="eager"
                                     fetchPriority="high"
-                                    className="w-full h-full object-cover object-top opacity-90 dark:opacity-80"
+                                    className="w-full h-full object-cover object-top opacity-100 dark:opacity-90 contrast-[0.9]"
                                 />
 
                                 {/* Organic Glow Effect Layer */}
@@ -205,7 +228,7 @@ export const Home = () => {
             </section>
 
             {/* Philosophy Section */}
-            <section className="relative z-10 py-16 md:py-24 bg-white dark:bg-slate-950">
+            <section className="relative py-16 md:py-24 bg-white dark:bg-slate-950 z-10">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center max-w-3xl mx-auto mb-16">
                         <span className="text-xs font-bold text-primary uppercase tracking-[0.2em] mb-4 block">Our Philosophy</span>
@@ -241,7 +264,8 @@ export const Home = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: i * 0.1 }}
-                                className="group overflow-hidden rounded-3xl bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800 hover:border-primary/30 transition-all hover:-translate-y-2"
+                                className="group overflow-hidden rounded-3xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 hover:border-primary/30 transition-all hover:-translate-y-2 isolate"
+                                style={{ WebkitBackfaceVisibility: 'hidden', WebkitTransform: 'translateZ(0)' }}
                             >
                                 <div className="aspect-[16/10] overflow-hidden transition-all duration-500">
                                     <img src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
@@ -259,7 +283,7 @@ export const Home = () => {
             </section>
 
             {/* Mirage Collection Promo */}
-            <section className="relative z-10 h-[500px] md:h-[650px] flex items-center overflow-hidden group">
+            <section className="relative h-[500px] md:h-[650px] flex items-center overflow-hidden group z-10">
                 <div className="absolute inset-0">
                     <img
                         src="/images/promo/mirage_promo.png"
@@ -297,7 +321,7 @@ export const Home = () => {
             </section>
 
             {/* Curated Skincare Shelf */}
-            <section className="relative z-10 py-16 md:py-24 bg-white dark:bg-slate-950 overflow-hidden">
+            <section className="relative py-16 md:py-24 bg-white dark:bg-slate-950 overflow-hidden z-10">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-end mb-12">
                         <div>
@@ -319,6 +343,7 @@ export const Home = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: i * 0.1 }}
+                                className="h-full"
                             >
                                 <ProductCard product={product} />
                             </motion.div>
@@ -328,7 +353,7 @@ export const Home = () => {
             </section>
 
             {/* Quick Services Preview */}
-            <section className="relative z-10 bg-slate-50 dark:bg-slate-900/50 py-16 md:py-24 px-4">
+            <section className="relative bg-slate-50 dark:bg-slate-900 py-16 md:py-24 px-4 z-10">
                 <div className="max-w-7xl mx-auto">
                     <div className="flex flex-col md:flex-row justify-between items-start mb-16">
                         <div>
@@ -352,8 +377,8 @@ export const Home = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                         {SERVICE_DATA.map((service, i) => (
-                            <div key={i} className="group bg-white dark:bg-slate-800 p-6 rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300">
-                                <div className="relative aspect-square rounded-2xl overflow-hidden mb-6 bg-slate-100">
+                            <div key={i} className="group bg-white dark:bg-slate-800 p-6 rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 h-full flex flex-col">
+                                <div className="relative aspect-square rounded-2xl overflow-hidden mb-6 bg-slate-100 flex-shrink-0">
                                     <img
                                         src={service.img}
                                         alt={service.title}
@@ -365,10 +390,12 @@ export const Home = () => {
                                         </span>
                                     </div>
                                 </div>
-                                <h3 className="text-xl font-medium mb-3 group-hover:text-primary transition-colors">{service.title}</h3>
-                                <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4 line-clamp-3">
-                                    {service.desc}
-                                </p>
+                                <div className="flex flex-col flex-grow">
+                                    <h3 className="text-xl font-medium mb-3 group-hover:text-primary transition-colors">{service.title}</h3>
+                                    <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4 line-clamp-3">
+                                        {service.desc}
+                                    </p>
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -376,7 +403,9 @@ export const Home = () => {
             </section>
 
             {/* FAQ Section */}
-            <FAQ />
+            <section className="relative z-10 bg-white dark:bg-slate-950 py-24">
+                <FAQ />
+            </section>
         </div>
     );
 };
