@@ -70,10 +70,10 @@ const FAQItem = ({ question, answer, isOpen, onClick }: { question: string, answ
         <div className="border-b border-slate-200 dark:border-slate-800">
             <button
                 onClick={onClick}
-                className="w-full py-6 flex items-center justify-between text-left focus:outline-none group"
+                className="w-full py-6 flex items-center justify-between text-left focus:outline-none group bg-transparent"
             >
                 <span className={cn(
-                    "text-lg font-medium transition-colors",
+                    "text-lg font-medium transition-all duration-300 transform translate-z-0 opacity-100",
                     isOpen ? "text-primary" : "text-slate-900 dark:text-white group-hover:text-primary"
                 )}>
                     {question}
