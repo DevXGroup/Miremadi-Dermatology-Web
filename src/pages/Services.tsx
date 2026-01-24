@@ -5,7 +5,7 @@ import { ArrowRight, Zap, Activity, Heart, ShieldCheck, Sun } from 'lucide-react
 
 export const Services = () => {
     return (
-        <div className="pt-24 min-h-screen bg-white dark:bg-slate-950 pb-24">
+        <div className="pt-24 min-h-screen bg-white dark:bg-slate-950 pb-12 md:pb-24">
 
             {/* Hero Section */}
             <section className="relative py-16 overflow-hidden">
@@ -96,7 +96,7 @@ export const Services = () => {
                                 />
                             </div>
                         </div>
-                        <div className="h-full min-h-[500px] rounded-3xl overflow-hidden shadow-xl">
+                        <div className="h-full min-h-[350px] lg:min-h-[500px] rounded-3xl overflow-hidden shadow-xl">
                             <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=1200" alt="Injectables" className="w-full h-full object-cover" />
                         </div>
                     </div>

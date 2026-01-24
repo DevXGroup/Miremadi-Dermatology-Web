@@ -115,35 +115,40 @@ export const Navbar = () => {
                 {isOpen && (
                     <motion.div
                         initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
+                        animate={{ opacity: 1, height: 'calc(100vh - 4rem)' }}
                         exit={{ opacity: 0, height: 0 }}
-                        className="md:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 overflow-hidden"
+                        className="md:hidden bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 overflow-hidden"
                     >
-                        <div className="px-4 pt-2 pb-6 space-y-2 max-h-[calc(100vh-5rem)] overflow-y-auto">
-                            {navLinks.map((link) => {
-                                const active = location.pathname === link.path ||
-                                    (link.path !== '/' && location.pathname.startsWith(link.path));
-                                return (
-                                    <Link
-                                        key={link.name}
-                                        to={link.path}
-                                        className={cn(
-                                            "block py-3 text-lg font-semibold transition-all cursor-pointer flex items-center justify-between",
-                                            active
-                                                ? "text-primary pl-2 border-l-4 border-primary bg-primary/5"
-                                                : "text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary"
-                                        )}
-                                        onClick={() => setIsOpen(false)}
-                                    >
-                                        <span>{link.name}</span>
-                                        {active && <span className="w-1.5 h-1.5 rounded-full bg-primary" />}
-                                    </Link>
-                                );
-                            })}
+                        <div className="flex flex-col h-full px-6 pt-8 pb-8">
+                            <div className="flex-1 space-y-6">
+                                {navLinks.map((link) => {
+                                    const active = location.pathname === link.path ||
+                                        (link.path !== '/' && location.pathname.startsWith(link.path));
+                                    return (
+                                        <Link
+                                            key={link.name}
+                                            to={link.path}
+                                            className={cn(
+                                                "block text-2xl font-display font-medium transition-all cursor-pointer",
+                                                active
+                                                    ? "text-primary translate-x-2"
+                                                    : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
+                                            )}
+                                            onClick={() => setIsOpen(false)}
+                                        >
+                                            {link.name}
+                                        </Link>
+                                    );
+                                })}
+                            </div>
 
-                            <div className="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-800">
-                                <div className="flex gap-4">
-                                    <button onClick={toggleDark} className="p-2 text-slate-500 dark:text-slate-400">
+                            <div className="pt-8 mt-auto border-t border-slate-100 dark:border-slate-800">
+                                <div className="flex items-center justify-between">
+                                    <span className="text-sm text-slate-400 font-medium tracking-wider uppercase">Appearance</span>
+                                    <button
+                                        onClick={toggleDark}
+                                        className="p-3 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+                                    >
                                         {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
                                     </button>
                                 </div>

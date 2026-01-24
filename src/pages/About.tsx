@@ -15,7 +15,7 @@ export const About = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
                     >
-                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-medium text-slate-900 dark:text-white mb-4 whitespace-nowrap">
+                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-medium text-slate-900 dark:text-white mb-4">
                             Arjang K. Miremadi, MD, FAAD
                         </h1>
                         <p className="text-xl text-slate-500 dark:text-slate-400">
