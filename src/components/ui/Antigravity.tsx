@@ -1,5 +1,6 @@
+/* eslint-disable react/no-unknown-property */
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import React, { useMemo, useRef } from 'react';
+import React, { useMemo, useRef, useEffect } from 'react';
 import * as THREE from 'three';
 
 interface AntigravityProps {
@@ -21,45 +22,96 @@ interface AntigravityProps {
 }
 
 const AntigravityInner: React.FC<AntigravityProps> = ({
-    count = 100, // Slightly reduced count for performance
-    magnetRadius = 15,
-    ringRadius = 12,
-    waveSpeed = 0.5, // Increased speed as requested
-    waveAmplitude = 1.5,
-    particleSize = 0.8,
+    count = 300,
+    magnetRadius = 10,
+    ringRadius = 10,
+    waveSpeed = 0.4,
+    waveAmplitude = 1,
+    particleSize = 2,
     lerpSpeed = 0.1,
-    color = '#818cf8',
-    autoAnimate = true,
-    particleVariance = 2,
-    rotationSpeed = 0.15, // Faster rotation
+    color = '#FF9FFC',
+    autoAnimate = false,
+    particleVariance = 1,
+    rotationSpeed = 0,
     depthFactor = 1,
-    pulseSpeed = 2.5, // Faster pulse
-    particleShape = 'sphere',
+    pulseSpeed = 3,
+    particleShape = 'capsule',
     fieldStrength = 10
 }) => {
     const meshRef = useRef<THREE.InstancedMesh>(null);
-    const { viewport } = useThree();
+    const { viewport, size } = useThree();
     const dummy = useMemo(() => new THREE.Object3D(), []);
 
     const lastMousePos = useRef({ x: 0, y: 0 });
+    const lastMouseMoveTime = useRef(0);
     const virtualMouse = useRef({ x: 0, y: 0 });
+
+    // Manual mouse tracking for robust interaction over overlays
+    const manualMouse = useRef({ x: 0, y: 0 });
+    useEffect(() => {
+        const handleMouseMove = (e: MouseEvent) => {
+            // Normalize to -1 to 1 range (R3F standard)
+            manualMouse.current = {
+                x: (e.clientX / window.innerWidth) * 2 - 1,
+                y: -(e.clientY / window.innerHeight) * 2 + 1
+            };
+        };
+        window.addEventListener('mousemove', handleMouseMove);
+        return () => window.removeEventListener('mousemove', handleMouseMove);
+    }, []);
+
+    // Track scroll position for mobile
+    const scrollY = useRef(0);
+    useEffect(() => {
+        const handleScroll = () => {
+            scrollY.current = window.scrollY;
+        };
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    // Check if device is mobile
+    const isMobile = size.width < 768; // Standard md breakpoint
 
     const particles = useMemo(() => {
         const temp = [];
         const width = viewport.width || 100;
         const height = viewport.height || 100;
 
-        for (let i = 0; i < count; i++) {
+        // Reduce count on mobile for performance
+        const effectiveCount = isMobile ? Math.min(count, 150) : count;
+
+        for (let i = 0; i < effectiveCount; i++) {
+            const t = Math.random() * 100;
+            const factor = 20 + Math.random() * 100;
+            const speed = 0.01 + Math.random() / 200;
+            const xFactor = -50 + Math.random() * 100;
+            const yFactor = -50 + Math.random() * 100;
+            const zFactor = -50 + Math.random() * 100;
+
+            const x = (Math.random() - 0.5) * width;
+            const y = (Math.random() - 0.5) * height;
+            const z = (Math.random() - 0.5) * 20;
+
+            const randomRadiusOffset = (Math.random() - 0.5) * 2;
+
             temp.push({
-                t: Math.random() * 100,
-                speed: 0.015 + Math.random() / 150, // Faster base speed
-                mx: (Math.random() - 0.5) * width,
-                my: (Math.random() - 0.5) * height,
-                mz: (Math.random() - 0.5) * 20,
-                cx: (Math.random() - 0.5) * width,
-                cy: (Math.random() - 0.5) * height,
-                cz: (Math.random() - 0.5) * 20,
-                randomRadiusOffset: (Math.random() - 0.5) * 2
+                t,
+                factor,
+                speed,
+                xFactor,
+                yFactor,
+                zFactor,
+                mx: x,
+                my: y,
+                mz: z,
+                cx: x,
+                cy: y,
+                cz: z,
+                vx: 0,
+                vy: 0,
+                vz: 0,
+                randomRadiusOffset
             });
         }
         return temp;
@@ -69,59 +121,111 @@ const AntigravityInner: React.FC<AntigravityProps> = ({
         const mesh = meshRef.current;
         if (!mesh) return;
 
-        const { viewport: v, pointer: m, clock } = state;
-        const time = clock.getElapsedTime();
+        const { viewport: v } = state;
+        // Use manual mouse tracker instead of state.pointer which can be blocked by z-index
+        const m = manualMouse.current;
 
-        let destX = (m.x * v.width) / 2;
-        let destY = (m.y * v.height) / 2;
+        const mouseDist = Math.sqrt(Math.pow(m.x - lastMousePos.current.x, 2) + Math.pow(m.y - lastMousePos.current.y, 2));
 
-        if (autoAnimate) {
-            destX = destX * 0.7 + Math.sin(time * 0.5) * (v.width / 5);
-            destY = destY * 0.7 + Math.cos(time * 0.6) * (v.height / 5);
+        if (mouseDist > 0.001) {
+            lastMouseMoveTime.current = Date.now();
+            lastMousePos.current = { x: m.x, y: m.y };
         }
 
-        virtualMouse.current.x += (destX - virtualMouse.current.x) * 0.08;
-        virtualMouse.current.y += (destY - virtualMouse.current.y) * 0.08;
+        let destX = 0;
+        let destY = 0;
+
+        if (isMobile) {
+            // Mobile Logic: Scroll controls Y position
+            // Map scroll Y (0 to window height) to viewport Y coordinates
+            // Start at top (viewport height / 2) and move down as we scroll
+            const maxScroll = window.innerHeight; // One full screen height range
+            const scrollProgress = Math.min(scrollY.current / maxScroll, 1);
+
+            // Initial position: Top center (header area)
+            // Move down as scroll increases
+            destX = 0; // Keep centered horizontally
+            destY = (v.height / 3) - (scrollProgress * v.height * 0.8);
+
+        } else {
+            // Desktop Logic: Mouse controls position
+            destX = (m.x * v.width) / 2;
+            destY = (m.y * v.height) / 2;
+
+            // Mouse offset: 100px right, 100px down
+            const xOffset = (100 / state.size.width) * v.width;
+            const yOffset = -(100 / state.size.height) * v.height;
+
+            destX += xOffset;
+            destY += yOffset;
+        }
+
+        if (autoAnimate && Date.now() - lastMouseMoveTime.current > 2000) {
+            const time = state.clock.getElapsedTime();
+            destX = Math.sin(time * 0.5) * (v.width / 4);
+            destY = Math.cos(time * 0.5 * 2) * (v.height / 4);
+        }
+
+        const smoothFactor = 0.05;
+        virtualMouse.current.x += (destX - virtualMouse.current.x) * smoothFactor;
+        virtualMouse.current.y += (destY - virtualMouse.current.y) * smoothFactor;
 
         const targetX = virtualMouse.current.x;
         const targetY = virtualMouse.current.y;
-        const globalRotation = time * rotationSpeed;
+
+        const globalRotation = state.clock.getElapsedTime() * rotationSpeed;
 
         particles.forEach((particle, i) => {
-            particle.t += particle.speed;
-            const t = particle.t;
+            let { t, speed, mx, my, mz, cz, randomRadiusOffset } = particle;
 
-            const dx = particle.mx - targetX;
-            const dy = particle.my - targetY;
+            t = particle.t += speed / 2;
+
+            const projectionFactor = 1 - cz / 50;
+            const projectedTargetX = targetX * projectionFactor;
+            const projectedTargetY = targetY * projectionFactor;
+
+            const dx = mx - projectedTargetX;
+            const dy = my - projectedTargetY;
             const dist = Math.sqrt(dx * dx + dy * dy);
 
-            let tx = particle.mx;
-            let ty = particle.my;
-            let tz = particle.mz * depthFactor;
+            let targetPos = { x: mx, y: my, z: mz * depthFactor };
 
             if (dist < magnetRadius) {
                 const angle = Math.atan2(dy, dx) + globalRotation;
+
                 const wave = Math.sin(t * waveSpeed + angle) * (0.5 * waveAmplitude);
-                const r = ringRadius + wave + particle.randomRadiusOffset * (5 / (fieldStrength + 0.1));
-                tx = targetX + r * Math.cos(angle);
-                ty = targetY + r * Math.sin(angle);
-                tz += Math.sin(t) * waveAmplitude;
+                const deviation = randomRadiusOffset * (5 / (fieldStrength + 0.1));
+
+                const currentRingRadius = ringRadius + wave + deviation;
+
+                targetPos.x = projectedTargetX + currentRingRadius * Math.cos(angle);
+                targetPos.y = projectedTargetY + currentRingRadius * Math.sin(angle);
+                targetPos.z = mz * depthFactor + Math.sin(t) * (1 * waveAmplitude * depthFactor);
             }
 
-            particle.cx += (tx - particle.cx) * lerpSpeed;
-            particle.cy += (ty - particle.cy) * lerpSpeed;
-            particle.cz += (tz - particle.cz) * lerpSpeed;
+            particle.cx += (targetPos.x - particle.cx) * lerpSpeed;
+            particle.cy += (targetPos.y - particle.cy) * lerpSpeed;
+            particle.cz += (targetPos.z - particle.cz) * lerpSpeed;
 
             dummy.position.set(particle.cx, particle.cy, particle.cz);
-            dummy.lookAt(targetX, targetY, particle.cz);
+
+            dummy.lookAt(projectedTargetX, projectedTargetY, particle.cz);
             dummy.rotateX(Math.PI / 2);
 
-            const dToM = Math.sqrt(Math.pow(particle.cx - targetX, 2) + Math.pow(particle.cy - targetY, 2));
-            const scale = Math.max(0.1, Math.min(1.2, 1 - Math.abs(dToM - ringRadius) / 15));
-            const finalScale = scale * (0.8 + Math.sin(t * pulseSpeed) * 0.4) * particleSize;
+            const currentDistToMouse = Math.sqrt(
+                Math.pow(particle.cx - projectedTargetX, 2) + Math.pow(particle.cy - projectedTargetY, 2)
+            );
 
+            const distFromRing = Math.abs(currentDistToMouse - ringRadius);
+            let scaleFactor = 1 - distFromRing / 10;
+
+            scaleFactor = Math.max(0, Math.min(1, scaleFactor));
+
+            const finalScale = scaleFactor * (0.8 + Math.sin(t * pulseSpeed) * 0.2 * particleVariance) * particleSize;
             dummy.scale.set(finalScale, finalScale, finalScale);
+
             dummy.updateMatrix();
+
             mesh.setMatrixAt(i, dummy.matrix);
         });
 
@@ -130,11 +234,11 @@ const AntigravityInner: React.FC<AntigravityProps> = ({
 
     return (
         <instancedMesh ref={meshRef} args={[undefined, undefined, count]}>
-            {particleShape === 'capsule' && <capsuleGeometry args={[0.1, 0.4, 4, 8]} />}
-            {particleShape === 'sphere' && <sphereGeometry args={[0.2, 8, 8]} />}
-            {particleShape === 'box' && <boxGeometry args={[0.3, 0.3, 0.3]} />}
-            {particleShape === 'tetrahedron' && <tetrahedronGeometry args={[0.3]} />}
-            <meshBasicMaterial color={color} transparent opacity={0.5} />
+            {particleShape === 'capsule' && <capsuleGeometry args={[0.04, 0.15, 4, 8]} />}
+            {particleShape === 'sphere' && <sphereGeometry args={[0.08, 16, 16]} />}
+            {particleShape === 'box' && <boxGeometry args={[0.1, 0.1, 0.1]} />}
+            {particleShape === 'tetrahedron' && <tetrahedronGeometry args={[0.1]} />}
+            <meshBasicMaterial color={color} transparent opacity={0.6} />
         </instancedMesh>
     );
 };
@@ -143,10 +247,9 @@ const Antigravity: React.FC<AntigravityProps> = props => {
     return (
         <div style={{ width: '100%', height: '100%' }}>
             <Canvas
-                dpr={[1, 1.5]} // Performance: limit resolution
                 camera={{ position: [0, 0, 50], fov: 35 }}
                 style={{ background: 'transparent' }}
-                gl={{ antialias: false, powerPreference: 'high-performance' }} // Performance hints
+                eventSource={document.body}
             >
                 <AntigravityInner {...props} />
             </Canvas>
