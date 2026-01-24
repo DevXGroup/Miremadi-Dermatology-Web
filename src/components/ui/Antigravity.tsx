@@ -21,20 +21,20 @@ interface AntigravityProps {
 }
 
 const AntigravityInner: React.FC<AntigravityProps> = ({
-    count = 150, // Reduced for cleaner look
+    count = 100, // Slightly reduced count for performance
     magnetRadius = 15,
     ringRadius = 12,
-    waveSpeed = 0.4,
+    waveSpeed = 0.5, // Increased speed as requested
     waveAmplitude = 1.5,
-    particleSize = 0.8, // Smaller for 'sparkle' look
-    lerpSpeed = 0.08,
-    color = '#818cf8', // Indigo-400 default
-    autoAnimate = true, // Auto-animate by default for homepage
+    particleSize = 0.8,
+    lerpSpeed = 0.1,
+    color = '#818cf8',
+    autoAnimate = true,
     particleVariance = 2,
-    rotationSpeed = 0.1,
+    rotationSpeed = 0.15, // Faster rotation
     depthFactor = 1,
-    pulseSpeed = 2,
-    particleShape = 'sphere', // Smooth spheres match medical/droplet theme best
+    pulseSpeed = 2.5, // Faster pulse
+    particleShape = 'sphere',
     fieldStrength = 10
 }) => {
     const meshRef = useRef<THREE.InstancedMesh>(null);
@@ -42,7 +42,6 @@ const AntigravityInner: React.FC<AntigravityProps> = ({
     const dummy = useMemo(() => new THREE.Object3D(), []);
 
     const lastMousePos = useRef({ x: 0, y: 0 });
-    const lastMouseMoveTime = useRef(0);
     const virtualMouse = useRef({ x: 0, y: 0 });
 
     const particles = useMemo(() => {
@@ -51,37 +50,16 @@ const AntigravityInner: React.FC<AntigravityProps> = ({
         const height = viewport.height || 100;
 
         for (let i = 0; i < count; i++) {
-            // ... (particle initialization logic)
-            const t = Math.random() * 100;
-            const factor = 20 + Math.random() * 100;
-            const speed = 0.01 + Math.random() / 200;
-            const xFactor = -50 + Math.random() * 100;
-            const yFactor = -50 + Math.random() * 100;
-            const zFactor = -50 + Math.random() * 100;
-
-            const x = (Math.random() - 0.5) * width;
-            const y = (Math.random() - 0.5) * height;
-            const z = (Math.random() - 0.5) * 20;
-
-            const randomRadiusOffset = (Math.random() - 0.5) * 2;
-
             temp.push({
-                t,
-                factor,
-                speed,
-                xFactor,
-                yFactor,
-                zFactor,
-                mx: x,
-                my: y,
-                mz: z,
-                cx: x,
-                cy: y,
-                cz: z,
-                vx: 0,
-                vy: 0,
-                vz: 0,
-                randomRadiusOffset
+                t: Math.random() * 100,
+                speed: 0.015 + Math.random() / 150, // Faster base speed
+                mx: (Math.random() - 0.5) * width,
+                my: (Math.random() - 0.5) * height,
+                mz: (Math.random() - 0.5) * 20,
+                cx: (Math.random() - 0.5) * width,
+                cy: (Math.random() - 0.5) * height,
+                cz: (Math.random() - 0.5) * 20,
+                randomRadiusOffset: (Math.random() - 0.5) * 2
             });
         }
         return temp;
@@ -91,87 +69,59 @@ const AntigravityInner: React.FC<AntigravityProps> = ({
         const mesh = meshRef.current;
         if (!mesh) return;
 
-        const { viewport: v, pointer: m } = state;
-
-        const mouseDist = Math.sqrt(Math.pow(m.x - lastMousePos.current.x, 2) + Math.pow(m.y - lastMousePos.current.y, 2));
-
-        if (mouseDist > 0.001) {
-            lastMouseMoveTime.current = Date.now();
-            lastMousePos.current = { x: m.x, y: m.y };
-        }
+        const { viewport: v, pointer: m, clock } = state;
+        const time = clock.getElapsedTime();
 
         let destX = (m.x * v.width) / 2;
         let destY = (m.y * v.height) / 2;
 
         if (autoAnimate) {
-            // ALWAYS auto-animate gently if mouse is idle OR just always
-            const time = state.clock.getElapsedTime();
-            // Combine mouse interaction with gentle wave motion
-            destX = destX * 0.8 + Math.sin(time * 0.3) * (v.width / 6);
-            destY = destY * 0.8 + Math.cos(time * 0.4) * (v.height / 6);
+            destX = destX * 0.7 + Math.sin(time * 0.5) * (v.width / 5);
+            destY = destY * 0.7 + Math.cos(time * 0.6) * (v.height / 5);
         }
 
-        const smoothFactor = 0.05;
-        virtualMouse.current.x += (destX - virtualMouse.current.x) * smoothFactor;
-        virtualMouse.current.y += (destY - virtualMouse.current.y) * smoothFactor;
+        virtualMouse.current.x += (destX - virtualMouse.current.x) * 0.08;
+        virtualMouse.current.y += (destY - virtualMouse.current.y) * 0.08;
 
         const targetX = virtualMouse.current.x;
         const targetY = virtualMouse.current.y;
-
-        const globalRotation = state.clock.getElapsedTime() * rotationSpeed;
+        const globalRotation = time * rotationSpeed;
 
         particles.forEach((particle, i) => {
-            let { t, speed, mx, my, mz, cz, randomRadiusOffset } = particle;
+            particle.t += particle.speed;
+            const t = particle.t;
 
-            t = particle.t += speed / 2;
-
-            const projectionFactor = 1 - cz / 50;
-            const projectedTargetX = targetX * projectionFactor;
-            const projectedTargetY = targetY * projectionFactor;
-
-            const dx = mx - projectedTargetX;
-            const dy = my - projectedTargetY;
+            const dx = particle.mx - targetX;
+            const dy = particle.my - targetY;
             const dist = Math.sqrt(dx * dx + dy * dy);
 
-            let targetPos = { x: mx, y: my, z: mz * depthFactor };
+            let tx = particle.mx;
+            let ty = particle.my;
+            let tz = particle.mz * depthFactor;
 
             if (dist < magnetRadius) {
                 const angle = Math.atan2(dy, dx) + globalRotation;
-
                 const wave = Math.sin(t * waveSpeed + angle) * (0.5 * waveAmplitude);
-                const deviation = randomRadiusOffset * (5 / (fieldStrength + 0.1));
-
-                const currentRingRadius = ringRadius + wave + deviation;
-
-                targetPos.x = projectedTargetX + currentRingRadius * Math.cos(angle);
-                targetPos.y = projectedTargetY + currentRingRadius * Math.sin(angle);
-                targetPos.z = mz * depthFactor + Math.sin(t) * (1 * waveAmplitude * depthFactor);
+                const r = ringRadius + wave + particle.randomRadiusOffset * (5 / (fieldStrength + 0.1));
+                tx = targetX + r * Math.cos(angle);
+                ty = targetY + r * Math.sin(angle);
+                tz += Math.sin(t) * waveAmplitude;
             }
 
-            particle.cx += (targetPos.x - particle.cx) * lerpSpeed;
-            particle.cy += (targetPos.y - particle.cy) * lerpSpeed;
-            particle.cz += (targetPos.z - particle.cz) * lerpSpeed;
+            particle.cx += (tx - particle.cx) * lerpSpeed;
+            particle.cy += (ty - particle.cy) * lerpSpeed;
+            particle.cz += (tz - particle.cz) * lerpSpeed;
 
             dummy.position.set(particle.cx, particle.cy, particle.cz);
-
-            dummy.lookAt(projectedTargetX, projectedTargetY, particle.cz);
+            dummy.lookAt(targetX, targetY, particle.cz);
             dummy.rotateX(Math.PI / 2);
 
-            // Scale Logic
-            const currentDistToMouse = Math.sqrt(
-                Math.pow(particle.cx - projectedTargetX, 2) + Math.pow(particle.cy - projectedTargetY, 2)
-            );
+            const dToM = Math.sqrt(Math.pow(particle.cx - targetX, 2) + Math.pow(particle.cy - targetY, 2));
+            const scale = Math.max(0.1, Math.min(1.2, 1 - Math.abs(dToM - ringRadius) / 15));
+            const finalScale = scale * (0.8 + Math.sin(t * pulseSpeed) * 0.4) * particleSize;
 
-            // Make particles near the "ring" larger, others smaller but visible
-            const distFromRing = Math.abs(currentDistToMouse - ringRadius);
-            let scaleFactor = 1 - distFromRing / 15; // Widen the interaction zone
-            scaleFactor = Math.max(0.1, Math.min(1.2, scaleFactor)); // Ensure minimum visibility
-
-            const finalScale = scaleFactor * (0.8 + Math.sin(t * pulseSpeed) * 0.2 * particleVariance) * particleSize;
             dummy.scale.set(finalScale, finalScale, finalScale);
-
             dummy.updateMatrix();
-
             mesh.setMatrixAt(i, dummy.matrix);
         });
 
@@ -181,10 +131,10 @@ const AntigravityInner: React.FC<AntigravityProps> = ({
     return (
         <instancedMesh ref={meshRef} args={[undefined, undefined, count]}>
             {particleShape === 'capsule' && <capsuleGeometry args={[0.1, 0.4, 4, 8]} />}
-            {particleShape === 'sphere' && <sphereGeometry args={[0.2, 16, 16]} />}
+            {particleShape === 'sphere' && <sphereGeometry args={[0.2, 8, 8]} />}
             {particleShape === 'box' && <boxGeometry args={[0.3, 0.3, 0.3]} />}
             {particleShape === 'tetrahedron' && <tetrahedronGeometry args={[0.3]} />}
-            <meshBasicMaterial color={color} transparent opacity={0.6} />
+            <meshBasicMaterial color={color} transparent opacity={0.5} />
         </instancedMesh>
     );
 };
@@ -192,7 +142,12 @@ const AntigravityInner: React.FC<AntigravityProps> = ({
 const Antigravity: React.FC<AntigravityProps> = props => {
     return (
         <div style={{ width: '100%', height: '100%' }}>
-            <Canvas camera={{ position: [0, 0, 50], fov: 35 }} style={{ background: 'transparent' }}>
+            <Canvas
+                dpr={[1, 1.5]} // Performance: limit resolution
+                camera={{ position: [0, 0, 50], fov: 35 }}
+                style={{ background: 'transparent' }}
+                gl={{ antialias: false, powerPreference: 'high-performance' }} // Performance hints
+            >
                 <AntigravityInner {...props} />
             </Canvas>
         </div>

@@ -58,7 +58,7 @@ export const Shop = () => {
                             alt="The Mirage Collection"
                             className="w-full h-full object-cover scale-105 group-hover:scale-110 transition-transform duration-1000"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900/40 to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900/40 to-slate-950/0" />
                         <div className="absolute inset-0 bg-slate-950/20" />
                     </div>
                     <div className="relative px-6 md:px-12 max-w-2xl">

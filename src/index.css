@@ -7,8 +7,16 @@
   /* Dark Dirty Pink */
 }
 
+html {
+  scroll-behavior: smooth;
+  height: -webkit-fill-available;
+}
+
 body {
   @apply bg-white text-slate-900 font-sans antialiased transition-colors duration-300;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a,

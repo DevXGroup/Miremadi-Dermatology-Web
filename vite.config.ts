@@ -9,12 +9,22 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
+      includeAssets: ['Miremadi-logo.webp'],
       manifest: {
         name: 'Miremadi Dermatology Medical Clinic',
         short_name: 'Miremadi Medical',
         description: 'Dr. Arjang Miremadi Dermatology & Shop',
-        theme_color: '#ffffff',
+        theme_color: '#B06D7A',
+        background_color: '#ffffff',
+        display: 'standalone',
+        icons: [
+          {
+            src: 'Miremadi-logo.webp',
+            sizes: '512x512',
+            type: 'image/webp',
+            purpose: 'any maskable'
+          }
+        ]
       }
     })
   ],

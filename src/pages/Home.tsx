@@ -27,7 +27,7 @@ export const Home = () => {
     }, []);
 
     return (
-        <div className="pt-24 min-h-screen relative overflow-hidden">
+        <div className="pt-24 min-h-screen relative overflow-hidden isolate">
             {/* Background Animation Layer */}
             <div className="absolute top-0 left-0 right-0 h-screen z-0 pointer-events-none">
                 <div className="absolute top-0 left-0 w-full h-[80vh] opacity-60">
@@ -40,8 +40,8 @@ export const Home = () => {
                         fieldStrength={8}
                     />
                 </div>
-                {/* Soft Fade Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white dark:to-slate-950" />
+                {/* Soft Fade Overlay - using explicit colors for Safari compatibility */}
+                <div className="absolute inset-0 bg-gradient-to-b from-white/0 via-white/0 to-white dark:from-slate-950/0 dark:via-slate-950/0 dark:to-slate-950 pointer-events-none transform translate-z-0" />
             </div>
 
             {/* Hero Section */}
@@ -171,11 +171,15 @@ export const Home = () => {
                             <motion.div
                                 animate={{ y: [0, -15, 0] }}
                                 transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                                className="relative h-[500px] md:h-[650px] bg-slate-100 dark:bg-slate-800 rounded-[2.5rem] overflow-hidden border-8 border-white dark:border-slate-800 shadow-2xl"
+                                className="relative h-[500px] md:h-[650px] bg-slate-100 dark:bg-slate-800 rounded-[2.5rem] overflow-hidden border-8 border-white dark:border-slate-800 shadow-2xl will-change-transform"
                             >
                                 <img
                                     src="/dr-miremadi-portrait-new.webp"
                                     alt="Dr. Arjang K. Miremadi"
+                                    width="1200"
+                                    height="1600"
+                                    loading="eager"
+                                    fetchPriority="high"
                                     className="w-full h-full object-cover object-top opacity-90 dark:opacity-80"
                                 />
 
@@ -263,7 +267,7 @@ export const Home = () => {
                         className="w-full h-full object-cover transition-all duration-1000 scale-105 group-hover:scale-110"
                     />
                     {/* Multi-layered gradient for depth and readability */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900/60 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900/60 to-slate-900/0" />
                     <div className="absolute inset-0 bg-slate-950/20" />
                 </div>
                 <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
