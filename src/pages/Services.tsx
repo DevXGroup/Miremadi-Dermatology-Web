@@ -167,8 +167,8 @@ export const Services = () => {
                                     <div className="grid gap-4">
                                         <TreatmentRow
                                             title="Male Pattern Baldness"
-                                            description="Strategized medical protocols to halt loss and encourage regrowth."
-                                            image="/images/services/male_hair_loss.png"
+                                            description="Medical treatments using peptides, prescription medications, and injectable therapies to halt hair loss and stimulate regrowth."
+                                            image="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&q=80&w=400"
                                         />
                                         <TreatmentRow
                                             title="Female Hair Thinning"
