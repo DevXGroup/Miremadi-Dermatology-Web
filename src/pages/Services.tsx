@@ -45,27 +45,45 @@ export const Services = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
                         <ServiceCard
                             title="Venus Bliss"
-                            description="Non-invasive lipo and body contouring. Target stubborn fat and cellulite with effective laser technology for a slimmer silhouette."
-                            image="/images/services/venus_bliss.webp"
+                            description="Non-invasive laser lipolysis for body contouring, targeting fat reduction in the abdomen and flanks with no downtime."
+                            image="https://device-trade.com/cdn/shop/files/Bliss2_grande.jpg?v=1723847298"
                             tags={['Fat Reduction', 'Body Contouring']}
                         />
                         <ServiceCard
                             title="Venus Viva MD"
-                            description="Advanced skin resurfacing using NanoFractional RF. Dramatically improves acne scars, wrinkles, enlarged pores, and uneven texture."
-                            image="/images/services/venus_viva.png"
+                            description="NanoFractional RF skin resurfacing treatment for scars, rosacea, texture, enlarged pores, and pigmentation with minimal downtime."
+                            image="https://bimedis.com/img/vimg/241426/big"
                             tags={['Acne Scars', 'Resurfacing']}
                         />
                         <ServiceCard
-                            title="Venus Versa"
-                            description="A versatile powerhouse for photofacials (IPL) to treat sun damage and discoloration, plus active acne treatments and skin rejuvenation."
-                            image="/images/services/venus_versa.png"
-                            tags={['IPL', 'Acne', 'Rejuvenation']}
+                            title="Venus Freeze"
+                            description="FDA-approved treatment for cellulite and loose skin using magnetic pulses to stimulate collagen."
+                            image="https://www.medprolasers.com/wp-content/uploads/2020/11/IMG_3184-rotated.jpg"
+                            tags={['Cellulite', 'Skin Tightening']}
+                        />
+                        <ServiceCard
+                            title="Botox & Fillers"
+                            description="Reduce fine lines and wrinkles and restore volume for a youthful, refreshed appearance."
+                            image="/images/services/botox_fillers.png"
+                            tags={['Anti-Aging', 'Volume']}
                         />
                         <ServiceCard
                             title="Laser Hair Removal"
                             description="Safe and effective hair reduction for all skin types using the latest medical-grade laser technology."
                             image="/images/services/laser_hair_removal.png"
                             tags={['Hair Reduction', 'Smooth Skin']}
+                        />
+                        <ServiceCard
+                            title="Chemical Peels"
+                            description="Exfoliating treatments to improve skin texture, tone, and clarity by removing damaged outer layers."
+                            image="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?auto=format&fit=crop&q=80&w=400"
+                            tags={['Exfoliation', 'Rejuvenation']}
+                        />
+                        <ServiceCard
+                            title="Vein Therapy"
+                            description="Fast disappearance of noticeable veins through specialized laser and clinical techniques."
+                            image="/images/services/vein_therapy.png"
+                            tags={['Vascular', 'Laser Treatment']}
                         />
                     </div>
                 </div>
@@ -142,7 +160,7 @@ export const Services = () => {
                                 <TreatmentRow
                                     title="Peptides (Hair Drops)"
                                     description="Targeted topical peptide therapy to support follicle health and promote active growth phases."
-                                    image="/images/services/peptides.png"
+                                    image="https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&q=80&w=400"
                                 />
                                 <div className="pt-4 border-t border-slate-100 dark:border-slate-800">
                                     <p className="text-sm font-medium text-slate-900 dark:text-white mb-4">Comprehensive Care For:</p>
@@ -193,22 +211,28 @@ export const Services = () => {
                             tags={['Skin', 'Hair', 'Nails']}
                         />
                         <ServiceCard
-                            title="Acne Treatments"
-                            description="Comprehensive acne management using medical-grade therapies, extractions, and advanced prescription protocols to clear skin."
-                            image="/images/services/acne_treatment.png"
+                            title="Acne Treatment"
+                            description="Customized plans involving topicals, lasers, and lifestyle changes to clear skin and prevent scarring."
+                            image="/images/services/acne_treatment_new.png"
                             tags={['Clear Skin', 'Therapy']}
                         />
                         <ServiceCard
-                            title="Skin Cancer Screenings"
-                            description="Thorough full-body examinations for early detection of melanomas and other skin cancers using advanced dermoscopy."
+                            title="Skin Cancer Screening"
+                            description="Comprehensive full-body exams for early detection using advanced dermoscopy for accuracy."
                             image="/images/services/skin_cancer_screening.png"
                             tags={['Prevention', 'Early Detection']}
                         />
                         <ServiceCard
                             title="Skin Cancer Surgery"
                             description="Precise surgical removal of cancerous lesions with a focus on medical cure and optimal cosmetic outcomes."
-                            image="/images/services/skin_cancer_surgery.png"
+                            image="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=400"
                             tags={['Surgery', 'Treatment']}
+                        />
+                        <ServiceCard
+                            title="Psoriasis Care"
+                            description="Advanced biologic and topical therapies for managing chronic psoriasis and improving quality of life."
+                            image="/images/services/psoriasis_care.png"
+                            tags={['Medical', 'Therapy']}
                         />
                         <ServiceCard
                             title="Earlobe Repair"
