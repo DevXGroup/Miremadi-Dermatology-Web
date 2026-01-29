@@ -38,21 +38,21 @@ export const SERVICE_DATA = [
     },
     // Retaining existing specialized services
     {
-        title: 'ReFirme',
-        desc: 'Uses Bipolar radiofrequency for skin tightening and sag reduction, primarily for face and neck.',
-        img: 'https://images.unsplash.com/photo-1600334129128-685c5582fd35?auto=format&fit=crop&q=80&w=400',
-        type: 'Tightening'
+        title: 'Venus Bliss',
+        desc: 'Non-invasive laser lipolysis for body contouring, targeting fat reduction in the abdomen and flanks with no downtime.',
+        img: 'https://device-trade.com/cdn/shop/files/Bliss2_grande.jpg?v=1723847298',
+        type: 'Body'
     },
     {
-        title: 'IPL Photofacial',
-        desc: 'Intense Pulsed Light breakthrough for age spots and various skin conditions without injury.',
-        img: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=400',
+        title: 'Venus Viva MD',
+        desc: 'NanoFractional RF skin resurfacing treatment for scars, rosacea, texture, enlarged pores, and pigmentation with minimal downtime.',
+        img: 'https://bimedis.com/img/vimg/241426/big',
         type: 'Rejuvenation'
     },
     {
         title: 'Venus Freeze',
         desc: 'FDA-approved treatment for cellulite and loose skin using magnetic pulses to stimulate collagen.',
-        img: '/images/ref-3.png',
+        img: 'https://www.medprolasers.com/wp-content/uploads/2020/11/IMG_3184-rotated.jpg',
         type: 'Body'
     },
     {
