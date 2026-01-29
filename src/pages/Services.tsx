@@ -225,7 +225,7 @@ export const Services = () => {
                         <ServiceCard
                             title="Skin Cancer Surgery"
                             description="Precise surgical removal of cancerous lesions with a focus on medical cure and optimal cosmetic outcomes."
-                            image="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=400"
+                            image="/images/services/skin_cancer_surgery.webp"
                             tags={['Surgery', 'Treatment']}
                         />
                         <ServiceCard
