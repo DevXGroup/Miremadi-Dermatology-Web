@@ -160,7 +160,7 @@ export const Services = () => {
                                 <TreatmentRow
                                     title="Peptides (Hair Drops)"
                                     description="Targeted topical peptide therapy to support follicle health and promote active growth phases."
-                                    image="https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&q=80&w=400"
+                                    image="https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&q=80&w=400"
                                 />
                                 <div className="pt-4 border-t border-slate-100 dark:border-slate-800">
                                     <p className="text-sm font-medium text-slate-900 dark:text-white mb-4">Comprehensive Care For:</p>
@@ -250,17 +250,17 @@ export const Services = () => {
 const ScannerCircle = () => {
     const slides = [
         {
-            image: "/images/services/male_hair_loss.png",
+            image: "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&q=80&w=800",
             position: "object-center",
             text: "Restore Density"
         },
         {
-            image: "/images/services/female_hair_thinning.png",
+            image: "https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&q=80&w=800",
             position: "object-center",
-            text: "Real Results"
+            text: "Peptide Therapy"
         },
         {
-            image: "/images/services/hair_treatment.png",
+            image: "https://images.unsplash.com/photo-1519415510236-718bdfcd89c8?auto=format&fit=crop&q=80&w=800",
             position: "object-center",
             text: "Expert Care"
         }
