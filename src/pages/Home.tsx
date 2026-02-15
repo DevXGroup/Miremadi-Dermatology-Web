@@ -206,8 +206,8 @@ export const Home = () => {
                                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
                                 className="absolute bottom-12 -left-6 p-6 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md rounded-2xl shadow-xl border border-white/20 max-w-[220px] text-right z-20"
                             >
-                                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Advanced Skin Analysis</p>
-                                <p className="text-sm font-bold text-slate-900 dark:text-white leading-tight">Precision Diagnostics</p>
+                                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Dermatology, Pathology & Dermatopathology</p>
+                                <p className="text-sm font-bold text-slate-900 dark:text-white leading-tight">Triple Board-Certified Care</p>
                             </motion.div>
                         </motion.div>
 
