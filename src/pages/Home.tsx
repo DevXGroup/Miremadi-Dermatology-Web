@@ -8,6 +8,7 @@ import { MOCK_PRODUCTS } from '../store/useStore';
 import { ProductCard } from '../components/ui/ProductCard';
 
 import Antigravity from '../components/ui/Antigravity';
+import { SkinScanAnimation } from '../components/ui/SkinScanAnimation';
 
 export const Home = () => {
     // Simple state to force re-render on theme change if needed, or just let CSS handle background. 
@@ -194,20 +195,9 @@ export const Home = () => {
                             <motion.div
                                 animate={{ y: [0, -15, 0] }}
                                 transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                                className="relative h-[500px] md:h-[650px] bg-slate-100 dark:bg-slate-800 rounded-[2.5rem] overflow-hidden border-8 border-white dark:border-slate-800 shadow-2xl will-change-transform"
+                                className="will-change-transform"
                             >
-                                <img
-                                    src="/dr-miremadi-portrait-new.webp"
-                                    alt="Dr. Arjang K. Miremadi"
-                                    width="1200"
-                                    height="1600"
-                                    loading="eager"
-                                    fetchPriority="high"
-                                    className="w-full h-full object-cover object-top opacity-100 dark:opacity-90 contrast-[0.9]"
-                                />
-
-                                {/* Organic Glow Effect Layer */}
-                                <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent mix-blend-overlay pointer-events-none" />
+                                <SkinScanAnimation isDark={isDark} />
                             </motion.div>
 
                             {/* Floating Expert Badge */}
@@ -216,8 +206,8 @@ export const Home = () => {
                                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
                                 className="absolute bottom-12 -left-6 p-6 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md rounded-2xl shadow-xl border border-white/20 max-w-[220px] text-right z-20"
                             >
-                                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Dermatology, Pathology, & Dermatopathology</p>
-                                <p className="text-sm font-bold text-slate-900 dark:text-white leading-tight">Triple-Certified Specialist</p>
+                                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Advanced Skin Analysis</p>
+                                <p className="text-sm font-bold text-slate-900 dark:text-white leading-tight">Precision Diagnostics</p>
                             </motion.div>
                         </motion.div>
 
