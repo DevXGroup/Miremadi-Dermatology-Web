@@ -1,234 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// --- Service highlights that rotate ---
-const SERVICES = [
-    { icon: '🩺', label: 'Skin Cancer Screening', detail: 'Free in San Diego County' },
-    { icon: '✨', label: 'The Miremadi System', detail: 'Signature rejuvenation treatment' },
-    { icon: '🔬', label: 'Dermatopathology', detail: 'Triple board-certified diagnostics' },
-    { icon: '💊', label: 'Medical Dermatology', detail: 'Adult & pediatric care' },
+// --- Rotating taglines ---
+const TAGLINES = [
+    'Reclaim Your Confidence',
+    'Radiance Meets Science',
+    'Your Skin, Perfected',
+    'Beauty Beyond Compare',
 ];
-
-// --- Floating service card ---
-const ServiceCarousel: React.FC<{ isDark: boolean }> = ({ isDark }) => {
-    const [active, setActive] = useState(0);
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setActive(prev => (prev + 1) % SERVICES.length);
-        }, 3500);
-        return () => clearInterval(interval);
-    }, []);
-
-    return (
-        <div className="absolute bottom-8 left-8 right-8 z-20">
-            <AnimatePresence mode="wait">
-                <motion.div
-                    key={active}
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -15 }}
-                    transition={{ duration: 0.5 }}
-                    className="flex items-center gap-4 px-6 py-4 rounded-2xl backdrop-blur-xl"
-                    style={{
-                        background: isDark ? 'rgba(15,23,42,0.75)' : 'rgba(255,255,255,0.8)',
-                        border: `1px solid ${isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)'}`,
-                    }}
-                >
-                    <span className="text-2xl">{SERVICES[active].icon}</span>
-                    <div>
-                        <p className={`font-semibold text-sm ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                            {SERVICES[active].label}
-                        </p>
-                        <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-                            {SERVICES[active].detail}
-                        </p>
-                    </div>
-                </motion.div>
-            </AnimatePresence>
-
-            {/* Progress dots */}
-            <div className="flex justify-center gap-2 mt-3">
-                {SERVICES.map((_, i) => (
-                    <div
-                        key={i}
-                        className="rounded-full transition-all duration-500"
-                        style={{
-                            width: i === active ? 20 : 6,
-                            height: 6,
-                            backgroundColor: i === active
-                                ? (isDark ? '#15b9c8' : '#6300db')
-                                : (isDark ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.1)'),
-                        }}
-                    />
-                ))}
-            </div>
-        </div>
-    );
-};
-
-// --- Animated health icons floating in background ---
-const FloatingIcons: React.FC<{ isDark: boolean }> = ({ isDark }) => {
-    const icons = [
-        { symbol: '🫀', x: '15%', y: '12%', delay: 0, size: 28 },
-        { symbol: '🧬', x: '75%', y: '8%', delay: 1.5, size: 24 },
-        { symbol: '🩻', x: '85%', y: '45%', delay: 0.8, size: 22 },
-        { symbol: '💉', x: '10%', y: '55%', delay: 2.2, size: 20 },
-        { symbol: '🧴', x: '60%', y: '25%', delay: 3, size: 22 },
-        { symbol: '☀️', x: '30%', y: '35%', delay: 1, size: 26 },
-        { symbol: '🛡️', x: '50%', y: '60%', delay: 2.5, size: 20 },
-        { symbol: '💧', x: '80%', y: '70%', delay: 0.5, size: 22 },
-    ];
-
-    return (
-        <>
-            {icons.map((icon, i) => (
-                <motion.div
-                    key={i}
-                    className="absolute pointer-events-none select-none"
-                    style={{
-                        left: icon.x,
-                        top: icon.y,
-                        fontSize: icon.size,
-                        filter: 'grayscale(0.3)',
-                        opacity: 0,
-                    }}
-                    animate={{
-                        y: [0, -12, 0],
-                        opacity: [0.15, 0.35, 0.15],
-                    }}
-                    transition={{
-                        duration: 5 + i * 0.5,
-                        repeat: Infinity,
-                        ease: 'easeInOut',
-                        delay: icon.delay,
-                    }}
-                />
-            ))}
-        </>
-    );
-};
-
-// --- Gentle pulse rings (like a heartbeat / wellness pulse) ---
-const WellnessPulse: React.FC<{ isDark: boolean }> = ({ isDark }) => {
-    const color = isDark ? 'rgba(21,185,200,0.12)' : 'rgba(99,0,219,0.08)';
-
-    return (
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            {[0, 1, 2].map(i => (
-                <motion.div
-                    key={i}
-                    className="absolute rounded-full"
-                    style={{
-                        width: 200 + i * 120,
-                        height: 200 + i * 120,
-                        border: `1px solid ${color}`,
-                    }}
-                    animate={{
-                        scale: [1, 1.15, 1],
-                        opacity: [0.6, 0.2, 0.6],
-                    }}
-                    transition={{
-                        duration: 4,
-                        repeat: Infinity,
-                        ease: 'easeInOut',
-                        delay: i * 0.8,
-                    }}
-                />
-            ))}
-            {/* Center medical cross */}
-            <motion.div
-                className="relative z-10"
-                animate={{ scale: [1, 1.05, 1], opacity: [0.6, 0.9, 0.6] }}
-                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-            >
-                <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-                    <rect
-                        x="18" y="8" width="12" height="32" rx="3"
-                        fill={isDark ? 'rgba(21,185,200,0.2)' : 'rgba(99,0,219,0.12)'}
-                    />
-                    <rect
-                        x="8" y="18" width="32" height="12" rx="3"
-                        fill={isDark ? 'rgba(21,185,200,0.2)' : 'rgba(99,0,219,0.12)'}
-                    />
-                </svg>
-            </motion.div>
-        </div>
-    );
-};
-
-// --- Skin layer cross-section illustration ---
-const SkinLayerDiagram: React.FC<{ isDark: boolean }> = ({ isDark }) => {
-    const [activeLayer, setActiveLayer] = useState(0);
-    const layers = [
-        { name: 'Epidermis', color: isDark ? '#f8d7b0' : '#f5c89a', desc: 'Protective outer layer' },
-        { name: 'Dermis', color: isDark ? '#e8a87c' : '#dea07a', desc: 'Collagen & elastin network' },
-        { name: 'Hypodermis', color: isDark ? '#d4845a' : '#c87850', desc: 'Insulating fat layer' },
-    ];
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setActiveLayer(prev => (prev + 1) % layers.length);
-        }, 2800);
-        return () => clearInterval(interval);
-    }, []);
-
-    return (
-        <div className="absolute top-6 right-6 z-20">
-            <div
-                className="px-5 py-4 rounded-2xl backdrop-blur-xl"
-                style={{
-                    background: isDark ? 'rgba(15,23,42,0.7)' : 'rgba(255,255,255,0.75)',
-                    border: `1px solid ${isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)'}`,
-                    minWidth: 170,
-                }}
-            >
-                <p
-                    className="text-[9px] font-bold uppercase tracking-[0.2em] mb-3"
-                    style={{ color: isDark ? 'rgba(148,163,184,0.6)' : 'rgba(100,116,139,0.5)' }}
-                >
-                    Skin Layers
-                </p>
-                <div className="space-y-1.5">
-                    {layers.map((layer, i) => (
-                        <motion.div
-                            key={layer.name}
-                            className="flex items-center gap-3"
-                            animate={{ opacity: i === activeLayer ? 1 : 0.4 }}
-                            transition={{ duration: 0.4 }}
-                        >
-                            <motion.div
-                                className="rounded-sm flex-shrink-0"
-                                style={{
-                                    width: 28,
-                                    height: i === activeLayer ? 14 : 8,
-                                    backgroundColor: layer.color,
-                                    opacity: i === activeLayer ? 0.9 : 0.4,
-                                    transition: 'all 0.4s ease',
-                                    borderRadius: 4,
-                                }}
-                            />
-                            <div>
-                                <p className={`text-xs font-medium leading-tight ${isDark ? 'text-white' : 'text-slate-800'}`}>
-                                    {layer.name}
-                                </p>
-                                {i === activeLayer && (
-                                    <motion.p
-                                        initial={{ opacity: 0, height: 0 }}
-                                        animate={{ opacity: 1, height: 'auto' }}
-                                        className={`text-[10px] ${isDark ? 'text-slate-400' : 'text-slate-500'}`}
-                                    >
-                                        {layer.desc}
-                                    </motion.p>
-                                )}
-                            </div>
-                        </motion.div>
-                    ))}
-                </div>
-            </div>
-        </div>
-    );
-};
 
 // --- Main component ---
 export const SkinScanAnimation: React.FC<{ isDark?: boolean }> = ({ isDark: isDarkProp }) => {
@@ -237,6 +16,7 @@ export const SkinScanAnimation: React.FC<{ isDark?: boolean }> = ({ isDark: isDa
         if (typeof window === 'undefined') return true;
         return document.documentElement.classList.contains('dark');
     });
+    const [taglineIdx, setTaglineIdx] = useState(0);
 
     useEffect(() => {
         if (typeof isDarkProp === 'boolean') {
@@ -250,97 +30,204 @@ export const SkinScanAnimation: React.FC<{ isDark?: boolean }> = ({ isDark: isDa
         return () => observer.disconnect();
     }, [isDarkProp]);
 
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setTaglineIdx(prev => (prev + 1) % TAGLINES.length);
+        }, 4000);
+        return () => clearInterval(interval);
+    }, []);
+
     const isDark = isDarkState;
+    const accent = isDark ? '#15b9c8' : '#6300db';
 
     return (
         <div
             className="relative w-full h-[500px] md:h-[650px] overflow-hidden"
             style={{
                 borderRadius: '2.5rem',
-                background: isDark
-                    ? 'linear-gradient(160deg, #0c1525 0%, #162033 40%, #0f1a2e 100%)'
-                    : 'linear-gradient(160deg, #faf8f6 0%, #f5efe8 40%, #f0ebe4 100%)',
                 border: `1px solid ${isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)'}`,
             }}
         >
-            {/* Warm organic gradient blobs */}
-            <motion.div
-                className="absolute rounded-full pointer-events-none"
-                style={{
-                    width: 350,
-                    height: 350,
-                    top: '-5%',
-                    left: '-10%',
-                    background: isDark
-                        ? 'radial-gradient(circle, rgba(21,185,200,0.08) 0%, transparent 70%)'
-                        : 'radial-gradient(circle, rgba(99,0,219,0.06) 0%, transparent 70%)',
-                    filter: 'blur(40px)',
-                }}
-                animate={{ x: [0, 30, 0], y: [0, 20, 0] }}
-                transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
-            />
-            <motion.div
-                className="absolute rounded-full pointer-events-none"
-                style={{
-                    width: 300,
-                    height: 300,
-                    bottom: '5%',
-                    right: '-5%',
-                    background: isDark
-                        ? 'radial-gradient(circle, rgba(139,92,246,0.08) 0%, transparent 70%)'
-                        : 'radial-gradient(circle, rgba(236,72,153,0.06) 0%, transparent 70%)',
-                    filter: 'blur(40px)',
-                }}
-                animate={{ x: [0, -20, 0], y: [0, -15, 0] }}
-                transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-            />
-            <motion.div
-                className="absolute rounded-full pointer-events-none"
-                style={{
-                    width: 250,
-                    height: 250,
-                    top: '40%',
-                    left: '30%',
-                    background: isDark
-                        ? 'radial-gradient(circle, rgba(251,191,146,0.05) 0%, transparent 70%)'
-                        : 'radial-gradient(circle, rgba(251,191,146,0.08) 0%, transparent 70%)',
-                    filter: 'blur(30px)',
-                }}
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+            {/* Background image */}
+            <motion.img
+                src="/images/hero-beauty.png"
+                alt="Beautiful radiant skin"
+                className="absolute inset-0 w-full h-full object-cover object-top"
+                initial={{ scale: 1.1, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 1.8, ease: [0.25, 0.46, 0.45, 0.94] }}
             />
 
-            {/* Floating health icons */}
-            <FloatingIcons isDark={isDark} />
+            {/* Subtle slow zoom breathing */}
+            <motion.div
+                className="absolute inset-0"
+                animate={{ scale: [1, 1.03, 1] }}
+                transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
+            >
+                <img
+                    src="/images/hero-beauty.png"
+                    alt=""
+                    aria-hidden="true"
+                    className="w-full h-full object-cover object-top"
+                />
+            </motion.div>
 
-            {/* Gentle wellness pulse rings */}
-            <WellnessPulse isDark={isDark} />
+            {/* Gradient overlays for text readability */}
+            <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                    background: isDark
+                        ? 'linear-gradient(to top, rgba(2,6,18,0.85) 0%, rgba(2,6,18,0.3) 40%, rgba(2,6,18,0.1) 70%, transparent 100%)'
+                        : 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.02) 70%, transparent 100%)',
+                }}
+            />
+            {/* Side gradient for depth */}
+            <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                    background: isDark
+                        ? 'linear-gradient(to right, rgba(2,6,18,0.4) 0%, transparent 50%)'
+                        : 'linear-gradient(to right, rgba(0,0,0,0.15) 0%, transparent 50%)',
+                }}
+            />
 
-            {/* Skin layer diagram card */}
-            <SkinLayerDiagram isDark={isDark} />
+            {/* Soft glow accent behind face */}
+            <motion.div
+                className="absolute pointer-events-none"
+                style={{
+                    width: '60%',
+                    height: '60%',
+                    top: '10%',
+                    left: '20%',
+                    background: isDark
+                        ? 'radial-gradient(circle, rgba(21,185,200,0.06) 0%, transparent 70%)'
+                        : 'radial-gradient(circle, rgba(99,0,219,0.04) 0%, transparent 70%)',
+                    filter: 'blur(60px)',
+                }}
+                animate={{ opacity: [0.5, 1, 0.5] }}
+                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+            />
 
-            {/* Service carousel at bottom */}
-            <ServiceCarousel isDark={isDark} />
-
-            {/* Top-left clinic label */}
-            <div className="absolute top-6 left-6 z-20">
+            {/* Top-left clinic badge */}
+            <motion.div
+                className="absolute top-6 left-6 z-20"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8, duration: 0.7, ease: 'easeOut' }}
+            >
                 <div
                     className="px-4 py-3 rounded-xl backdrop-blur-xl"
                     style={{
-                        background: isDark ? 'rgba(15,23,42,0.7)' : 'rgba(255,255,255,0.75)',
-                        border: `1px solid ${isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)'}`,
+                        background: isDark ? 'rgba(15,23,42,0.6)' : 'rgba(255,255,255,0.7)',
+                        border: `1px solid ${isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.06)'}`,
                     }}
                 >
                     <p
                         className="text-[9px] font-bold uppercase tracking-[0.25em]"
-                        style={{ color: isDark ? '#15b9c8' : '#6300db' }}
+                        style={{ color: accent }}
                     >
                         Miremadi Dermatology
                     </p>
-                    <p className={`text-[11px] mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                    <p className="text-[11px] mt-0.5 text-white/70">
                         La Jolla, California
                     </p>
                 </div>
+            </motion.div>
+
+            {/* Bottom content area */}
+            <div className="absolute bottom-0 left-0 right-0 z-20 px-8 pb-8">
+                {/* Animated rotating tagline */}
+                <div className="mb-4 h-[48px] md:h-[56px] overflow-hidden">
+                    <AnimatePresence mode="wait">
+                        <motion.h3
+                            key={taglineIdx}
+                            className="text-3xl md:text-4xl font-display font-medium text-white leading-tight"
+                            initial={{ opacity: 0, y: 30, filter: 'blur(8px)' }}
+                            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                            exit={{ opacity: 0, y: -20, filter: 'blur(6px)' }}
+                            transition={{
+                                duration: 0.8,
+                                ease: [0.25, 0.1, 0.25, 1],
+                            }}
+                        >
+                            {TAGLINES[taglineIdx]}
+                        </motion.h3>
+                    </AnimatePresence>
+                </div>
+
+                {/* Thin accent line */}
+                <motion.div
+                    className="mb-4 rounded-full"
+                    style={{ height: 2, backgroundColor: accent }}
+                    initial={{ width: 0, opacity: 0 }}
+                    animate={{ width: 80, opacity: 0.7 }}
+                    transition={{ delay: 1.2, duration: 1, ease: 'easeOut' }}
+                />
+
+                {/* Subtitle text with staggered word reveal */}
+                <motion.p
+                    className="text-sm md:text-base text-white/70 max-w-sm leading-relaxed"
+                    initial="hidden"
+                    animate="visible"
+                    variants={{
+                        hidden: { opacity: 0 },
+                        visible: {
+                            opacity: 1,
+                            transition: { staggerChildren: 0.04, delayChildren: 1.5 },
+                        },
+                    }}
+                >
+                    {('Expert dermatology care with 57+ years of medical excellence. Where science meets beauty.').split(' ').map((word, i) => (
+                        <motion.span
+                            key={i}
+                            className="inline-block mr-[0.3em]"
+                            variants={{
+                                hidden: { opacity: 0, y: 8 },
+                                visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } },
+                            }}
+                        >
+                            {word}
+                        </motion.span>
+                    ))}
+                </motion.p>
+
+                {/* Service pills */}
+                <motion.div
+                    className="flex flex-wrap gap-2 mt-5"
+                    initial="hidden"
+                    animate="visible"
+                    variants={{
+                        hidden: { opacity: 0 },
+                        visible: {
+                            opacity: 1,
+                            transition: { staggerChildren: 0.1, delayChildren: 2.2 },
+                        },
+                    }}
+                >
+                    {['Skin Cancer Screening', 'Rejuvenation', 'Dermatopathology', 'Medical Care'].map((service, i) => (
+                        <motion.span
+                            key={i}
+                            className="px-3 py-1.5 rounded-full text-[10px] font-semibold uppercase tracking-wider"
+                            style={{
+                                background: isDark ? 'rgba(21,185,200,0.12)' : 'rgba(255,255,255,0.2)',
+                                color: isDark ? '#15b9c8' : 'rgba(255,255,255,0.9)',
+                                border: `1px solid ${isDark ? 'rgba(21,185,200,0.2)' : 'rgba(255,255,255,0.2)'}`,
+                                backdropFilter: 'blur(8px)',
+                            }}
+                            variants={{
+                                hidden: { opacity: 0, scale: 0.8, y: 10 },
+                                visible: {
+                                    opacity: 1,
+                                    scale: 1,
+                                    y: 0,
+                                    transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] },
+                                },
+                            }}
+                        >
+                            {service}
+                        </motion.span>
+                    ))}
+                </motion.div>
             </div>
         </div>
     );
