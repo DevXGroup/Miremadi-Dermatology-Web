@@ -192,14 +192,7 @@ export const Home = () => {
                             transition={{ duration: 1 }}
                             className="relative z-10"
                         >
-                            <motion.div
-                                animate={{ y: [0, -15, 0] }}
-                                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                                className="will-change-transform"
-                            >
-                                <SkinScanAnimation isDark={isDark} />
-                            </motion.div>
-
+                            <SkinScanAnimation isDark={isDark} />
                         </motion.div>
 
                         {/* Decorative Background Element */}
