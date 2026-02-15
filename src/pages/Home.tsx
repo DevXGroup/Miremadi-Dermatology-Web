@@ -200,15 +200,6 @@ export const Home = () => {
                                 <SkinScanAnimation isDark={isDark} />
                             </motion.div>
 
-                            {/* Floating Expert Badge */}
-                            <motion.div
-                                animate={{ y: [0, -10, 0], rotate: [-1, 1, -1] }}
-                                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                                className="absolute bottom-12 -left-6 p-6 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md rounded-2xl shadow-xl border border-white/20 max-w-[220px] text-right z-20"
-                            >
-                                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Dermatology, Pathology & Dermatopathology</p>
-                                <p className="text-sm font-bold text-slate-900 dark:text-white leading-tight">Triple Board-Certified Care</p>
-                            </motion.div>
                         </motion.div>
 
                         {/* Decorative Background Element */}
@@ -274,6 +265,91 @@ export const Home = () => {
                                 </div>
                             </motion.div>
                         ))}
+                    </div>
+
+                    {/* Meet Dr. Miremadi */}
+                    <div className="mt-20 grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
+                        <motion.div
+                            initial={{ opacity: 0, x: -40 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.8, ease: "easeOut" }}
+                            className="relative"
+                        >
+                            <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+                                <img
+                                    src="/dr-miremadi-portrait-new.webp"
+                                    alt="Dr. Arjang K. Miremadi"
+                                    className="w-full h-[500px] md:h-[600px] object-cover object-top"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 to-transparent" />
+                            </div>
+                            {/* Floating credentials card */}
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: 0.4, duration: 0.6 }}
+                                className="absolute -bottom-6 -right-4 md:right-6 p-5 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md rounded-2xl shadow-xl border border-slate-100 dark:border-slate-800 max-w-[240px]"
+                            >
+                                <p className="text-[10px] font-bold text-primary uppercase tracking-widest mb-1.5">Dermatology, Pathology & Dermatopathology</p>
+                                <p className="text-sm font-bold text-slate-900 dark:text-white leading-tight">Triple Board-Certified Specialist</p>
+                                <div className="flex items-center gap-2 mt-2 pt-2 border-t border-slate-100 dark:border-slate-800">
+                                    <div className="w-2 h-2 rounded-full bg-green-500" />
+                                    <p className="text-[10px] text-slate-500 dark:text-slate-400">57+ Years of Medical Excellence</p>
+                                </div>
+                            </motion.div>
+                        </motion.div>
+
+                        <motion.div
+                            initial={{ opacity: 0, x: 40 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+                        >
+                            <span className="text-xs font-bold text-secondary-dark uppercase tracking-[0.2em] mb-4 block">Meet Your Doctor</span>
+                            <h3 className="text-3xl md:text-4xl font-display font-medium text-slate-900 dark:text-white mb-6 leading-tight">
+                                Arjang K. Miremadi, <span className="italic font-light text-slate-400">M.D., FAAD</span>
+                            </h3>
+
+                            <div className="relative mb-8 pl-6 border-l-4 border-primary/30">
+                                <p className="text-lg italic text-slate-600 dark:text-slate-300 font-display leading-relaxed">
+                                    "The Miremadi System literally 'peels' away the years, along with wrinkles and unwanted spots. The dramatic results possible with this treatment brings radiant, younger looking skin to all patients regardless of age, race, color, or ethnic group."
+                                </p>
+                                <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mt-3">— Dr. Miremadi</p>
+                            </div>
+
+                            <p className="text-slate-500 dark:text-slate-400 leading-relaxed mb-6">
+                                A board-certified Dermatologist and Pathologist with over five decades of experience, Dr. Miremadi is the only provider of free skin cancer screening for the American Cancer Society in San Diego County. As a retired Captain of the United States Navy Medical Corp, he brings unmatched precision and dedication to every patient.
+                            </p>
+
+                            <div className="flex flex-wrap gap-3 mb-8">
+                                {[
+                                    { label: 'Board Certified', sub: 'Dermatology & Pathology' },
+                                    { label: 'U.S. Navy', sub: 'Retired Captain' },
+                                    { label: 'Free Screening', sub: 'Only Provider in SD' },
+                                ].map((badge, i) => (
+                                    <motion.div
+                                        key={i}
+                                        initial={{ opacity: 0, y: 10 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true }}
+                                        transition={{ delay: 0.4 + i * 0.1 }}
+                                        className="px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700"
+                                    >
+                                        <p className="text-xs font-bold text-slate-900 dark:text-white">{badge.label}</p>
+                                        <p className="text-[10px] text-slate-500 dark:text-slate-400">{badge.sub}</p>
+                                    </motion.div>
+                                ))}
+                            </div>
+
+                            <Link
+                                to="/about"
+                                className="inline-block px-8 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-full font-medium hover:scale-105 hover:bg-white dark:hover:bg-slate-900 hover:text-slate-900 dark:hover:text-white border border-slate-900 dark:border-white transition-all uppercase tracking-wider text-sm"
+                            >
+                                Read Full Biography
+                            </Link>
+                        </motion.div>
                     </div>
                 </div>
             </section>
