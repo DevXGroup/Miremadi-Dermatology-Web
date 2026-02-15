@@ -89,7 +89,7 @@ const POSTS = [
         `,
         date: 'Feb 14, 2026',
         readTime: '6 min read',
-        image: 'https://images.unsplash.com/photo-1612528443702-f6741f70a049?auto=format&fit=crop&q=80&w=800',
+        image: '/images/blog/melanoma.png',
         category: 'Prevention'
     }
 ];
