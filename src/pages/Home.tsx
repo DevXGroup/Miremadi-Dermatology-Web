@@ -37,7 +37,7 @@ const MirageSection = () => {
 
     return (
         <section
-            className="relative h-[500px] md:h-[650px] flex items-center overflow-hidden z-10 cursor-none"
+            className="relative h-[500px] md:h-[650px] flex items-center overflow-hidden z-10"
             onMouseMove={handleMouseMove}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
