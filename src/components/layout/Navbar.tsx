@@ -10,16 +10,23 @@ import { useClickAway } from 'react-use';
 
 export const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
     const [isDark, setIsDark] = useState(() => {
         if (typeof window === 'undefined') return true;
         const savedTheme = localStorage.getItem('theme');
-        // Default to dark mode if no theme is saved, or if it's explicitly 'dark'
         if (savedTheme === 'light') return false;
         return true;
     });
 
     const location = useLocation();
     const { } = useShopStore();
+
+    useEffect(() => {
+        const onScroll = () => setScrolled(window.scrollY > 10);
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+        return () => window.removeEventListener('scroll', onScroll);
+    }, []);
 
     useEffect(() => {
         if (isDark) {
@@ -43,7 +50,14 @@ export const Navbar = () => {
     ];
 
     return (
-        <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-colors duration-300">
+        <nav
+            className={cn(
+                "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
+                scrolled
+                    ? "bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl backdrop-saturate-150 border-b border-white/20 dark:border-slate-700/30 shadow-[0_1px_3px_rgba(0,0,0,0.05)]"
+                    : "bg-white/40 dark:bg-slate-900/40 backdrop-blur-md border-b border-transparent"
+            )}
+        >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16">
 
