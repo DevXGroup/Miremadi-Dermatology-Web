@@ -282,7 +282,7 @@ export const Home = () => {
                                     alt="Dr. Arjang K. Miremadi"
                                     loading="lazy"
                                     decoding="async"
-                                    className="w-full h-[500px] md:h-[600px] object-cover object-[center_20%]"
+                                    className="w-full h-[500px] md:h-[600px] object-cover object-top"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 to-transparent" />
                             </div>
