@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FAQ } from '../components/sections/FAQ';
@@ -9,6 +9,96 @@ import { ProductCard } from '../components/ui/ProductCard';
 
 import Antigravity from '../components/ui/Antigravity';
 import { SkinScanAnimation } from '../components/ui/SkinScanAnimation';
+
+const MirageSection = () => {
+    const revealRef = useRef<HTMLDivElement>(null);
+
+    const handleMouseMove = useCallback((e: React.MouseEvent<HTMLElement>) => {
+        if (!revealRef.current) return;
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const mask = `radial-gradient(circle 140px at ${x}px ${y}px, black 0%, black 60%, transparent 100%)`;
+        revealRef.current.style.maskImage = mask;
+        revealRef.current.style.webkitMaskImage = mask;
+    }, []);
+
+    const handleMouseEnter = useCallback(() => {
+        if (revealRef.current) revealRef.current.style.opacity = '1';
+    }, []);
+
+    const handleMouseLeave = useCallback(() => {
+        if (revealRef.current) {
+            revealRef.current.style.opacity = '0';
+            revealRef.current.style.maskImage = '';
+            revealRef.current.style.webkitMaskImage = '';
+        }
+    }, []);
+
+    return (
+        <section
+            className="relative h-[500px] md:h-[650px] flex items-center overflow-hidden z-10 cursor-none"
+            onMouseMove={handleMouseMove}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+        >
+            {/* Layer 1: Blurred background image */}
+            <div className="absolute inset-0">
+                <img
+                    src="/images/promo/mirage_promo.webp"
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-cover scale-105 blur-[6px]"
+                />
+            </div>
+
+            {/* Layer 2: Sharp image revealed at cursor via radial mask — no React re-renders */}
+            <div
+                ref={revealRef}
+                className="absolute inset-0 pointer-events-none transition-opacity duration-300 will-change-[mask-image]"
+                style={{ opacity: 0 }}
+            >
+                <img
+                    src="/images/promo/mirage_promo.webp"
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-cover scale-105"
+                />
+            </div>
+
+            {/* Gradient overlays for text readability */}
+            <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-900/50 to-slate-900/20 pointer-events-none" />
+
+            {/* Content */}
+            <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+                <motion.div
+                    initial={{ opacity: 0, x: -30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8 }}
+                    className="max-w-2xl text-white"
+                >
+                    <span className="text-xs font-bold uppercase tracking-[0.5em] mb-4 block text-blue-300">Premium Medical Grade</span>
+                    <h2 className="text-4xl sm:text-5xl md:text-7xl font-display font-medium mb-6 leading-[1.1]">
+                        The <span className="italic font-light text-white drop-shadow-sm">Mirage</span> <br />
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-blue-200">Collection</span>
+                    </h2>
+                    <p className="text-xl text-slate-200 mb-10 font-light leading-relaxed max-w-xl">
+                        Experience the pinnacle of dermatological science with our new signature skincare line. Meticulously formulated for transformative results and professional-grade precision.
+                    </p>
+                    <Link
+                        to="/shop"
+                        className="inline-block px-10 py-5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 border border-transparent hover:border-slate-900 dark:hover:border-white rounded-full font-bold uppercase tracking-widest text-sm hover:bg-white dark:hover:bg-slate-900 hover:text-slate-900 dark:hover:text-white transition-all transform hover:scale-105 cursor-pointer"
+                    >
+                        Shop the Collection
+                    </Link>
+                </motion.div>
+            </div>
+        </section>
+    );
+};
 
 export const Home = () => {
     // Simple state to force re-render on theme change if needed, or just let CSS handle background. 
@@ -62,8 +152,8 @@ export const Home = () => {
 
 
             {/* Hero Section */}
-            <section className="relative z-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto py-12 md:py-16">
-                <div className="grid md:grid-cols-2 gap-12 items-center">
+            <section className="relative z-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto py-6 md:py-10">
+                <div className="grid md:grid-cols-2 gap-8 items-center">
                     <motion.div
                         initial="hidden"
                         animate="visible"
@@ -89,7 +179,7 @@ export const Home = () => {
                             <span className="text-sm font-bold text-secondary-dark uppercase tracking-[0.2em]">57+ Years of Medical Leadership</span>
                         </motion.div>
 
-                        <h1 className="text-5xl md:text-7xl font-display font-medium leading-[1.1] mb-6 overflow-hidden">
+                        <h1 className="text-4xl md:text-6xl font-display font-medium leading-[1.1] mb-5 overflow-hidden">
                             <motion.span className="block" variants={{
                                 hidden: { y: "100%" },
                                 visible: { y: 0, transition: { duration: 0.8, ease: [0.2, 0.65, 0.3, 0.9] } }
@@ -155,9 +245,9 @@ export const Home = () => {
                                 hidden: { opacity: 0, x: -20 },
                                 visible: { opacity: 1, x: 0, transition: { duration: 0.6 } }
                             }}
-                            className="relative mb-8 pl-6 border-l-4 border-slate-200 dark:border-slate-700"
+                            className="relative mb-6 pl-6 border-l-4 border-slate-200 dark:border-slate-700"
                         >
-                            <p className="text-xl italic text-slate-600 dark:text-slate-300 font-display">
+                            <p className="text-lg italic text-slate-600 dark:text-slate-300 font-display">
                                 Your skin is the largest organ of the body which needs meticulous care
                             </p>
                             <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mt-1.5">— Arjang K. Miremadi, M.D.</p>
@@ -350,44 +440,7 @@ export const Home = () => {
             </section>
 
             {/* Mirage Collection Promo */}
-            <section className="relative h-[500px] md:h-[650px] flex items-center overflow-hidden group z-10">
-                <div className="absolute inset-0">
-                    <img
-                        src="/images/promo/mirage_promo.png"
-                        alt="Mirage Skincare Collection"
-                        loading="lazy"
-                        decoding="async"
-                        className="w-full h-full object-cover transition-all duration-1000 scale-105 group-hover:scale-110"
-                    />
-                    {/* Multi-layered gradient for depth and readability */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900/60 to-slate-900/0" />
-                    <div className="absolute inset-0 bg-slate-950/20" />
-                </div>
-                <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-                    <motion.div
-                        initial={{ opacity: 0, x: -30 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8 }}
-                        className="max-w-2xl text-white"
-                    >
-                        <span className="text-xs font-bold uppercase tracking-[0.5em] mb-4 block text-blue-300">Premium Medical Grade</span>
-                        <h2 className="text-4xl sm:text-5xl md:text-7xl font-display font-medium mb-6 leading-[1.1]">
-                            The <span className="italic font-light text-white drop-shadow-sm">Mirage</span> <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-blue-200">Collection</span>
-                        </h2>
-                        <p className="text-xl text-slate-200 mb-10 font-light leading-relaxed max-w-xl">
-                            Experience the pinnacle of dermatological science with our new signature skincare line. Meticulously formulated for transformative results and professional-grade precision.
-                        </p>
-                        <Link
-                            to="/shop"
-                            className="inline-block px-10 py-5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 border border-transparent hover:border-slate-900 dark:hover:border-white rounded-full font-bold uppercase tracking-widest text-sm hover:bg-white dark:hover:bg-slate-900 hover:text-slate-900 dark:hover:text-white transition-all transform hover:scale-105"
-                        >
-                            Shop the Collection
-                        </Link>
-                    </motion.div>
-                </div>
-            </section>
+            <MirageSection />
 
             {/* Curated Skincare Shelf */}
             <section className="relative py-16 md:py-24 bg-white dark:bg-slate-950 overflow-hidden z-10">
