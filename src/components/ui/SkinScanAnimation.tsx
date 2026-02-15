@@ -48,26 +48,22 @@ export const SkinScanAnimation: React.FC<{ isDark?: boolean }> = ({ isDark: isDa
                 border: `1px solid ${isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)'}`,
             }}
         >
-            {/* Background image */}
-            <motion.img
-                src="/images/hero-beauty.png"
-                alt="Beautiful radiant skin"
-                className="absolute inset-0 w-full h-full object-cover object-top"
-                initial={{ scale: 1.1, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 1.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-            />
-
-            {/* Subtle slow zoom breathing */}
+            {/* Background image with breathing zoom */}
             <motion.div
                 className="absolute inset-0"
-                animate={{ scale: [1, 1.03, 1] }}
-                transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
+                initial={{ scale: 1.1, opacity: 0 }}
+                animate={{ scale: [1, 1.03, 1], opacity: 1 }}
+                transition={{
+                    opacity: { duration: 1.2, ease: [0.25, 0.46, 0.45, 0.94] },
+                    scale: { duration: 12, repeat: Infinity, ease: 'easeInOut', delay: 1.2 },
+                }}
             >
                 <img
-                    src="/images/hero-beauty.png"
-                    alt=""
-                    aria-hidden="true"
+                    src="/images/hero-beauty.webp"
+                    alt="Beautiful radiant skin"
+                    loading="eager"
+                    decoding="async"
+                    fetchPriority="high"
                     className="w-full h-full object-cover object-top"
                 />
             </motion.div>

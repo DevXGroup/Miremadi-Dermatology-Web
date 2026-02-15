@@ -255,7 +255,7 @@ export const Home = () => {
                                 style={{ WebkitBackfaceVisibility: 'hidden', WebkitTransform: 'translateZ(0)' }}
                             >
                                 <div className="aspect-[16/10] overflow-hidden transition-all duration-500">
-                                    <img src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                    <img src={item.image} alt={item.title} loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                                 </div>
                                 <div className="p-8">
                                     <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">{item.title}</h3>
@@ -280,7 +280,9 @@ export const Home = () => {
                                 <img
                                     src="/dr-miremadi-portrait-new.webp"
                                     alt="Dr. Arjang K. Miremadi"
-                                    className="w-full h-[500px] md:h-[600px] object-cover object-top"
+                                    loading="lazy"
+                                    decoding="async"
+                                    className="w-full h-[500px] md:h-[600px] object-cover object-[center_15%]"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 to-transparent" />
                             </div>
@@ -290,7 +292,7 @@ export const Home = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: 0.4, duration: 0.6 }}
-                                className="absolute -bottom-6 -right-4 md:right-6 p-5 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md rounded-2xl shadow-xl border border-slate-100 dark:border-slate-800 max-w-[240px]"
+                                className="absolute -bottom-6 -left-4 md:left-6 p-5 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md rounded-2xl shadow-xl border border-slate-100 dark:border-slate-800 max-w-[240px]"
                             >
                                 <p className="text-[10px] font-bold text-primary uppercase tracking-widest mb-1.5">Dermatology, Pathology & Dermatopathology</p>
                                 <p className="text-sm font-bold text-slate-900 dark:text-white leading-tight">Triple Board-Certified Specialist</p>
@@ -360,6 +362,8 @@ export const Home = () => {
                     <img
                         src="/images/promo/mirage_promo.png"
                         alt="Mirage Skincare Collection"
+                        loading="lazy"
+                        decoding="async"
                         className="w-full h-full object-cover transition-all duration-1000 scale-105 group-hover:scale-110"
                     />
                     {/* Multi-layered gradient for depth and readability */}
@@ -466,6 +470,8 @@ export const Home = () => {
                                     <img
                                         src={service.img}
                                         alt={service.title}
+                                        loading="lazy"
+                                        decoding="async"
                                         className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
                                     />
                                     <div className="absolute top-4 left-4">

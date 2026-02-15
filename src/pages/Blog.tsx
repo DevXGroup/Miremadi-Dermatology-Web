@@ -89,7 +89,7 @@ const POSTS = [
         `,
         date: 'Feb 14, 2026',
         readTime: '6 min read',
-        image: '/images/blog/melanoma.png',
+        image: '/images/blog/melanoma.webp',
         category: 'Prevention'
     }
 ];
