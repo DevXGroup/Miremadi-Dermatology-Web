@@ -59,6 +59,38 @@ const POSTS = [
         readTime: '8 min read',
         image: 'https://images.unsplash.com/photo-1552693673-1bf958298935?auto=format&fit=crop&q=80&w=800',
         category: 'Education'
+    },
+    {
+        id: 4,
+        title: 'Melanoma Prevention: Caring for Your Skin',
+        excerpt: 'Learn essential dermatology-backed strategies to protect your skin and reduce your risk of melanoma.',
+        content: `
+            <p>Melanoma is the most serious form of skin cancer, but it is also one of the most preventable. At Miremadi Dermatology, we believe that proactive skin care and regular monitoring are the cornerstones of melanoma prevention.</p>
+            <h3>Understanding Melanoma</h3>
+            <p>Melanoma develops in the melanocytes, the cells responsible for producing pigment in our skin. While it accounts for only about 1% of skin cancers, it causes the majority of skin cancer deaths. Early detection dramatically improves outcomes, with a 5-year survival rate exceeding 99% when caught in its earliest stages.</p>
+            <h3>The ABCDEs of Mole Monitoring</h3>
+            <p>Regularly examining your skin is one of the most effective prevention tools. Look for the warning signs known as the ABCDEs:</p>
+            <p><strong>A — Asymmetry:</strong> One half of the mole does not match the other.<br/>
+            <strong>B — Border:</strong> Irregular, ragged, or blurred edges.<br/>
+            <strong>C — Color:</strong> Uneven shades of brown, black, tan, red, white, or blue.<br/>
+            <strong>D — Diameter:</strong> Larger than 6mm (the size of a pencil eraser), though melanomas can be smaller.<br/>
+            <strong>E — Evolving:</strong> Any change in size, shape, color, or symptoms like itching or bleeding.</p>
+            <h3>Daily Sun Protection</h3>
+            <p>UV radiation is the leading modifiable risk factor for melanoma. Incorporate these habits into your daily routine:</p>
+            <p>1. <strong>Broad-spectrum sunscreen:</strong> Apply SPF 30 or higher every morning, and reapply every two hours when outdoors.<br/>
+            2. <strong>Protective clothing:</strong> Wear wide-brimmed hats, UV-blocking sunglasses, and long sleeves when possible.<br/>
+            3. <strong>Seek shade:</strong> Avoid direct sun exposure between 10 AM and 4 PM when UV rays are strongest.<br/>
+            4. <strong>Avoid tanning beds:</strong> Indoor tanning increases melanoma risk by up to 75%, especially when used before age 35.</p>
+            <h3>The Role of Annual Skin Exams</h3>
+            <p>Self-exams are essential, but they are not a substitute for professional evaluation. A board-certified dermatologist can identify suspicious lesions that may be invisible to the untrained eye, using tools like dermoscopy for magnified analysis. At Miremadi Dermatology, we recommend annual full-body skin exams for all patients, and more frequent checks for those with a personal or family history of skin cancer.</p>
+            <h3>Lifestyle Factors That Support Skin Health</h3>
+            <p>Beyond sun protection, a holistic approach to skin health can further reduce risk. Antioxidant-rich foods such as berries, leafy greens, and fish high in omega-3 fatty acids help combat oxidative stress. Avoiding smoking and managing chronic inflammation also contribute to healthier skin over time.</p>
+            <p>Prevention starts with awareness. If you notice any changes in your skin, schedule a consultation promptly. Early intervention is always the best medicine.</p>
+        `,
+        date: 'Feb 14, 2026',
+        readTime: '6 min read',
+        image: 'https://images.unsplash.com/photo-1612528443702-f6741f70a049?auto=format&fit=crop&q=80&w=800',
+        category: 'Prevention'
     }
 ];
 
