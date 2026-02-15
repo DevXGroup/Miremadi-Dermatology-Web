@@ -52,7 +52,7 @@ export const Services = () => {
                         <ServiceCard
                             title="Venus Viva MD"
                             description="NanoFractional RF skin resurfacing treatment for scars, rosacea, texture, enlarged pores, and pigmentation with minimal downtime."
-                            image="https://bimedis.com/img/vimg/241426/big"
+                            image="/public/images/services/bimedis-241426.webp"
                             tags={['Acne Scars', 'Resurfacing']}
                         />
                         <ServiceCard

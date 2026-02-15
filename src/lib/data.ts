@@ -46,7 +46,7 @@ export const SERVICE_DATA = [
     {
         title: 'Venus Viva MD',
         desc: 'NanoFractional RF skin resurfacing treatment for scars, rosacea, texture, enlarged pores, and pigmentation with minimal downtime.',
-        img: 'https://bimedis.com/img/vimg/241426/big',
+        img: '/public/images/services/bimedis-241426.webp',
         type: 'Rejuvenation'
     },
     {
