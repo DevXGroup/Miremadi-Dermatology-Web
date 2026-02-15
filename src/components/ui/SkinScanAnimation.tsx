@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform, useSpring } from 'framer-motion';
 
 // --- Sparkle component ---
 const Sparkle: React.FC<{ style: React.CSSProperties; delay: number }> = ({ style, delay }) => (
@@ -99,22 +99,51 @@ export const SkinScanAnimation: React.FC<{ isDark?: boolean }> = ({ isDark: isDa
     const isDark = isDarkState;
     const accent = isDark ? '#15b9c8' : '#6300db';
 
+    // Scroll-driven zoom into eyes
+    const containerRef = useRef<HTMLDivElement>(null);
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ['start start', 'end start'],
+    });
+
+    // Smooth spring for buttery zoom
+    const smoothProgress = useSpring(scrollYProgress, {
+        stiffness: 50,
+        damping: 20,
+        restDelta: 0.001,
+    });
+
+    // Scale from 1 to 2.8 as user scrolls
+    const scale = useTransform(smoothProgress, [0, 0.7], [1, 2.8]);
+    // Pan up to center on the eyes (move image down in view as we zoom)
+    const y = useTransform(smoothProgress, [0, 0.7], ['0%', '18%']);
+    // Slight horizontal centering adjustment
+    const x = useTransform(smoothProgress, [0, 0.7], ['0%', '2%']);
+    // Fade out overlays as we zoom in for clarity
+    const overlayOpacity = useTransform(smoothProgress, [0, 0.4, 0.7], [1, 0.6, 0.15]);
+
     return (
         <div
+            ref={containerRef}
             className="relative w-full h-[500px] md:h-[650px] overflow-hidden"
             style={{
                 borderRadius: '2.5rem',
                 border: `1px solid ${isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)'}`,
             }}
         >
-            {/* Background image with breathing zoom */}
+            {/* Background image with scroll-driven zoom into eyes */}
             <motion.div
-                className="absolute inset-0"
-                initial={{ scale: 1.1, opacity: 0 }}
-                animate={{ scale: [1, 1.03, 1], opacity: 1 }}
+                className="absolute inset-0 will-change-transform"
+                style={{
+                    scale,
+                    y,
+                    x,
+                    transformOrigin: '50% 20%',
+                }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
                 transition={{
                     opacity: { duration: 1.2, ease: [0.25, 0.46, 0.45, 0.94] },
-                    scale: { duration: 12, repeat: Infinity, ease: 'easeInOut', delay: 1.2 },
                 }}
             >
                 <img
@@ -130,19 +159,21 @@ export const SkinScanAnimation: React.FC<{ isDark?: boolean }> = ({ isDark: isDa
             {/* Skin sparkle/shine effects */}
             <SkinSparkles />
 
-            {/* Gradient overlays for text readability */}
-            <div
+            {/* Gradient overlays for text readability - fade out on scroll zoom */}
+            <motion.div
                 className="absolute inset-0 pointer-events-none"
                 style={{
+                    opacity: overlayOpacity,
                     background: isDark
                         ? 'linear-gradient(to top, rgba(2,6,18,0.85) 0%, rgba(2,6,18,0.3) 40%, rgba(2,6,18,0.1) 70%, transparent 100%)'
                         : 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.02) 70%, transparent 100%)',
                 }}
             />
             {/* Side gradient for depth */}
-            <div
+            <motion.div
                 className="absolute inset-0 pointer-events-none"
                 style={{
+                    opacity: overlayOpacity,
                     background: isDark
                         ? 'linear-gradient(to right, rgba(2,6,18,0.4) 0%, transparent 50%)'
                         : 'linear-gradient(to right, rgba(0,0,0,0.15) 0%, transparent 50%)',
@@ -172,6 +203,7 @@ export const SkinScanAnimation: React.FC<{ isDark?: boolean }> = ({ isDark: isDa
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8, duration: 0.7, ease: 'easeOut' }}
+                style={{ opacity: overlayOpacity }}
             >
                 <div
                     className="px-4 py-3 rounded-xl backdrop-blur-xl"
@@ -193,7 +225,7 @@ export const SkinScanAnimation: React.FC<{ isDark?: boolean }> = ({ isDark: isDa
             </motion.div>
 
             {/* Bottom content area */}
-            <div className="absolute bottom-0 left-0 right-0 z-20 px-8 pb-8">
+            <motion.div className="absolute bottom-0 left-0 right-0 z-20 px-8 pb-8" style={{ opacity: overlayOpacity }}>
                 {/* Animated rotating tagline */}
                 <div className="mb-4 h-[48px] md:h-[56px] overflow-hidden">
                     <AnimatePresence mode="wait">
@@ -286,7 +318,7 @@ export const SkinScanAnimation: React.FC<{ isDark?: boolean }> = ({ isDark: isDa
                         </motion.span>
                     ))}
                 </motion.div>
-            </div>
+            </motion.div>
         </div>
     );
 };
