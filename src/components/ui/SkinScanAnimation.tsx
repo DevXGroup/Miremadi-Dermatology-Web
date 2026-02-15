@@ -1,5 +1,64 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+
+// --- Sparkle component ---
+const Sparkle: React.FC<{ style: React.CSSProperties; delay: number }> = ({ style, delay }) => (
+    <motion.div
+        className="absolute pointer-events-none"
+        style={style}
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{
+            opacity: [0, 1, 1, 0],
+            scale: [0, 1, 1.2, 0],
+            rotate: [0, 90, 180],
+        }}
+        transition={{
+            duration: 1.8,
+            delay,
+            repeat: Infinity,
+            repeatDelay: 4 + Math.random() * 3,
+            ease: 'easeInOut',
+        }}
+    >
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path
+                d="M8 0L9.4 6.6L16 8L9.4 9.4L8 16L6.6 9.4L0 8L6.6 6.6L8 0Z"
+                fill="white"
+                fillOpacity="0.9"
+            />
+        </svg>
+    </motion.div>
+);
+
+const SkinSparkles: React.FC = () => {
+    const sparkles = [
+        { top: '18%', left: '55%', delay: 0, size: 14 },
+        { top: '25%', left: '38%', delay: 2.5, size: 10 },
+        { top: '12%', left: '48%', delay: 5, size: 12 },
+        { top: '30%', left: '62%', delay: 1.5, size: 8 },
+        { top: '22%', left: '44%', delay: 3.8, size: 16 },
+        { top: '35%', left: '52%', delay: 6.5, size: 10 },
+        { top: '15%', left: '58%', delay: 4.2, size: 11 },
+        { top: '28%', left: '35%', delay: 7, size: 9 },
+    ];
+
+    return (
+        <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden" style={{ borderRadius: 'inherit' }}>
+            {sparkles.map((s, i) => (
+                <Sparkle
+                    key={i}
+                    delay={s.delay}
+                    style={{
+                        top: s.top,
+                        left: s.left,
+                        width: s.size,
+                        height: s.size,
+                    }}
+                />
+            ))}
+        </div>
+    );
+};
 
 // --- Rotating taglines ---
 const TAGLINES = [
@@ -67,6 +126,9 @@ export const SkinScanAnimation: React.FC<{ isDark?: boolean }> = ({ isDark: isDa
                     className="w-full h-full object-cover object-top"
                 />
             </motion.div>
+
+            {/* Skin sparkle/shine effects */}
+            <SkinSparkles />
 
             {/* Gradient overlays for text readability */}
             <div
