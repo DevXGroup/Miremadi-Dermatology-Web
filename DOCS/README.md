@@ -2,6 +2,12 @@
 
 A premium, high-performance web application for Dr. Arjang Miremadi, combining a dermatology service showcase with a full-featured e-commerce store. Built with modern web technologies to ensure speed, accessibility, and a stunning "Attio-style" aesthetic.
 
+## ⚠️ Production Deployment Status
+
+**Important Note:** While we have built a complete, enterprise-grade e-commerce system (including secure checkout, inventory management, and an admin fulfillment dashboard), the current production deployment is serving the **Static Informational Version** of the site. 
+
+Per the customer's request and for legal/regulatory compliance, the e-commerce functionalities are implemented but remain deactivated in the live environment for the time being. The current production build focuses on providing patients with comprehensive practice information and service showcases.
+
 ## 🚀 Features
 
 ### Core Experience
@@ -10,7 +16,7 @@ A premium, high-performance web application for Dr. Arjang Miremadi, combining a
 - **PWA Support**: Installable on mobile devices with offline capabilities.
 - **Responsive**: Mobile-first design that scales perfectly to desktop.
 
-### E-Commerce (Shop)
+### E-Commerce (Shop) - *Ready for Activation*
 - **Product Management**: Grid view with filtering and search.
 - **Cart System**: High-performance cart state management using `zustand`.
 - **Private Admin Dashboard**: Secure area for order management, fulfillment, and revenue tracking.
@@ -125,11 +131,11 @@ The application has reached **Phase 3 Completion**. The core frontend, backend s
 - [x] **Admin Dashboard**: Secure backend-driven dashboard for order management.
 - [x] **Backend Logic**: Cloud Edge Functions for `checkout`, `webhooks`, and `admin-api`.
 - [x] **Security**: Row Level Security (RLS) and Role-Based Access Control (RBAC).
+- [x] **Live Deployment**: Frontend deployed and reachable via custom domain.
+- [x] **Content Population**: Initial clinical content and media assets integrated.
+- [x] **Analytics**: Google Analytics 4 (GA4) integration for traffic monitoring.
 
-### 🚧 In Progress / Next Steps
-- [ ] **Live Deployment**: Deploy frontend to Vercel/Netlify.
-- [ ] **Stripe Production**: Switch Stripe keys from Test to Live mode.
-- [ ] **Domain Setup**: configure custom domain and SSL.
-- [ ] **Content Population**: Replace placeholder product images with real inventory photos.
-
-For detailed Stripe Setup instructions, see: [`STRIPE_SETUP_AND_TESTING.md`](./STRIPE_SETUP_AND_TESTING.md)
+### 🚧 Future Roadmap
+- [ ] **Stripe Production Activation**: Switch Stripe keys from Test to Live mode upon business clearance.
+- [ ] **Extended E-Commerce**: Activate full shopping and fulfillment loop once legal requirements are met.
+- [ ] **Enhanced SEO**: Further optimization of meta tags and structured data for service pages.
