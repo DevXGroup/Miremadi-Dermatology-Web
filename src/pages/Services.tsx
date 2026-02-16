@@ -5,11 +5,10 @@ import { ArrowRight, Zap, Activity, Heart, ShieldCheck, Sun } from 'lucide-react
 
 export const Services = () => {
     return (
-        <div className="pt-24 min-h-screen bg-white dark:bg-slate-950 pb-12 md:pb-24">
+        <div className="pt-24 min-h-screen bg-slate-50 dark:bg-slate-950 pb-12 md:pb-24">
 
             {/* Hero Section */}
-            <section className="relative py-16 overflow-hidden">
-                <div className="absolute inset-0 bg-slate-50 dark:bg-slate-900/20 -z-10" />
+            <section className="relative py-16 overflow-hidden bg-white dark:bg-slate-950">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <motion.div
                         initial={{ opacity: 0, x: -50 }}
@@ -27,7 +26,7 @@ export const Services = () => {
             </section>
 
             {/* Cosmetic Section */}
-            <section className="py-16">
+            <section className="py-16 bg-slate-50 dark:bg-slate-900/40">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-16">
                         <span className="text-primary font-semibold tracking-wider uppercase text-sm">Cosmetic Dermatology</span>
@@ -90,7 +89,7 @@ export const Services = () => {
             </section>
 
             {/* Injectables Section */}
-            <section className="py-16 bg-slate-50 dark:bg-slate-900/40">
+            <section className="py-24 bg-white dark:bg-slate-950">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid lg:grid-cols-2 gap-12 items-center">
                         <div>
@@ -134,7 +133,7 @@ export const Services = () => {
             </section>
 
             {/* Hair Growth Section */}
-            <section className="py-16">
+            <section className="py-24 bg-slate-50 dark:bg-slate-900/40">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid lg:grid-cols-2 gap-16 items-center">
                         <div className="relative order-last lg:order-first">
@@ -189,7 +188,7 @@ export const Services = () => {
             </section>
 
             {/* General Medical Section */}
-            <section className="py-16 bg-slate-50 dark:bg-slate-900/40">
+            <section className="py-24 bg-white dark:bg-slate-950">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-16">
                         <span className="text-primary font-semibold tracking-wider uppercase text-sm">Medical Dermatology</span>
