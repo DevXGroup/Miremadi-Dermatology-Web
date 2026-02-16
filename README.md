@@ -27,6 +27,10 @@ Per the customer's request and for legal/regulatory compliance, the e-commerce f
 - **Blog Engine**: A rich journal section for dermatology insights.
 - **Service Showcase**: Animated presentation of medical and cosmetic services.
 
+### Analytics & Monitoring
+- **Google Analytics 4**: Integrated for privacy-compliant traffic analysis and user engagement monitoring.
+- **Real-time Event Tracking**: Automated page-view and core interaction tracking.
+
 ## 🛠 Tech Stack
 
 - **Framework**: [Vite](https://vitejs.dev/) + [React](https://react.dev/)
