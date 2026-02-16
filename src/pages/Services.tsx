@@ -46,19 +46,19 @@ export const Services = () => {
                         <ServiceCard
                             title="Venus Bliss"
                             description="Non-invasive laser lipolysis for body contouring, targeting fat reduction in the abdomen and flanks with no downtime."
-                            image="https://device-trade.com/cdn/shop/files/Bliss2_grande.jpg?v=1723847298"
+                            image="/images/services/venus_bliss.jpg"
                             tags={['Fat Reduction', 'Body Contouring']}
                         />
                         <ServiceCard
                             title="Venus Viva MD"
                             description="NanoFractional RF skin resurfacing treatment for scars, rosacea, texture, enlarged pores, and pigmentation with minimal downtime."
-                            image="/public/images/services/bimedis-241426.webp"
+                            image="/images/services/bimedis-241426.webp"
                             tags={['Acne Scars', 'Resurfacing']}
                         />
                         <ServiceCard
                             title="Venus Freeze"
                             description="FDA-approved treatment for cellulite and loose skin using magnetic pulses to stimulate collagen."
-                            image="https://www.medprolasers.com/wp-content/uploads/2020/11/IMG_3184-rotated.jpg"
+                            image="/images/services/venus_freeze.jpg"
                             tags={['Cellulite', 'Skin Tightening']}
                         />
                         <ServiceCard
@@ -76,7 +76,7 @@ export const Services = () => {
                         <ServiceCard
                             title="Chemical Peels"
                             description="Exfoliating treatments to improve skin texture, tone, and clarity by removing damaged outer layers."
-                            image="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?auto=format&fit=crop&q=80&w=400"
+                            image="/images/services/chemical_peels.jpg"
                             tags={['Exfoliation', 'Rejuvenation']}
                         />
                         <ServiceCard
@@ -127,7 +127,7 @@ export const Services = () => {
                             </div>
                         </div>
                         <div className="h-full min-h-[350px] lg:min-h-[500px] rounded-3xl overflow-hidden shadow-xl">
-                            <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=1200" alt="Injectables" className="w-full h-full object-cover" />
+                            <img src="/images/services/injectables.jpg" alt="Injectables" className="w-full h-full object-cover" />
                         </div>
                     </div>
                 </div>
@@ -168,7 +168,7 @@ export const Services = () => {
                                         <TreatmentRow
                                             title="Male Pattern Baldness"
                                             description="Medical treatments using peptides, prescription medications, and injectable therapies to halt hair loss and stimulate regrowth."
-                                            image="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&q=80&w=400"
+                                            image="/images/services/male_pattern_baldness.jpg"
                                         />
                                         <TreatmentRow
                                             title="Female Hair Thinning"

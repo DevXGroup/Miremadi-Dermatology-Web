@@ -27,7 +27,7 @@ export const SERVICE_DATA = [
     {
         title: 'Chemical Peels',
         desc: 'Exfoliating treatments to improve skin texture, tone, and clarity by removing damaged outer layers.',
-        img: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?auto=format&fit=crop&q=80&w=400',
+        img: '/images/services/chemical_peels.jpg',
         type: 'Cosmetic'
     },
     {
@@ -40,19 +40,19 @@ export const SERVICE_DATA = [
     {
         title: 'Venus Bliss',
         desc: 'Non-invasive laser lipolysis for body contouring, targeting fat reduction in the abdomen and flanks with no downtime.',
-        img: 'https://device-trade.com/cdn/shop/files/Bliss2_grande.jpg?v=1723847298',
+        img: '/images/services/venus_bliss.jpg',
         type: 'Body'
     },
     {
         title: 'Venus Viva MD',
         desc: 'NanoFractional RF skin resurfacing treatment for scars, rosacea, texture, enlarged pores, and pigmentation with minimal downtime.',
-        img: '/public/images/services/bimedis-241426.webp',
+        img: '/images/services/bimedis-241426.webp',
         type: 'Rejuvenation'
     },
     {
         title: 'Venus Freeze',
         desc: 'FDA-approved treatment for cellulite and loose skin using magnetic pulses to stimulate collagen.',
-        img: 'https://www.medprolasers.com/wp-content/uploads/2020/11/IMG_3184-rotated.jpg',
+        img: '/images/services/venus_freeze.jpg',
         type: 'Body'
     },
     {
