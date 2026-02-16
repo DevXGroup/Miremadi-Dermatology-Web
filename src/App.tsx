@@ -24,6 +24,7 @@ import { AdminLayout } from './pages/admin/AdminLayout';
 import { Dashboard } from './pages/admin/Dashboard';
 import { OrderHistory } from './pages/OrderHistory';
 import { GoogleAnalytics } from './components/ui/GoogleAnalytics';
+import { ScrollToTop } from './components/ui/ScrollToTop';
 
 // Skeleton for loading states
 const PageLoader = () => (
@@ -103,6 +104,7 @@ function App() {
 
     return (
         <Router>
+            <ScrollToTop />
             <GoogleAnalytics />
             <div className="min-h-screen bg-white dark:bg-slate-900 text-slate-900 dark:text-white font-sans transition-colors duration-300">
                 <Navbar />
