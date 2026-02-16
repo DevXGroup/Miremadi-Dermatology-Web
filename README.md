@@ -131,11 +131,13 @@ The application has reached **Phase 3 Completion**. The core frontend, backend s
 - [x] **Admin Dashboard**: Secure backend-driven dashboard for order management.
 - [x] **Backend Logic**: Cloud Edge Functions for `checkout`, `webhooks`, and `admin-api`.
 - [x] **Security**: Row Level Security (RLS) and Role-Based Access Control (RBAC).
+- [x] **Live Deployment**: Frontend deployed and reachable via custom domain.
+- [x] **Content Population**: Initial clinical content and media assets integrated.
+- [x] **Analytics**: Google Analytics 4 (GA4) integration for traffic monitoring.
 
-### 🚧 In Progress / Next Steps
-- [ ] **Live Deployment**: Deploy frontend to Vercel/Netlify.
-- [ ] **Stripe Production**: Switch Stripe keys from Test to Live mode.
-- [ ] **Domain Setup**: configure custom domain and SSL.
-- [ ] **Content Population**: Replace placeholder product images with real inventory photos.
+### 🚧 Future Roadmap
+- [ ] **Stripe Production Activation**: Switch Stripe keys from Test to Live mode upon business clearance.
+- [ ] **Extended E-Commerce**: Activate full shopping and fulfillment loop once legal requirements are met.
+- [ ] **Enhanced SEO**: Further optimization of meta tags and structured data for service pages.
 
 For detailed documentation, see the [`DOCS/`](./DOCS/) directory.
