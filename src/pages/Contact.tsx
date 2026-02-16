@@ -28,7 +28,7 @@ export const Contact = () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     ...data,
-                    _to: 'miremadidermatology@gmail.com',
+                    _to: 'info@drmiremadi.com',
                     _subject: `New Contact Form Submission from ${data.name}`
                 }),
             });
