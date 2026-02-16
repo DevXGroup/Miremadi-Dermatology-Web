@@ -21,10 +21,7 @@ const MirageSection = () => {
         const mask = `radial-gradient(circle 140px at ${x}px ${y}px, black 0%, black 60%, transparent 100%)`;
         revealRef.current.style.maskImage = mask;
         revealRef.current.style.webkitMaskImage = mask;
-    }, []);
-
-    const handleMouseEnter = useCallback(() => {
-        if (revealRef.current) revealRef.current.style.opacity = '1';
+        revealRef.current.style.opacity = '1';
     }, []);
 
     const handleMouseLeave = useCallback(() => {
@@ -39,7 +36,6 @@ const MirageSection = () => {
         <section
             className="relative h-[500px] md:h-[650px] flex items-center overflow-hidden z-10"
             onMouseMove={handleMouseMove}
-            onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
             {/* Layer 1: Blurred background image */}
