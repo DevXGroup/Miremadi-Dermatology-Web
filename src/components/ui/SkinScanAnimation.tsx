@@ -124,7 +124,7 @@ export const SkinScanAnimation: React.FC<{ isDark?: boolean }> = ({ isDark: isDa
     return (
         <div
             ref={containerRef}
-            className="relative w-full aspect-[4/3] md:aspect-[8/5] overflow-hidden"
+            className="relative w-full aspect-[3/4] md:aspect-[3/4] md:max-h-[calc(100vh-12rem)] overflow-hidden"
             style={{
                 borderRadius: '2.5rem',
                 border: `1px solid ${isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)'}`,

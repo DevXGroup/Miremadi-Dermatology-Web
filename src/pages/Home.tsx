@@ -126,8 +126,8 @@ export const Home = () => {
     return (
         <div className="pt-24 min-h-screen relative overflow-x-hidden">
             {/* Background Animation Layer - Hero Only */}
-            <div className="absolute top-0 left-0 right-0 h-[900px] overflow-hidden" style={{ zIndex: 0 }}>
-                <div className="absolute left-0 right-0 top-[100px] h-full opacity-100 dark:opacity-80">
+            <div className="absolute top-0 left-0 right-0 h-screen overflow-hidden" style={{ zIndex: 0 }}>
+                <div className="absolute inset-0 opacity-100 dark:opacity-90">
                     <Antigravity
                         count={633}
                         magnetRadius={20}
@@ -147,13 +147,13 @@ export const Home = () => {
                     />
                 </div>
                 {/* Soft Fade Overlay - Strictly contained to hero section */}
-                <div className="absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-b from-white/0 via-white/50 to-white dark:from-slate-950/0 dark:via-slate-950/50 dark:to-slate-950 pointer-events-none" />
+                <div className="absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-b from-white/0 via-white/20 to-white dark:from-slate-950/0 dark:via-slate-950/20 dark:to-slate-950 pointer-events-none" />
             </div>
 
 
             {/* Hero Section */}
-            <section className="relative z-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto py-6 md:py-10">
-                <div className="grid md:grid-cols-2 gap-8 items-center">
+            <section className="relative z-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto min-h-[calc(100vh-6rem)] flex items-end pb-10 md:pb-16 pt-6 md:pt-10">
+                <div className="grid md:grid-cols-2 gap-8 items-end w-full">
                     <motion.div
                         initial="hidden"
                         animate="visible"
@@ -275,12 +275,12 @@ export const Home = () => {
                         </motion.div>
                     </motion.div>
 
-                    <div className="relative">
+                    <div className="relative md:max-h-[calc(100vh-12rem)]">
                         <motion.div
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 1 }}
-                            className="relative z-10"
+                            className="relative z-10 md:max-h-[calc(100vh-12rem)]"
                         >
                             <SkinScanAnimation isDark={isDark} />
                         </motion.div>
@@ -315,17 +315,17 @@ export const Home = () => {
                             {
                                 title: "Patient-First Care",
                                 desc: "Your comfort and long-term health are our top priorities. We co-author treatment plans with you to ensure they align with your lifestyle and goals.",
-                                image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=800"
+                                image: "/images/philosophy/patient_first.jpg"
                             },
                             {
                                 title: "Holistic Approach",
                                 desc: "We analyze lifestyle, nutrition, and environmental factors to address the root causes of skin concerns, promoting lasting wellness.",
-                                image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=800"
+                                image: "/images/philosophy/holistic.jpg"
                             },
                             {
                                 title: "Cutting-Edge Tech",
                                 desc: "Utilizing the latest FDA-approved lasers and medical-grade treatments to deliver safe, effective, and transformative results.",
-                                image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&q=80&w=800"
+                                image: "/images/philosophy/cutting_edge.jpg"
                             }
                         ].map((item, i) => (
                             <motion.div
@@ -435,6 +435,117 @@ export const Home = () => {
                                 Read Full Biography
                             </Link>
                         </motion.div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Patient Reviews */}
+            <section className="relative py-16 md:py-24 bg-slate-50 dark:bg-slate-900 z-10">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="text-center max-w-3xl mx-auto mb-16">
+                        <span className="text-xs font-bold text-primary uppercase tracking-[0.2em] mb-4 block">Patient Testimonials</span>
+                        <motion.h2
+                            initial={{ opacity: 0, x: -50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.8, ease: "easeOut" }}
+                            className="text-4xl md:text-5xl font-display font-medium text-slate-900 dark:text-white mb-6"
+                        >
+                            What Our <span className="italic font-light text-slate-400">Patients Say</span>
+                        </motion.h2>
+                        <p className="text-lg text-slate-500 dark:text-slate-400 leading-relaxed">
+                            Real reviews from real patients on Yelp. We're proud of the trust our community places in us.
+                        </p>
+                    </div>
+
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {[
+                            {
+                                name: "Sara A.",
+                                location: "San Diego, CA",
+                                date: "Aug 2017",
+                                text: "Dr. Miremadi was highly recommended by a trusted friend. He is a Dermatologist with extensive experience. He is always transparent, you see the bottle he pulls from. He is such a kind hearted man and very professional and his experience is evident. I absolutely love him and am so happy to be his patient.",
+                                initials: "SA",
+                            },
+                            {
+                                name: "Donald O.",
+                                location: "San Diego, CA",
+                                date: "Mar 2021",
+                                text: "Dr. Miremadi is by far one of the best doctors in town. He is very kind, gentle and knowledgeable about his practice. You get what you pay for in the skin care business and here you get the best of the best. Dr. M is very open, transparent and honest — a class act and a wonderful human.",
+                                initials: "DO",
+                            },
+                            {
+                                name: "Ashley A.",
+                                location: "Spring Valley, CA",
+                                date: "Jul 2019",
+                                text: "He is a very kind and gentle doctor, knowledgeable about what will and won't be covered by insurance. He genuinely cares about patients and their health, takes his time with you and makes recommendations which accommodate your lifestyle. He's the best!",
+                                initials: "AA",
+                            },
+                            {
+                                name: "Tina B.",
+                                location: "San Francisco, CA",
+                                date: "Jan 2024",
+                                text: "I have been seeing Dr. Miremadi for my skin care for the past few years and recently started receiving hair laser treatments as well. I can vouch how happy I've been with both. Dr. Miremadi himself is simply amazing at what he does! Definitely a 10 out of 10!",
+                                initials: "TB",
+                            },
+                            {
+                                name: "Emily M.",
+                                location: "San Diego, CA",
+                                date: "Jan 2024",
+                                text: "I would recommend Dr. Miremadi to everyone. I've been his patient for years and so has my family. He is thorough and kind and knows what he's doing. He is highly respected by his peers and patients.",
+                                initials: "EM",
+                            },
+                            {
+                                name: "Mojgan K.",
+                                location: "San Diego, CA",
+                                date: "Nov 2025",
+                                text: "Dr Miremadi is very knowledgeable and has a lot of experience. He is fantastic in diagnosing skin issues. His professional and kind demeanor is a great assurance that you are in good hands. I highly recommend him.",
+                                initials: "MK",
+                            },
+                        ].map((review, i) => (
+                            <motion.div
+                                key={i}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: i * 0.08 }}
+                                className="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-100 dark:border-slate-700 flex flex-col"
+                            >
+                                <div className="flex items-center gap-1 mb-4">
+                                    {[...Array(5)].map((_, s) => (
+                                        <svg key={s} className="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                        </svg>
+                                    ))}
+                                </div>
+                                <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed flex-grow mb-4">
+                                    "{review.text}"
+                                </p>
+                                <div className="flex items-center gap-3 pt-4 border-t border-slate-100 dark:border-slate-700">
+                                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/80 to-secondary-DEFAULT/80 flex items-center justify-center text-white text-xs font-bold">
+                                        {review.initials}
+                                    </div>
+                                    <div>
+                                        <p className="text-sm font-bold text-slate-900 dark:text-white">{review.name}</p>
+                                        <p className="text-[11px] text-slate-400">{review.location} · {review.date}</p>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+
+                    <div className="text-center mt-10">
+                        <a
+                            href="https://www.yelp.com/biz/arjang-k-miremadi-md-miremadi-dermatology-medical-clinic-la-jolla"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-full font-bold text-sm uppercase tracking-wider hover:scale-105 hover:bg-white dark:hover:bg-slate-900 hover:text-slate-900 dark:hover:text-white border border-slate-900 dark:border-white transition-all"
+                        >
+                            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12.773 11.39c-.263-.054-1.464-.498-1.708-.576-.244-.08-.455-.104-.634.158-.18.263-.604.758-.752.918-.148.16-.263.17-.526.116-.263-.054-1.107-.419-2.1-1.306-.775-.698-1.296-1.558-1.447-1.82-.15-.264-.016-.404.113-.535.116-.116.263-.302.395-.453.13-.15.173-.256.263-.427.088-.17.044-.319-.022-.453-.066-.134-.634-1.494-.868-2.044-.229-.537-.461-.465-.634-.473-.163-.008-.353-.01-.543-.01-.19 0-.498.072-.76.354-.262.282-1 .978-1 2.385 0 1.407 1.024 2.766 1.167 2.957.143.19 2.015 3.077 4.884 4.313.683.295 1.216.47 1.631.603.685.218 1.31.187 1.803.113.55-.082 1.693-.692 1.932-1.36.24-.67.24-1.243.168-1.361-.07-.12-.262-.19-.526-.244zm-5.072 6.93L7.7 18.32c-.01-.004-3.452-1.426-4.583-5.396C2.028 9.205 3.87 5.618 7.466 3.86A9.57 9.57 0 0112.02 2.78c5.283 0 9.584 4.3 9.584 9.584 0 5.283-4.3 9.584-9.584 9.584a9.56 9.56 0 01-4.318-1.028v-.001z"/>
+                            </svg>
+                            Read All Reviews on Yelp
+                        </a>
                     </div>
                 </div>
             </section>
