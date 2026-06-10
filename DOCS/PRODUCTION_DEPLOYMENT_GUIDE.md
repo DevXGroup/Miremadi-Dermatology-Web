@@ -39,7 +39,7 @@ Log in to your [Stripe Dashboard](https://dashboard.stripe.com/).
   - Copy your **Publishable Key** (`pk_live_...`)
 - [ ] **Create Live Webhook**:
   - Go to **Developers > Webhooks > Add Endpoint**.
-  - **URL**: `https://[YOUR_SUPABASE_PROJECT_ID].supabase.co/functions/v1/stripe-webhook`
+  - **URL**: `https://[YOUR_SUPABASE_PROJECT_ID].supabase.co/functions/v1/stripe-webhook` (PLACEHOLDER - replace with your actual Supabase project endpoint)
   - **Events to listen for**: `checkout.session.completed`
   - **Signing Secret**: Click "Reveal" to get the `whsec_...` key.
 

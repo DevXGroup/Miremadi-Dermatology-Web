@@ -83,7 +83,7 @@ sequenceDiagram
     end
 
     box "Async Processing" #e6f3ff
-        Stripe->>Edge: POST /stripe-webhook<br/>(checkout.session.completed)
+        Stripe->>Edge: POST /stripe-webhook (FAKE PLACEHOLDER)<br/>(checkout.session.completed)
         Edge->>Stripe: Verify Signature
         Edge->>Edge: Extract Metadata (patient_id, purchase_id)
         Edge->>DB: INSERT INTO orders (status='paid')
