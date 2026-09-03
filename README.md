@@ -1,147 +1,43 @@
 # Miremadi Dermatology & Web Store
 
-A premium, high-performance web application for Dr. Arjang Miremadi, combining a dermatology service showcase with a full-featured e-commerce store. Built with modern web technologies to ensure speed, accessibility, and a stunning "Attio-style" aesthetic.
+Website for Dr. Arjang Miremadi's dermatology practice. Vite + React + TypeScript,
+Tailwind v4, Supabase backend, Stripe payments.
 
-## ⚠️ Production Deployment Status
+Read `BRIEF.md` first, then `../BACKLOG.md` for open items and the client-relationship
+status.
 
-**Important Note:** While we have built a complete, enterprise-grade e-commerce system (including secure checkout, inventory management, and an admin fulfillment dashboard), the current production deployment is serving the **Static Informational Version** of the site. 
+## Production status
 
-Per the customer's request and for legal/regulatory compliance, the e-commerce functionalities are implemented but remain deactivated in the live environment for the time being. The current production build focuses on providing patients with comprehensive practice information and service showcases.
+The live site serves the informational version only: practice info, services, blog.
+An e-commerce layer (product catalog, cart, Stripe checkout, Supabase-backed admin
+fulfillment dashboard) is built into this codebase but switched off in production, per
+the client's request, pending legal and regulatory clearance to sell skincare products
+online.
 
-## 🚀 Features
+## Stack
 
-### Core Experience
-- **Premium UI/UX**: Linear design system, glassmorphism, and micro-interactions powered by `framer-motion`.
-- **Dark/Light Mode**: Fully supported dynamic theming.
-- **PWA Support**: Installable on mobile devices with offline capabilities.
-- **Responsive**: Mobile-first design that scales perfectly to desktop.
+- Vite + React 19 + TypeScript
+- Tailwind v4
+- Zustand (cart state)
+- Supabase (auth, database, storage, edge functions in Deno)
+- Stripe (checkout, currently test mode / inactive in prod)
+- Framer Motion
+- Google Analytics 4 (`react-ga4`)
 
-### E-Commerce (Shop) - *Ready for Activation*
-- **Product Management**: Grid view with filtering and search.
-- **Cart System**: High-performance cart state management using `zustand`.
-- **Private Admin Dashboard**: Secure area for order management, fulfillment, and revenue tracking.
-- **Wishlist**: Save favorite products (persisted locally).
-- **Checkout Flow**: Secure Stripe-integrated checkout with server-side session creation.
+## Run it
 
-### Content
-- **Blog Engine**: A rich journal section for dermatology insights.
-- **Service Showcase**: Animated presentation of medical and cosmetic services.
-
-### Analytics & Monitoring
-- **Google Analytics 4**: Integrated for privacy-compliant traffic analysis and user engagement monitoring.
-- **Real-time Event Tracking**: Automated page-view and core interaction tracking.
-
-## 🛠 Tech Stack
-
-- **Framework**: [Vite](https://vitejs.dev/) + [React](https://react.dev/)
-- **Language**: [TypeScript](https://www.typescriptlang.org/)
-- **Styling**: [TailwindCSS](https://tailwindcss.com/) (v4) + Custom Design System
-- **State Management**: [Zustand](https://github.com/pmndrs/zustand)
-- **Backend**: [Supabase](https://supabase.com/) (Auth, Database, Storage)
-- **Edge Runtime**: [Deno](https://deno.com/) (Supabase Edge Functions)
-- **Payments**: [Stripe](https://stripe.com/)
-- **Animations**: [Framer Motion](https://www.framer.com/motion/)
-- **PWA**: [Vite PWA](https://vite-pwa-org.netlify.app/)
-
-## 🏗 System Architecture
-
-High-level overview of the components and their interactions, including the secure e-commerce and admin fulfillment system.
-
-```mermaid
-graph TD
-    subgraph Client ["Frontend (Vite + React)"]
-        PatientUI["Patient UI<br/>(Shop, Cart, Checkout)"]
-        AdminUI["Admin Dashboard<br/>(Stats, Orders, Fulfillment)"]
-    end
-
-    subgraph Backend ["Supabase Edge Functions"]
-        CreateSession["create-checkout-session<br/>(Secure Session Creation)"]
-        StripeWebhook["stripe-webhook<br/>(Async Order Processing)"]
-        AdminAPI["admin-api<br/>(Secure Admin Actions)"]
-    end
-
-    subgraph Data ["Supabase Platform"]
-        Auth[Supabase Auth]
-        DB[(Postgres DB)]
-        Storage[Supabase Storage]
-    end
-
-    subgraph External ["External Services"]
-        Stripe[Stripe Payments]
-    end
-
-    %% Auth Flows
-    PatientUI -->|Auth & RLS| Auth
-    AdminUI -->|Auth & Role Check| Auth
-
-    %% Checkout Flow
-    PatientUI -->|POST /create-session| CreateSession
-    CreateSession -->|Create Customer/Session| Stripe
-    CreateSession -.->|Read Profile| DB
-    PatientUI -->|Redirect| Stripe
-
-    %% Webhook Flow
-    Stripe -->|Webhook Event| StripeWebhook
-    StripeWebhook -->|Verify Signature| Stripe
-    StripeWebhook -->|Create Order & Items| DB
-
-    %% Admin Flow
-    AdminUI -->|GET Stats/Orders| AdminAPI
-    AdminUI -->|POST Complete with Image| AdminAPI
-    AdminAPI -->|Read/Write Data| DB
-    AdminAPI -->|Upload Image| Storage
-    
-    %% Relationships
-    DB <--> Storage
+```bash
+npm install
+npm run dev       # http://localhost:5173
+npm run build      # production build
+npm run preview    # preview the build
 ```
 
-## 🏃‍♂️ Getting Started
+## Where things live
 
-### Prerequisites
-- Node.js (v18 or higher)
-- npm or pnpm
-
-### Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone <repo-url>
-   cd Miremadi-Dermatology-Web
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Start Development Server**
-   ```bash
-   npm run dev
-   ```
-   Visit `http://localhost:5173` to view the app.
-
-4. **Build for Production**
-   ```bash
-   npm run build
-   ```
-
-## 📍 Project Status & Roadmap
-
-The application has reached **Phase 3 Completion**. The core frontend, backend secure payments, and admin fulfillment loop are implemented.
-
-### ✅ Completed
-- [x] **Frontend Architecture**: Complete React+Vite app with Attio-style design system.
-- [x] **Product Store & Cart**: Functional shopping cart with local persistence.
-- [x] **Admin Dashboard**: Secure backend-driven dashboard for order management.
-- [x] **Backend Logic**: Cloud Edge Functions for `checkout`, `webhooks`, and `admin-api`.
-- [x] **Security**: Row Level Security (RLS) and Role-Based Access Control (RBAC).
-- [x] **Live Deployment**: Frontend deployed and reachable via custom domain.
-- [x] **Content Population**: Initial clinical content and media assets integrated.
-- [x] **Analytics**: Google Analytics 4 (GA4) integration for traffic monitoring.
-
-### 🚧 Future Roadmap
-- [ ] **Stripe Production Activation**: Switch Stripe keys from Test to Live mode upon business clearance.
-- [ ] **Extended E-Commerce**: Activate full shopping and fulfillment loop once legal requirements are met.
-- [ ] **Enhanced SEO**: Further optimization of meta tags and structured data for service pages.
-
-For detailed documentation, see the [`DOCS/`](./DOCS/) directory.
+- `src/` — app code (components, pages, store, lib)
+- `supabase/` — schema, migrations, edge functions (`stripe-webhook`,
+  `create-checkout-session`, `admin-api`, `process-barcode-ocr`)
+- `DOCS/SYSTEM_ARCHITECTURE.md` — how the frontend, edge functions, and Stripe connect
+- `DOCS/PRODUCTION_DEPLOYMENT_GUIDE.md` — deploy steps
+- `DOCS/IMPLEMENTATION_PLAN.md` — build history and roadmap
