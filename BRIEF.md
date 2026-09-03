@@ -1,7 +1,7 @@
 # Miremadi-Dermatology-Web, in one page
 
 > This is the code repo. The project-level brief and backlog live one level up, at
-> `../BRIEF.md` and `../BACKLOG.md` — read those first for the client relationship and
+> `../BRIEF.md` and `../BACKLOG.md`, read those first for the client relationship and
 > priorities. This file covers what lives in this repo specifically. Deeper docs:
 > `README.md` for setup, `DOCS/SYSTEM_ARCHITECTURE.md` for architecture,
 > `DOCS/PRODUCTION_DEPLOYMENT_GUIDE.md` for deploys.

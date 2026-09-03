@@ -35,9 +35,9 @@ npm run preview    # preview the build
 
 ## Where things live
 
-- `src/` — app code (components, pages, store, lib)
-- `supabase/` — schema, migrations, edge functions (`stripe-webhook`,
+- `src/`, app code (components, pages, store, lib)
+- `supabase/`, schema, migrations, edge functions (`stripe-webhook`,
   `create-checkout-session`, `admin-api`, `process-barcode-ocr`)
-- `DOCS/SYSTEM_ARCHITECTURE.md` — how the frontend, edge functions, and Stripe connect
-- `DOCS/PRODUCTION_DEPLOYMENT_GUIDE.md` — deploy steps
-- `DOCS/IMPLEMENTATION_PLAN.md` — build history and roadmap
+- `DOCS/SYSTEM_ARCHITECTURE.md`, how the frontend, edge functions, and Stripe connect
+- `DOCS/PRODUCTION_DEPLOYMENT_GUIDE.md`, deploy steps
+- `DOCS/IMPLEMENTATION_PLAN.md`, build history and roadmap

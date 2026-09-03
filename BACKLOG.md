@@ -15,7 +15,7 @@ shipped_recently:
 # Miremadi Dermatology (code repo) backlog
 
 This repo's task list and client-relationship status live one level up, in
-`../BACKLOG.md` — that file is the source of truth for this engagement (project key
+`../BACKLOG.md`, that file is the source of truth for this engagement (project key
 `miremadi-webapp`). This file exists only because every repo under `~/Desktop/CODE/*`
 keeps one, and it tracks the repo itself, not the business relationship.
 

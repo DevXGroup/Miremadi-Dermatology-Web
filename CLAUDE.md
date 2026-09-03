@@ -1,4 +1,4 @@
-# Miremadi-Dermatology-Web — Claude Project Instructions
+# Miremadi-Dermatology-Web: Claude Project Instructions
 
 Client site for Dr. Arjang Miremadi's dermatology practice. Client engagement, not a
 DevX product.
